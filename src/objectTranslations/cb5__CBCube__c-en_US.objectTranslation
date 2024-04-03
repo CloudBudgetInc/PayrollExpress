@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fields>
+        <label><!-- GLA Subtype --></label>
+        <name>cb5__AccSubType__c</name>
+    </fields>
+    <fields>
+        <label><!-- GLA Type --></label>
+        <name>cb5__AccType__c</name>
+    </fields>
+    <fields>
+        <label><!-- Actual --></label>
+        <name>cb5__Actual__c</name>
+    </fields>
+    <fields>
+        <label><!-- Budget --></label>
+        <name>cb5__Budget__c</name>
+    </fields>
+    <fields>
+        <label><!-- CB Account --></label>
+        <name>cb5__CBAccount__c</name>
+        <relationshipLabel><!-- CB Cubes --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- CB Budget Year --></label>
+        <name>cb5__CBBudgetYear__c</name>
+        <relationshipLabel><!-- CB Cubes --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- CB Division --></label>
+        <name>cb5__CBDivision__c</name>
+        <relationshipLabel><!-- CB Cubes --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Key --></label>
+        <name>cb5__CBKey__c</name>
+    </fields>
+    <fields>
+        <label><!-- CB Period --></label>
+        <name>cb5__CBPeriod__c</name>
+        <relationshipLabel><!-- CB Cubes --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- CB Scenario --></label>
+        <name>cb5__CBScenario__c</name>
+        <relationshipLabel><!-- CB Cubes --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- CB Variable 1 --></label>
+        <name>cb5__CBVariable1__c</name>
+        <relationshipLabel><!-- CB Cubes --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- CB Variable 2 --></label>
+        <name>cb5__CBVariable2__c</name>
+        <relationshipLabel><!-- CB Cubes --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- CB Variable 3 --></label>
+        <name>cb5__CBVariable3__c</name>
+        <relationshipLabel><!-- CB Cubes --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- CB Variable 4 --></label>
+        <name>cb5__CBVariable4__c</name>
+        <relationshipLabel><!-- CB Cubes --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- CB Variable 5 --></label>
+        <name>cb5__CBVariable5__c</name>
+        <relationshipLabel><!-- CB Cubes --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Diff --></label>
+        <name>cb5__Diff__c</name>
+    </fields>
+    <fields>
+        <help><!-- List of Ids related to Cube --></help>
+        <label><!-- Drill Down Ids --></label>
+        <name>cb5__DrillDownIds__c</name>
+    </fields>
+    <fields>
+        <label><!-- Sign --></label>
+        <name>cb5__Sign__c</name>
+    </fields>
+    <layouts>
+        <layout>CB Cube Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+</CustomObjectTranslation>

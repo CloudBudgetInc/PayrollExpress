@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fields>
+        <label><!-- CB Account --></label>
+        <name>cb5__CBAccount__c</name>
+        <relationshipLabel><!-- CB Calculation Rules --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- CB Budget Year --></label>
+        <name>cb5__CBBudgetYear__c</name>
+        <relationshipLabel><!-- CB Calculation Rules --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- CB Division --></label>
+        <name>cb5__CBDivision__c</name>
+        <relationshipLabel><!-- CB Calculation Rules --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- CB Folder --></label>
+        <name>cb5__CBFolder__c</name>
+        <relationshipLabel><!-- CB Calculation Rule Folders --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- CB Scenario --></label>
+        <name>cb5__CBScenario__c</name>
+        <relationshipLabel><!-- CB Calculation Rules --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- CB Variable 1 --></label>
+        <name>cb5__CBVariable1__c</name>
+        <relationshipLabel><!-- CB Calculation Rules --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- CB Variable 2 --></label>
+        <name>cb5__CBVariable2__c</name>
+        <relationshipLabel><!-- CB Calculation Rules --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- CB Variable 3 --></label>
+        <name>cb5__CBVariable3__c</name>
+        <relationshipLabel><!-- CB Calculation Rules --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- CB Variable 4 --></label>
+        <name>cb5__CBVariable4__c</name>
+        <relationshipLabel><!-- CB Calculation Rules --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- CB Variable 5 --></label>
+        <name>cb5__CBVariable5__c</name>
+        <relationshipLabel><!-- CB Calculation Rules --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Description --></label>
+        <name>cb5__Description__c</name>
+    </fields>
+    <fields>
+        <label><!-- Formula --></label>
+        <name>cb5__Formula__c</name>
+    </fields>
+    <fields>
+        <label><!-- Mode --></label>
+        <name>cb5__Mode__c</name>
+        <picklistValues>
+            <masterLabel>many-to-one</masterLabel>
+            <translation><!-- many-to-one --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>one-to-one</masterLabel>
+            <translation><!-- one-to-one --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>result under source</masterLabel>
+            <translation><!-- result under source --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- NFL1 --></label>
+        <name>cb5__NFL1__c</name>
+        <relationshipLabel><!-- CB Calculation Rules --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Period Shift --></label>
+        <name>cb5__PeriodShift__c</name>
+    </fields>
+    <fields>
+        <label><!-- Result Name --></label>
+        <name>cb5__ResultName__c</name>
+    </fields>
+    <fields>
+        <label><!-- Source Child Filter --></label>
+        <name>cb5__SourceChildFilter__c</name>
+    </fields>
+    <fields>
+        <label><!-- Source Parent Filter --></label>
+        <name>cb5__SourceParentFilter__c</name>
+    </fields>
+    <fields>
+        <label><!-- Value --></label>
+        <name>cb5__Value__c</name>
+    </fields>
+    <fields>
+        <label><!-- copyAccount --></label>
+        <name>cb5__copyAccount__c</name>
+    </fields>
+    <fields>
+        <label><!-- copyBudgetYear --></label>
+        <name>cb5__copyBudgetYear__c</name>
+    </fields>
+    <fields>
+        <label><!-- copyDivision --></label>
+        <name>cb5__copyDivision__c</name>
+    </fields>
+    <fields>
+        <label><!-- copyScenario --></label>
+        <name>cb5__copyScenario__c</name>
+    </fields>
+    <fields>
+        <label><!-- copyVariable1 --></label>
+        <name>cb5__copyVariable1__c</name>
+    </fields>
+    <fields>
+        <label><!-- copyVariable2 --></label>
+        <name>cb5__copyVariable2__c</name>
+    </fields>
+    <fields>
+        <label><!-- copyVariable3 --></label>
+        <name>cb5__copyVariable3__c</name>
+    </fields>
+    <fields>
+        <label><!-- copyVariable4 --></label>
+        <name>cb5__copyVariable4__c</name>
+    </fields>
+    <fields>
+        <label><!-- copyVariable5 --></label>
+        <name>cb5__copyVariable5__c</name>
+    </fields>
+    <validationRules>
+        <errorMessage><!-- Folder type must be &apos;Calculation Rule&apos; --></errorMessage>
+        <name>cb5__CalcRuleType</name>
+    </validationRules>
+</CustomObjectTranslation>

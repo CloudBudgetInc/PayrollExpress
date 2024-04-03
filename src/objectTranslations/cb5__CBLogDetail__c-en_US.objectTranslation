@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fields>
+        <label><!-- Description --></label>
+        <name>cb5__Description__c</name>
+    </fields>
+    <fields>
+        <label><!-- Parent --></label>
+        <name>cb5__Parent__c</name>
+        <relationshipLabel><!-- CB LogDetails --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Reason --></label>
+        <name>cb5__Reason__c</name>
+    </fields>
+</CustomObjectTranslation>

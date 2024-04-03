@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fields>
+        <label><!-- AP Ahead Trigger --></label>
+        <name>cb5__APAheadTrigger__c</name>
+    </fields>
+    <fields>
+        <label><!-- AP Back Trigger --></label>
+        <name>cb5__APBackTrigger__c</name>
+    </fields>
+    <fields>
+        <label><!-- AP Have Access To Ahead --></label>
+        <name>cb5__APHaveAccessToAhead__c</name>
+        <relationshipLabel><!-- CB Budget Lines (AP Have Access To Ahead) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- AP Have Access To Back --></label>
+        <name>cb5__APHaveAccessToBack__c</name>
+        <relationshipLabel><!-- CB Budget Lines (AP Have Access To Back) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- AP Next Status Name --></label>
+        <name>cb5__APNextStatusName__c</name>
+    </fields>
+    <fields>
+        <label><!-- AP Previous Status Name --></label>
+        <name>cb5__APPreviousStatusName__c</name>
+    </fields>
+    <fields>
+        <label><!-- Button title --></label>
+        <name>cb5__Buttontitle__c</name>
+    </fields>
+    <fields>
+        <label><!-- Sign --></label>
+        <name>cb5__CBAccountSign__c</name>
+    </fields>
+    <fields>
+        <label><!-- Account Type --></label>
+        <name>cb5__CBAccountType__c</name>
+    </fields>
+    <fields>
+        <label><!-- CB Account --></label>
+        <name>cb5__CBAccount__c</name>
+        <relationshipLabel><!-- CB Budget Lines --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- CB Budget Year --></label>
+        <name>cb5__CBBudgetYear__c</name>
+        <relationshipLabel><!-- CB Budget Lines --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- CB Calculation Rule --></label>
+        <name>cb5__CBCalculationRule__c</name>
+        <relationshipLabel><!-- CB Budget Lines --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- CB Division --></label>
+        <name>cb5__CBDivision__c</name>
+        <relationshipLabel><!-- CB Budget Lines --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Key --></label>
+        <name>cb5__CBKey__c</name>
+    </fields>
+    <fields>
+        <label><!-- CB Owner Name --></label>
+        <name>cb5__CBOwnerName__c</name>
+    </fields>
+    <fields>
+        <label><!-- CB Scenario --></label>
+        <name>cb5__CBScenario__c</name>
+        <relationshipLabel><!-- CB Budget Lines --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- CB Account Subtype --></label>
+        <name>cb5__CBSubAccountName__c</name>
+    </fields>
+    <fields>
+        <label><!-- CB Variable 1 --></label>
+        <name>cb5__CBVariable1__c</name>
+        <relationshipLabel><!-- CB Budget Lines --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- CB Variable 2 --></label>
+        <name>cb5__CBVariable2__c</name>
+        <relationshipLabel><!-- CB Budget Lines --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- CB Variable 3 --></label>
+        <name>cb5__CBVariable3__c</name>
+        <relationshipLabel><!-- CB Budget Lines --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- CB Variable 4 --></label>
+        <name>cb5__CBVariable4__c</name>
+        <relationshipLabel><!-- CB Budget Lines --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- CB Variable 5 --></label>
+        <name>cb5__CBVariable5__c</name>
+        <relationshipLabel><!-- CB Budget Lines --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Code --></label>
+        <name>cb5__Code__c</name>
+    </fields>
+    <fields>
+        <label><!-- Description --></label>
+        <name>cb5__Description__c</name>
+    </fields>
+    <fields>
+        <label><!-- Drill Down Ids --></label>
+        <name>cb5__DrillDownIds__c</name>
+    </fields>
+    <fields>
+        <label><!-- Index --></label>
+        <name>cb5__Index__c</name>
+    </fields>
+    <fields>
+        <label><!-- Lock --></label>
+        <name>cb5__Lock__c</name>
+        <picklistValues>
+            <masterLabel>Deleting</masterLabel>
+            <translation><!-- Deleting --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Editing</masterLabel>
+            <translation><!-- Editing --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- CB Non-Financial Library 1 --></label>
+        <name>cb5__NFL1__c</name>
+        <relationshipLabel><!-- CB Budget Lines --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- CB Non-Financial Library 2 --></label>
+        <name>cb5__NFL2__c</name>
+        <relationshipLabel><!-- CB Budget Lines --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- CB Non-Financial Library 3 --></label>
+        <name>cb5__NFL3__c</name>
+        <relationshipLabel><!-- CB Budget Lines --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- CB Non-Financial Library 4 --></label>
+        <name>cb5__NFL4__c</name>
+        <relationshipLabel><!-- CB Budget Lines --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- CB Non-Financial Library 5 --></label>
+        <name>cb5__NFL5__c</name>
+        <relationshipLabel><!-- CB Budget Lines --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- NFL Formula --></label>
+        <name>cb5__NFLFormula__c</name>
+    </fields>
+    <fields>
+        <help><!-- Lookup to a parent budget line --></help>
+        <label><!-- Parent Budget Line --></label>
+        <name>cb5__ParentBudgetLine__c</name>
+        <relationshipLabel><!-- CB Budget Lines --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Status --></label>
+        <name>cb5__Status__c</name>
+    </fields>
+    <fields>
+        <label><!-- System Access Key --></label>
+        <name>cb5__SystemAccessKey__c</name>
+    </fields>
+    <fields>
+        <label><!-- User --></label>
+        <name>cb5__User__c</name>
+        <relationshipLabel><!-- CB Budget Lines (User) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Value --></label>
+        <name>cb5__Value__c</name>
+    </fields>
+    <fields>
+        <label><!-- Warning Message --></label>
+        <name>cb5__WarningMessage__c</name>
+    </fields>
+    <fields>
+        <help><!-- True if the budget line is allocated to simple lines --></help>
+        <label><!-- Is Allocation --></label>
+        <name>cb5__isAllocation__c</name>
+    </fields>
+    <fields>
+        <label><!-- Is Formula --></label>
+        <name>cb5__isFormulaBudgetLine__c</name>
+    </fields>
+    <fields>
+        <help><!-- True is the current budget line is topdown sum --></help>
+        <label><!-- is Topdown --></label>
+        <name>cb5__isTopdown__c</name>
+    </fields>
+    <layouts>
+        <layout>CB Budget Line Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+</CustomObjectTranslation>

@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fields>
+        <label><!-- CB Account --></label>
+        <name>cb5__CBAccount__c</name>
+        <relationshipLabel><!-- CB Functions --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- CB Division --></label>
+        <name>cb5__CBDivision__c</name>
+        <relationshipLabel><!-- CB Functions --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- CB Owner --></label>
+        <name>cb5__CBOwner__c</name>
+        <relationshipLabel><!-- CB Functions --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- CB Variable 1 --></label>
+        <name>cb5__CBVariable1__c</name>
+        <relationshipLabel><!-- CB Functions --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- CB Variable 2 --></label>
+        <name>cb5__CBVariable2__c</name>
+        <relationshipLabel><!-- CB Functions --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- CB Variable 3 --></label>
+        <name>cb5__CBVariable3__c</name>
+        <relationshipLabel><!-- CB Functions --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- CB Variable 4 --></label>
+        <name>cb5__CBVariable4__c</name>
+        <relationshipLabel><!-- CB Functions --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- CB Variable 5 --></label>
+        <name>cb5__CBVariable5__c</name>
+        <relationshipLabel><!-- CB Functions --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Details --></label>
+        <name>cb5__Details__c</name>
+    </fields>
+    <fields>
+        <label><!-- Index --></label>
+        <name>cb5__Index__c</name>
+    </fields>
+    <fields>
+        <label><!-- NFL1 --></label>
+        <name>cb5__NFL1__c</name>
+    </fields>
+    <fields>
+        <label><!-- NFL2 --></label>
+        <name>cb5__NFL2__c</name>
+    </fields>
+    <fields>
+        <label><!-- NFL3 --></label>
+        <name>cb5__NFL3__c</name>
+    </fields>
+    <fields>
+        <label><!-- NFL4 --></label>
+        <name>cb5__NFL4__c</name>
+    </fields>
+    <fields>
+        <label><!-- NFL5 --></label>
+        <name>cb5__NFL5__c</name>
+    </fields>
+    <fields>
+        <label><!-- NFL Formula --></label>
+        <name>cb5__NFLFormula__c</name>
+    </fields>
+    <fields>
+        <label><!-- Title --></label>
+        <name>cb5__Title__c</name>
+    </fields>
+    <fields>
+        <label><!-- Type --></label>
+        <name>cb5__Type__c</name>
+        <picklistValues>
+            <masterLabel>BLM</masterLabel>
+            <translation><!-- BLM --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>NFL</masterLabel>
+            <translation><!-- NFL --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Variable</masterLabel>
+            <translation><!-- Variable --></translation>
+        </picklistValues>
+    </fields>
+    <layouts>
+        <layout>CB Function Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+</CustomObjectTranslation>

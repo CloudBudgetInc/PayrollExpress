@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fields>
+        <label><!-- CB Folder --></label>
+        <name>cb5__CBFolder__c</name>
+        <relationshipLabel><!-- CB Report Folders --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Description --></label>
+        <name>cb5__Description__c</name>
+    </fields>
+    <fields>
+        <label><!-- Filter --></label>
+        <name>cb5__Filter__c</name>
+    </fields>
+    <fields>
+        <label><!-- Grouping --></label>
+        <name>cb5__Grouping__c</name>
+    </fields>
+    <fields>
+        <label><!-- Mode --></label>
+        <name>cb5__Mode__c</name>
+        <picklistValues>
+            <masterLabel>Auto</masterLabel>
+            <translation><!-- Auto --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Manual</masterLabel>
+            <translation><!-- Manual --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Subtotal Mode --></label>
+        <name>cb5__SubtotalMode__c</name>
+        <picklistValues>
+            <masterLabel>Bottom</masterLabel>
+            <translation><!-- Bottom --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Bottom With Header</masterLabel>
+            <translation><!-- Bottom With Header --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Top</masterLabel>
+            <translation><!-- Top --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- need Only Total --></label>
+        <name>cb5__needOnlyTotal__c</name>
+    </fields>
+    <fields>
+        <label><!-- Need Quarter Totals --></label>
+        <name>cb5__needQuarterTotals__c</name>
+    </fields>
+    <fields>
+        <label><!-- One Column Mode --></label>
+        <name>cb5__oneColumnMode__c</name>
+    </fields>
+    <layouts>
+        <layout>CB Report Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+</CustomObjectTranslation>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fields>
+        <label><!-- CB Calculation Rule --></label>
+        <name>cb5__CBCalculationRule__c</name>
+        <relationshipLabel><!-- CB Allocation Terms --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Part --></label>
+        <name>cb5__Part__c</name>
+    </fields>
+    <fields>
+        <label><!-- Period Unit --></label>
+        <name>cb5__PeriodUnit__c</name>
+        <picklistValues>
+            <masterLabel>Day</masterLabel>
+            <translation><!-- Day --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Month</masterLabel>
+            <translation><!-- Month --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Quarter</masterLabel>
+            <translation><!-- Quarter --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Week</masterLabel>
+            <translation><!-- Week --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Year</masterLabel>
+            <translation><!-- Year --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Shift --></label>
+        <name>cb5__Shift__c</name>
+    </fields>
+</CustomObjectTranslation>

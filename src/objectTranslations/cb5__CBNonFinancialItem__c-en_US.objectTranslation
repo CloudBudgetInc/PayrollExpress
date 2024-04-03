@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fields>
+        <label><!-- CB Budget Year Set --></label>
+        <name>cb5__CBBudgetYearSet__c</name>
+    </fields>
+    <fields>
+        <label><!-- CB Budget Year --></label>
+        <name>cb5__CBBudgetYear__c</name>
+    </fields>
+    <fields>
+        <label><!-- CB Period --></label>
+        <name>cb5__CBPeriod__c</name>
+        <relationshipLabel><!-- CB Non-Financial Items --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Non-Financial Library --></label>
+        <name>cb5__NonFinancialLibrary__c</name>
+        <relationshipLabel><!-- CB Non-Financial Items --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Period Name --></label>
+        <name>cb5__PeriodName__c</name>
+    </fields>
+    <fields>
+        <label><!-- Value --></label>
+        <name>cb5__Value__c</name>
+    </fields>
+</CustomObjectTranslation>

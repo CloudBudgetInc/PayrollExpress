@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fields>
+        <label><!-- CB Account --></label>
+        <name>cb5__CBAccount__c</name>
+        <relationshipLabel><!-- CB Transactions --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- CB Budget Year --></label>
+        <name>cb5__CBBudgetYear__c</name>
+        <relationshipLabel><!-- CB Transactions --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- CB Division --></label>
+        <name>cb5__CBDivision__c</name>
+        <relationshipLabel><!-- CB Transactions --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- CBKey --></label>
+        <name>cb5__CBKey__c</name>
+    </fields>
+    <fields>
+        <label><!-- CB Period --></label>
+        <name>cb5__CBPeriod__c</name>
+        <relationshipLabel><!-- CB Transactions --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- CB Variable 1 --></label>
+        <name>cb5__CBVariable1__c</name>
+        <relationshipLabel><!-- CB Transactions --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- CB Variable 2 --></label>
+        <name>cb5__CBVariable2__c</name>
+        <relationshipLabel><!-- CB Transactions --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- CB Variable 3 --></label>
+        <name>cb5__CBVariable3__c</name>
+        <relationshipLabel><!-- CB Transactions --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- CB Variable 4 --></label>
+        <name>cb5__CBVariable4__c</name>
+        <relationshipLabel><!-- CB Transactions --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- CB Variable 5 --></label>
+        <name>cb5__CBVariable5__c</name>
+        <relationshipLabel><!-- CB Transactions --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Value --></label>
+        <name>cb5__Value__c</name>
+    </fields>
+</CustomObjectTranslation>

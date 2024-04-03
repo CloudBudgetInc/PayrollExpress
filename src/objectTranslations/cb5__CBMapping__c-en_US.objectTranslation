@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fields>
+        <label><!-- Result sObject --></label>
+        <name>cb5__ResultSObject__c</name>
+    </fields>
+    <fields>
+        <help><!-- Result records sObject name --></help>
+        <label><!-- Result Type --></label>
+        <name>cb5__ResultType__c</name>
+    </fields>
+    <fields>
+        <help><!-- Filter string for source records --></help>
+        <label><!-- Source Filter --></label>
+        <name>cb5__SourceFilter__c</name>
+    </fields>
+    <fields>
+        <label><!-- Source Name --></label>
+        <name>cb5__SourceName__c</name>
+    </fields>
+    <fields>
+        <label><!-- Source sObject --></label>
+        <name>cb5__SourceSObject__c</name>
+    </fields>
+    <fields>
+        <label><!-- Source Subtype --></label>
+        <name>cb5__SourceSubtype__c</name>
+    </fields>
+    <fields>
+        <help><!-- Source sObject type name --></help>
+        <label><!-- Source Type --></label>
+        <name>cb5__SourceType__c</name>
+    </fields>
+    <fields>
+        <label><!-- Special Filter --></label>
+        <name>cb5__SpecialFilter__c</name>
+    </fields>
+    <fields>
+        <label><!-- Type --></label>
+        <name>cb5__Type__c</name>
+    </fields>
+</CustomObjectTranslation>

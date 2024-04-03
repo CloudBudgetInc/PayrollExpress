@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fields>
+        <label><!-- CB Folder --></label>
+        <name>cb5__CBFolder__c</name>
+        <relationshipLabel><!-- CB Modeling Rule Group Folders --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Delete Old Results --></label>
+        <name>cb5__DeleteOldResults__c</name>
+    </fields>
+    <fields>
+        <label><!-- Label --></label>
+        <name>cb5__Label__c</name>
+    </fields>
+    <fields>
+        <help><!-- True if DrillDown needed --></help>
+        <label><!-- Store Drill Down --></label>
+        <name>cb5__StoreDrillDown__c</name>
+    </fields>
+    <validationRules>
+        <errorMessage><!-- Folder type must be &quot;Modeling Rule&quot; --></errorMessage>
+        <name>cb5__ModelingRuleType</name>
+    </validationRules>
+</CustomObjectTranslation>

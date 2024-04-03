@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fields>
+        <label><!-- CB Report --></label>
+        <name>cb5__CBReport__c</name>
+        <relationshipLabel><!-- CB Report Configurations --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Description --></label>
+        <name>cb5__Description__c</name>
+    </fields>
+    <fields>
+        <label><!-- Display Units --></label>
+        <name>cb5__DisplayUnits__c</name>
+        <picklistValues>
+            <masterLabel>Millions</masterLabel>
+            <translation><!-- Millions --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Thousands</masterLabel>
+            <translation><!-- Thousands --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Whole Units</masterLabel>
+            <translation><!-- Whole Units --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Filter --></label>
+        <name>cb5__Filter__c</name>
+    </fields>
+    <fields>
+        <label><!-- Float Point Cell --></label>
+        <name>cb5__FloatPointCell__c</name>
+        <picklistValues>
+            <masterLabel>1</masterLabel>
+            <translation><!-- 1 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>1.0</masterLabel>
+            <translation><!-- 1.0 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>1.00</masterLabel>
+            <translation><!-- 1.00 --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Grouping --></label>
+        <name>cb5__Grouping__c</name>
+    </fields>
+    <fields>
+        <label><!-- SubRows --></label>
+        <name>cb5__SubRows__c</name>
+    </fields>
+    <fields>
+        <label><!-- Subtotal Number --></label>
+        <name>cb5__SubtotalNumber__c</name>
+    </fields>
+</CustomObjectTranslation>

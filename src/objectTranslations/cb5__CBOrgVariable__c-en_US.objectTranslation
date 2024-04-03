@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fields>
+        <help><!-- True is budget lines can be allocated --></help>
+        <label><!-- Allocation Is Using --></label>
+        <name>cb5__AllocationIsUsing__c</name>
+    </fields>
+    <fields>
+        <label><!-- Approval Is Using --></label>
+        <name>cb5__ApprovalIsUsing__c</name>
+    </fields>
+    <fields>
+        <label><!-- Bottom Up Mode Is Using --></label>
+        <name>cb5__BottomUpMode__c</name>
+    </fields>
+    <fields>
+        <label><!-- Budget Line Is Multi Year --></label>
+        <name>cb5__BudgetLineIsMultiYear__c</name>
+    </fields>
+    <fields>
+        <label><!-- Budget Line Lvl1 Style --></label>
+        <name>cb5__BudgetLineLvl1Style__c</name>
+        <relationshipLabel><!-- CB Org Variables --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Budget Line Lvl2 Style --></label>
+        <name>cb5__BudgetLineLvl2Style__c</name>
+        <relationshipLabel><!-- CB Org Variables (Budget Line Lvl2 Style) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Budget Line Lvl3 Style --></label>
+        <name>cb5__BudgetLineLvl3Style__c</name>
+        <relationshipLabel><!-- CB Org Variables (Budget Line Lvl3 Style) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Budget Line Lvl4 Style --></label>
+        <name>cb5__BudgetLineLvl4Style__c</name>
+        <relationshipLabel><!-- CB Org Variables (Budget Line Lvl4 Style) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Budget Line Lvl5 Style --></label>
+        <name>cb5__BudgetLineLvl5Style__c</name>
+        <relationshipLabel><!-- CB Org Variables (Budget Line Lvl5 Style) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Budget Lines Order --></label>
+        <name>cb5__BudgetLinesOrder__c</name>
+        <picklistValues>
+            <masterLabel>CreatedDate</masterLabel>
+            <translation><!-- CreatedDate --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Name</masterLabel>
+            <translation><!-- Name --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>cb5__CBAccount__r.Name</masterLabel>
+            <translation><!-- cb5__CBAccount__r.Name --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>cb5__CBVariable1__r.Name</masterLabel>
+            <translation><!-- cb5__CBVariable1__r.Name --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>cb5__CBVariable2__r.Name</masterLabel>
+            <translation><!-- cb5__CBVariable2__r.Name --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>cb5__CBVariable3__r.Name</masterLabel>
+            <translation><!-- cb5__CBVariable3__r.Name --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>cb5__CBVariable4__r.Name</masterLabel>
+            <translation><!-- cb5__CBVariable4__r.Name --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>cb5__CBVariable5__r.Name</masterLabel>
+            <translation><!-- cb5__CBVariable5__r.Name --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>cb5__Status__c</masterLabel>
+            <translation><!-- cb5__Status__c --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>cb5__Value__c</masterLabel>
+            <translation><!-- cb5__Value__c --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>cb5__Value__c DESC</masterLabel>
+            <translation><!-- cb5__Value__c DESC --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Budget Lines Pagination Threshold --></label>
+        <name>cb5__BudgetLinesPaginationThreshold__c</name>
+    </fields>
+    <fields>
+        <label><!-- CB Account Label --></label>
+        <name>cb5__CBAccountLabel__c</name>
+    </fields>
+    <fields>
+        <label><!-- CB Budget Year Label --></label>
+        <name>cb5__CBBudgetYearLabel__c</name>
+    </fields>
+    <fields>
+        <label><!-- CB Division Label --></label>
+        <name>cb5__CBDivisionLabel__c</name>
+    </fields>
+    <fields>
+        <label><!-- CB Period Label --></label>
+        <name>cb5__CBPeriodLabel__c</name>
+    </fields>
+    <fields>
+        <label><!-- CB Variable 1 Label --></label>
+        <name>cb5__CBVariable1Label__c</name>
+    </fields>
+    <fields>
+        <label><!-- CB Variable 2 Label --></label>
+        <name>cb5__CBVariable2Label__c</name>
+    </fields>
+    <fields>
+        <label><!-- CB Variable 3 Label --></label>
+        <name>cb5__CBVariable3Label__c</name>
+    </fields>
+    <fields>
+        <label><!-- CB Variable 4 Label --></label>
+        <name>cb5__CBVariable4Label__c</name>
+    </fields>
+    <fields>
+        <label><!-- CB Variable 5 Label --></label>
+        <name>cb5__CBVariable5Label__c</name>
+    </fields>
+    <fields>
+        <label><!-- Calculation Rule Deleting Job Size --></label>
+        <name>cb5__CalculationRuleDeletingJobSize__c</name>
+    </fields>
+    <fields>
+        <label><!-- Calculation Rule Job Size --></label>
+        <name>cb5__CalculationRuleJobSize__c</name>
+    </fields>
+    <fields>
+        <label><!-- Modeling Rule Deleting Mode Job Size --></label>
+        <name>cb5__DeletingModeJobSize__c</name>
+    </fields>
+    <fields>
+        <label><!-- Description --></label>
+        <name>cb5__Description__c</name>
+    </fields>
+    <fields>
+        <label><!-- Display BLM Navigation --></label>
+        <name>cb5__DisplayBLMNavigation__c</name>
+    </fields>
+    <fields>
+        <label><!-- Formula Is Using --></label>
+        <name>cb5__FormulaIsUsing__c</name>
+    </fields>
+    <fields>
+        <label><!-- Init Wizard Job Threshold --></label>
+        <name>cb5__InitWizardJobThreshold__c</name>
+    </fields>
+    <fields>
+        <label><!-- Mapping Process Job Size --></label>
+        <name>cb5__MappingProcessJobSize__c</name>
+    </fields>
+    <fields>
+        <label><!-- Max Number Of Displayed Lines --></label>
+        <name>cb5__MaxNumberOfDisplayedLines__c</name>
+    </fields>
+    <fields>
+        <label><!-- Modeling Rule Job Size --></label>
+        <name>cb5__ModelingRuleJobSize__c</name>
+    </fields>
+    <fields>
+        <label><!-- Modeling Rule Mass Update Job Size --></label>
+        <name>cb5__ModelingRuleMassUpdateJobSize__c</name>
+    </fields>
+    <fields>
+        <label><!-- Modeling Rule Period Shift Job Size --></label>
+        <name>cb5__ModelingRulePeriodShiftJobSize__c</name>
+    </fields>
+    <fields>
+        <label><!-- Modeling Rule Zeroing Job Size --></label>
+        <name>cb5__ModelingRuleZeroingJobSize__c</name>
+    </fields>
+    <fields>
+        <label><!-- Amount of latest NFL to load --></label>
+        <name>cb5__NFLDefaultListSize__c</name>
+    </fields>
+    <fields>
+        <label><!-- Non Financial Libraries Is Using --></label>
+        <name>cb5__NonFinancialLibIsUsing__c</name>
+    </fields>
+    <fields>
+        <label><!-- Only Formula Analytics Is Applicable --></label>
+        <name>cb5__OnlyFormulaAnalytics__c</name>
+    </fields>
+    <fields>
+        <label><!-- Period Validation Enabled --></label>
+        <name>cb5__PeriodValidationEnabled__c</name>
+    </fields>
+    <fields>
+        <label><!-- Scenario Is Using --></label>
+        <name>cb5__ScenarioIsUsing__c</name>
+    </fields>
+    <fields>
+        <label><!-- Show Summary In Tab --></label>
+        <name>cb5__ShowSummaryInTab__c</name>
+    </fields>
+    <fields>
+        <label><!-- ThemeJSON --></label>
+        <name>cb5__ThemeJSON__c</name>
+    </fields>
+    <fields>
+        <label><!-- Topdown Mode Is Using --></label>
+        <name>cb5__TopdownModeIsUsing__c</name>
+    </fields>
+    <fields>
+        <help><!-- Accuracy tolerance for topdown approach --></help>
+        <label><!-- Topdown Tolerance --></label>
+        <name>cb5__TopdownTolerance__c</name>
+    </fields>
+    <layouts>
+        <layout>CB Org Variable Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Labeling --></label>
+            <section>Labeling</section>
+        </sections>
+        <sections>
+            <label><!-- Styles --></label>
+            <section>Styles</section>
+        </sections>
+    </layouts>
+</CustomObjectTranslation>
