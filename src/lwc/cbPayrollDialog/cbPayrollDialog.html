@@ -1,0 +1,75 @@
+<template>
+
+	<section role="dialog" tabindex="-1" aria-modal="true" aria-labelledby="modal-heading-01"
+			 class="slds-modal slds-fade-in-open slds-modal_large">
+		<div class="slds-modal__container">
+			<button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
+					onclick={closeDialog}>
+				<svg class="slds-button__icon slds-button__icon_large" aria-hidden="true">
+					<use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#close"></use>
+				</svg>
+				<span class="slds-assistive-text">Cancel and close</span>
+			</button>
+			<template lwc:if={readyToRender}>
+				<div class="slds-modal__header">
+					<h1 id="modal-heading-01" class="slds-modal__title slds-hyphenate">{employee.Name}</h1>
+				</div>
+				<div class="slds-modal__content slds-p-around_medium" >
+					<lightning-layout>
+						<lightning-layout-item>
+							<lightning-input value={employee.Name} label='Name' name="Name"
+											 onchange={handleChange}></lightning-input>
+						</lightning-layout-item>
+						<lightning-layout-item>
+							<lightning-record-edit-form object-api-name="cb5__CBVariable5__c">
+								<lightning-input-field
+										field-name="CBDivision__c"
+										value={employee.CBDivision__c}
+										name="CBDivision__c"
+										onchange={handleChange}
+								></lightning-input-field>
+							</lightning-record-edit-form>
+						</lightning-layout-item>
+						<lightning-layout-item>
+							<lightning-record-edit-form object-api-name="cb5__CBVariable5__c">
+								<lightning-input-field
+										field-name="Position__c"
+										name="Position__c"
+										value={employee.Position__c}
+										onchange={handleChange}
+								></lightning-input-field>
+							</lightning-record-edit-form>
+						</lightning-layout-item>
+
+					</lightning-layout>
+					<template lwc:if={showCategories}>
+						Categories
+						<template for:each={categories} for:item="cat">
+							<div key={cat} class="slds-box">
+								<c-cb-category record-id={cat.Id} refresh-parent={refreshDialog}></c-cb-category>
+							</div>
+						</template>
+					</template>
+				</div>
+			</template>
+			<template lwc:else>
+				<!-- SPINNER -->
+				<c-cb-spinner show={showSpinner}></c-cb-spinner>
+				<!-- SPINNER -->
+			</template>
+			<div class="slds-modal__footer">
+				<lightning-button label="Cancel" onclick={closeDialog}>
+
+				</lightning-button>
+				<lightning-button label="Add Category" icon-name="utility:add" onclick={addCategory}>
+
+				</lightning-button>
+				<lightning-button label="Save" onclick={saveEmployee} variant="success">
+
+				</lightning-button>
+			</div>
+		</div>
+	</section>
+	<div class="slds-backdrop slds-backdrop_open"></div>
+
+</template>

@@ -1,0 +1,108 @@
+<template>
+
+	<lightning-card title="CB Payroll Express">
+
+		<lightning-layout slot="actions">
+			<lightning-layout-item>
+				<div class="slds-m-top_large">
+					<lightning-button label="Refresh" icon-name="utility:refresh" onclick={connectedCallback}
+									  variant="brand"></lightning-button>
+				</div>
+			</lightning-layout-item>
+			<lightning-layout-item>
+				<lightning-select
+						name="division"
+						label="Division"
+						value={params.divisionId}
+						options={divisionSO}
+						onchange={handleChange}
+				></lightning-select>
+			</lightning-layout-item>
+			<lightning-layout-item>
+				<lightning-select
+						name="budgetYear"
+						label="Budget Year"
+						value={params.budgetYearId}
+						options={budgetYearSO}
+						onchange={handleChange}
+				></lightning-select>
+			</lightning-layout-item>
+			<lightning-layout-item>
+				<lightning-select
+						name="employee"
+						label="Employee"
+						value={params.employeeId}
+						options={employeeSO}
+						onchange={handleChange}
+				></lightning-select>
+			</lightning-layout-item>
+
+
+		</lightning-layout>
+
+
+		<div class="slds-m-around_small slds-p-horizontal_small"
+			 style="height: 500px;">
+
+			<!-- SPINNER -->
+			<c-cb-spinner show={showSpinner}></c-cb-spinner>
+			<!-- SPINNER -->
+
+			<template lwc:if={readyToRender}>
+
+				<table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered">
+					<thead>
+					<tr>
+						<th>Name</th>
+						<th>Division</th>
+						<th>Position</th>
+						<template for:each={categoryTypes} for:item="type">
+							<th key={type}>
+								{type}
+							</th>
+						</template>
+						<th>Yearly Total</th>
+					</tr>
+					</thead>
+
+					<tbody>
+					<template for:each={employees} for:item="emp">
+						<tr key={emp}>
+							<td>
+								<div onclick={openEmployeeDialog} id={emp.Id}>
+									{emp.Name}
+								</div>
+							</td>
+							<td>{emp.divisionName}</td>
+							<td>{emp.positionName}</td>
+							<template for:each={emp.categoryValues} for:item="val">
+								<td key={val}>
+									<lightning-input type="number" label="" value={val} formatter="currency"
+													 variant="label-hidden" disabled
+													 step="0.01"></lightning-input>
+								</td>
+							</template>
+							<td>
+								<lightning-input type="number" label="" value={emp.total} formatter="currency"
+												 variant="label-hidden" disabled
+												 step="0.01"></lightning-input>
+							</td>
+						</tr>
+					</template>
+					</tbody>
+
+				</table>
+
+			</template>
+
+		</div>
+
+	</lightning-card>
+
+	<template if:true={showEmployeeDialog}>
+		<c-cb-payroll-dialog record-id={selectedEmployeeId} budget-year-id={params.budgetYearId}
+							 close-dialog-function={closeEmployeeDialog}></c-cb-payroll-dialog>
+	</template>
+
+
+</template>

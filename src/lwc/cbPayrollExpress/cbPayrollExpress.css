@@ -1,0 +1,33 @@
+.excelHeader {
+    background-color: #f4f4f4;
+    overflow: hidden;
+    text-align: center !important;
+    font-size: larger;
+}
+
+.exTable {
+    table-layout: fixed;
+    display: block;
+}
+
+.exTable td {
+    overflow: hidden !important;
+    text-overflow: ellipsis;
+    border: 1px solid #cecece;
+}
+
+.exTable tr:first-child td {
+    background: white;
+    position: sticky;
+    top: 0;
+    box-shadow: 0 2px 2px -1px rgba(0, 0, 0, 0.4);
+    border: 1px solid #cecece;
+}
+
+td div {
+    overflow: hidden;
+}
+
+.exTable, th, td {
+    border: 1px solid;
+}
