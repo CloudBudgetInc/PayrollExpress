@@ -1,0 +1,9 @@
+.total {
+    font-weight: bold;
+}
+
+.nfl-index {
+    position: absolute;
+    z-index: 9;
+    left: 15px;
+}

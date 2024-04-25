@@ -62,6 +62,10 @@
         <fields>NAME</fields>
         <relatedList>cb5__CBCalculationRule__c.cb5__CBBudgetYear__c</relatedList>
     </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <relatedList>CBCategory__c.CBBudgetYear__c</relatedList>
+    </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>
     <showHighlightsPanel>false</showHighlightsPanel>
     <showInteractionLogPanel>false</showInteractionLogPanel>

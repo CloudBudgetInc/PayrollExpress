@@ -24,6 +24,18 @@ OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 public with sharing class CBEmployeeSelector {
 
-
+	public static List<cb5__CBVariable5__c> getEmployees(Map<String, String> params) {
+		String byId = params.get('budgetYearId');
+		String divisionId = params.get('divisionId');
+		String employeeId = params.get('employeeId');
+		String s = 'SELECT Id,Name,CBDivision__c,CBDivision__r.Name,Position__c, ' +
+				'(SELECT Id,Name,Type__c,Value__c FROM CBCategories__r WHERE CBBudgetYear__c = \'' + byId + '\' ORDER BY Index__c) ';
+		String f = ' FROM  cb5__CBVariable5__c ';
+		String w = ' WHERE Name != null '; // CBBudgetYear__c = \'' + byId + '\'
+		if (divisionId != null) w += ' AND CBDivision__c = \'' + divisionId + '\' ';
+		if (employeeId != null) w += ' AND Id = \'' + employeeId + '\' ';
+		String o = ' ORDER BY Name ';
+		return Database.query(s + f + w + o);
+	}
 
 }

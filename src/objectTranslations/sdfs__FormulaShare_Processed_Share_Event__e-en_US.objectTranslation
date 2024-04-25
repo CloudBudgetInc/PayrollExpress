@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fields>
+        <label><!-- Access Level --></label>
+        <name>sdfs__Access_Level__c</name>
+    </fields>
+    <fields>
+        <label><!-- Assessment Type Override --></label>
+        <name>sdfs__Assessment_Type_Override__c</name>
+    </fields>
+    <fields>
+        <label><!-- Context Detail --></label>
+        <name>sdfs__Context_Detail__c</name>
+    </fields>
+    <fields>
+        <label><!-- Existing Sharing On Record --></label>
+        <name>sdfs__Existing_Sharing_On_Record__c</name>
+    </fields>
+    <fields>
+        <label><!-- Failed Status Reason --></label>
+        <name>sdfs__Failed_Status_Reason__c</name>
+    </fields>
+    <fields>
+        <label><!-- FormulaShare Rule Name --></label>
+        <name>sdfs__FormulaShare_Rule_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Object --></label>
+        <name>sdfs__Object__c</name>
+    </fields>
+    <fields>
+        <label><!-- Operation --></label>
+        <name>sdfs__Operation__c</name>
+    </fields>
+    <fields>
+        <label><!-- Processed Date / Time --></label>
+        <name>sdfs__Processed_Date_Time__c</name>
+    </fields>
+    <fields>
+        <label><!-- Record Id --></label>
+        <name>sdfs__Record_Id__c</name>
+    </fields>
+    <fields>
+        <label><!-- Related Batch Log Id --></label>
+        <name>sdfs__Related_Batch_Log_Id__c</name>
+    </fields>
+    <fields>
+        <label><!-- Share Id --></label>
+        <name>sdfs__Share_Id__c</name>
+    </fields>
+    <fields>
+        <label><!-- Share Key --></label>
+        <name>sdfs__Share_Key__c</name>
+    </fields>
+    <fields>
+        <label><!-- Share With --></label>
+        <name>sdfs__Share_With__c</name>
+    </fields>
+    <fields>
+        <label><!-- Shared To Field Type --></label>
+        <name>sdfs__Shared_To_Field_Type__c</name>
+    </fields>
+    <fields>
+        <label><!-- Shared to Id --></label>
+        <name>sdfs__Shared_to_Id__c</name>
+    </fields>
+    <fields>
+        <label><!-- Sharing Reason --></label>
+        <name>sdfs__Sharing_Reason__c</name>
+    </fields>
+    <fields>
+        <label><!-- Status --></label>
+        <name>sdfs__Status__c</name>
+    </fields>
+</CustomObjectTranslation>

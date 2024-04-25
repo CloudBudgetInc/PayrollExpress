@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fields>
+        <label><!-- FormulaShare Targeted Job Name --></label>
+        <name>sdfs__FormulaShare_Targeted_Job_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Last Run Completed --></label>
+        <name>sdfs__Last_Run_Completed__c</name>
+    </fields>
+    <fields>
+        <label><!-- Last Run Started --></label>
+        <name>sdfs__Last_Run_Started__c</name>
+    </fields>
+    <fields>
+        <label><!-- Next Scheduled Run --></label>
+        <name>sdfs__Next_Scheduled_Run__c</name>
+    </fields>
+</CustomObjectTranslation>

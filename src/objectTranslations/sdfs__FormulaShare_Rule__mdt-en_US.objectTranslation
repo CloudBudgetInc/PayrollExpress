@@ -1,0 +1,456 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fields>
+        <label><!-- Access For Owner Of Teams User Is On --></label>
+        <name>sdfs__Access_For_Owner_Of_Teams_User_Is_On__c</name>
+        <picklistValues>
+            <masterLabel>Edit</masterLabel>
+            <translation><!-- Edit --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>None</masterLabel>
+            <translation><!-- None --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Read</masterLabel>
+            <translation><!-- Read --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Access For Team Comembers --></label>
+        <name>sdfs__Access_For_Team_Comembers__c</name>
+        <picklistValues>
+            <masterLabel>Account</masterLabel>
+            <translation><!-- Account --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Case</masterLabel>
+            <translation><!-- Case --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Contact</masterLabel>
+            <translation><!-- Contact --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Edit</masterLabel>
+            <translation><!-- Edit --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>None</masterLabel>
+            <translation><!-- None --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Opportunity</masterLabel>
+            <translation><!-- Opportunity --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Read</masterLabel>
+            <translation><!-- Read --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Access For Team --></label>
+        <name>sdfs__Access_For_Team__c</name>
+        <picklistValues>
+            <masterLabel>Account</masterLabel>
+            <translation><!-- Account --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Case</masterLabel>
+            <translation><!-- Case --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Contact</masterLabel>
+            <translation><!-- Contact --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Edit</masterLabel>
+            <translation><!-- Edit --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>None</masterLabel>
+            <translation><!-- None --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Opportunity</masterLabel>
+            <translation><!-- Opportunity --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Read</masterLabel>
+            <translation><!-- Read --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Access Level --></label>
+        <name>sdfs__Access_Level__c</name>
+        <picklistValues>
+            <masterLabel>Edit</masterLabel>
+            <translation><!-- Edit --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Read</masterLabel>
+            <translation><!-- Read --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Varies</masterLabel>
+            <translation><!-- Varies --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Active --></label>
+        <name>sdfs__Active__c</name>
+    </fields>
+    <fields>
+        <label><!-- Case Access --></label>
+        <name>sdfs__Case_Access__c</name>
+        <picklistValues>
+            <masterLabel>Edit</masterLabel>
+            <translation><!-- Edit --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>None</masterLabel>
+            <translation><!-- None --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Read</masterLabel>
+            <translation><!-- Read --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- If sharing is based on a child object (or an object related to this child object), indicates the field on the child object which is a lookup to the object to be shared --></help>
+        <label><!-- Related Object 1 Lookup to Shared Object --></label>
+        <name>sdfs__Child_Object_Lookup_Field__c</name>
+    </fields>
+    <fields>
+        <help><!-- If sharing is based on the contents of a field in a related object, indicates the type of data in the shared to field (id or name) on the related object controlling this sharing --></help>
+        <label><!-- Controlling Object Shared To Field Type --></label>
+        <name>sdfs__Child_Object_Shared_To_Field_Type__c</name>
+        <picklistValues>
+            <masterLabel>Id</masterLabel>
+            <translation><!-- Id --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Name</masterLabel>
+            <translation><!-- Name --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- If sharing is based on the contents of a field in an object related directly to the shared object, indicates the field which contains the user, role or group that the shared object should be shared with --></help>
+        <label><!-- Related Object 1 Shared To Field --></label>
+        <name>sdfs__Child_Object_Shared_To_Field__c</name>
+    </fields>
+    <fields>
+        <help><!-- If sharing is based on the contents of a field in a related child object, indicate the child object here --></help>
+        <label><!-- Related Object 1 --></label>
+        <name>sdfs__Child_Object_with_Shared_To_Field__c</name>
+    </fields>
+    <fields>
+        <label><!-- Contact Access --></label>
+        <name>sdfs__Contact_Access__c</name>
+        <picklistValues>
+            <masterLabel>ControlledByParent</masterLabel>
+            <translation><!-- ControlledByParent --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Edit</masterLabel>
+            <translation><!-- Edit --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>None</masterLabel>
+            <translation><!-- None --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Read</masterLabel>
+            <translation><!-- Read --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Description --></label>
+        <name>sdfs__Description__c</name>
+    </fields>
+    <fields>
+        <label><!-- Metadata Mapping Match Field --></label>
+        <name>sdfs__Metadata_Mapping_Match_Field__c</name>
+    </fields>
+    <fields>
+        <label><!-- Metadata Mapping Shared To Field --></label>
+        <name>sdfs__Metadata_Mapping_Shared_To_Field__c</name>
+    </fields>
+    <fields>
+        <label><!-- Metadata Mapping Type --></label>
+        <name>sdfs__Metadata_Mapping_Type__c</name>
+    </fields>
+    <fields>
+        <label><!-- Object Shared --></label>
+        <name>sdfs__Object_Shared__c</name>
+    </fields>
+    <fields>
+        <label><!-- Opportunity Access --></label>
+        <name>sdfs__Opportunity_Access__c</name>
+        <picklistValues>
+            <masterLabel>Edit</masterLabel>
+            <translation><!-- Edit --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>None</masterLabel>
+            <translation><!-- None --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Read</masterLabel>
+            <translation><!-- Read --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Related Object 10 Lookup from RO9 --></label>
+        <name>sdfs__Related_Object_10_Lookup_from_RO9__c</name>
+    </fields>
+    <fields>
+        <label><!-- Related Object 10 Lookup to RO9 --></label>
+        <name>sdfs__Related_Object_10_Lookup_to_RO9__c</name>
+    </fields>
+    <fields>
+        <label><!-- Related Object 10 Shared To Field --></label>
+        <name>sdfs__Related_Object_10_Shared_To_Field__c</name>
+    </fields>
+    <fields>
+        <label><!-- Related Object 10 --></label>
+        <name>sdfs__Related_Object_10__c</name>
+    </fields>
+    <fields>
+        <label><!-- Related Object 1 Lookup from Shared Obj --></label>
+        <name>sdfs__Related_Object_1_Lookup_from_Shared_Obj__c</name>
+    </fields>
+    <fields>
+        <label><!-- Related Object 2 Lookup from RO1 --></label>
+        <name>sdfs__Related_Object_2_Lookup_from_RO1__c</name>
+    </fields>
+    <fields>
+        <label><!-- Related Object 2 Lookup to RO1 --></label>
+        <name>sdfs__Related_Object_2_Lookup_to_RO1__c</name>
+    </fields>
+    <fields>
+        <label><!-- Related Object 2 Shared To Field --></label>
+        <name>sdfs__Related_Object_2_Shared_To_Field__c</name>
+    </fields>
+    <fields>
+        <label><!-- Related Object 2 --></label>
+        <name>sdfs__Related_Object_2__c</name>
+    </fields>
+    <fields>
+        <label><!-- Related Object 3 Lookup from RO2 --></label>
+        <name>sdfs__Related_Object_3_Lookup_from_RO2__c</name>
+    </fields>
+    <fields>
+        <label><!-- Related Object 3 Lookup to RO2 --></label>
+        <name>sdfs__Related_Object_3_Lookup_to_RO2__c</name>
+    </fields>
+    <fields>
+        <label><!-- Related Object 3 Shared To Field --></label>
+        <name>sdfs__Related_Object_3_Shared_To_Field__c</name>
+    </fields>
+    <fields>
+        <label><!-- Related Object 3 --></label>
+        <name>sdfs__Related_Object_3__c</name>
+    </fields>
+    <fields>
+        <label><!-- Related Object 4 Lookup from RO3 --></label>
+        <name>sdfs__Related_Object_4_Lookup_from_RO3__c</name>
+    </fields>
+    <fields>
+        <label><!-- Related Object 4 Lookup to RO3 --></label>
+        <name>sdfs__Related_Object_4_Lookup_to_RO3__c</name>
+    </fields>
+    <fields>
+        <label><!-- Related Object 4 Shared To Field --></label>
+        <name>sdfs__Related_Object_4_Shared_To_Field__c</name>
+    </fields>
+    <fields>
+        <label><!-- Related Object 4 --></label>
+        <name>sdfs__Related_Object_4__c</name>
+    </fields>
+    <fields>
+        <label><!-- Related Object 5 Lookup from RO4 --></label>
+        <name>sdfs__Related_Object_5_Lookup_from_RO4__c</name>
+    </fields>
+    <fields>
+        <label><!-- Related Object 5 Lookup to RO4 --></label>
+        <name>sdfs__Related_Object_5_Lookup_to_RO4__c</name>
+    </fields>
+    <fields>
+        <label><!-- Related Object 5 Shared To Field --></label>
+        <name>sdfs__Related_Object_5_Shared_To_Field__c</name>
+    </fields>
+    <fields>
+        <label><!-- Related Object 5 --></label>
+        <name>sdfs__Related_Object_5__c</name>
+    </fields>
+    <fields>
+        <label><!-- Related Object 6 Lookup from RO5 --></label>
+        <name>sdfs__Related_Object_6_Lookup_from_RO5__c</name>
+    </fields>
+    <fields>
+        <label><!-- Related Object 6 Lookup to RO5 --></label>
+        <name>sdfs__Related_Object_6_Lookup_to_RO5__c</name>
+    </fields>
+    <fields>
+        <label><!-- Related Object 6 Shared To Field --></label>
+        <name>sdfs__Related_Object_6_Shared_To_Field__c</name>
+    </fields>
+    <fields>
+        <label><!-- Related Object 6 --></label>
+        <name>sdfs__Related_Object_6__c</name>
+    </fields>
+    <fields>
+        <label><!-- Related Object 7 Lookup from RO6 --></label>
+        <name>sdfs__Related_Object_7_Lookup_from_RO6__c</name>
+    </fields>
+    <fields>
+        <label><!-- Related Object 7 Lookup to RO6 --></label>
+        <name>sdfs__Related_Object_7_Lookup_to_RO6__c</name>
+    </fields>
+    <fields>
+        <label><!-- Related Object 7 Shared To Field --></label>
+        <name>sdfs__Related_Object_7_Shared_To_Field__c</name>
+    </fields>
+    <fields>
+        <label><!-- Related Object 7 --></label>
+        <name>sdfs__Related_Object_7__c</name>
+    </fields>
+    <fields>
+        <label><!-- Related Object 8 Lookup from RO7 --></label>
+        <name>sdfs__Related_Object_8_Lookup_from_RO7__c</name>
+    </fields>
+    <fields>
+        <label><!-- Related Object 8 Lookup to RO7 --></label>
+        <name>sdfs__Related_Object_8_Lookup_to_RO7__c</name>
+    </fields>
+    <fields>
+        <label><!-- Related Object 8 Shared To Field --></label>
+        <name>sdfs__Related_Object_8_Shared_To_Field__c</name>
+    </fields>
+    <fields>
+        <label><!-- Related Object 8 --></label>
+        <name>sdfs__Related_Object_8__c</name>
+    </fields>
+    <fields>
+        <label><!-- Related Object 9 Lookup from RO8 --></label>
+        <name>sdfs__Related_Object_9_Lookup_from_RO8__c</name>
+    </fields>
+    <fields>
+        <label><!-- Related Object 9 Lookup to RO8 --></label>
+        <name>sdfs__Related_Object_9_Lookup_to_RO8__c</name>
+    </fields>
+    <fields>
+        <label><!-- Related Object 9 Shared To Field --></label>
+        <name>sdfs__Related_Object_9_Shared_To_Field__c</name>
+    </fields>
+    <fields>
+        <label><!-- Related Object 9 --></label>
+        <name>sdfs__Related_Object_9__c</name>
+    </fields>
+    <fields>
+        <label><!-- Share With --></label>
+        <name>sdfs__Share_With__c</name>
+        <picklistValues>
+            <masterLabel>Default Account Teams of Users</masterLabel>
+            <translation><!-- Default Account Teams of Users --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Default Opportunity Teams of Users</masterLabel>
+            <translation><!-- Default Opportunity Teams of Users --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Managers of Users</masterLabel>
+            <translation><!-- Managers of Users --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Public Groups</masterLabel>
+            <translation><!-- Public Groups --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Roles</masterLabel>
+            <translation><!-- Roles --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Roles and Internal Subordinates</masterLabel>
+            <translation><!-- Roles and Internal Subordinates --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Roles, Internal and Portal Subordinates</masterLabel>
+            <translation><!-- Roles, Internal and Portal Subordinates --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Users</masterLabel>
+            <translation><!-- Users --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Users and Manager Subordinates</masterLabel>
+            <translation><!-- Users and Manager Subordinates --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- &quot;Shared To Field&quot; can contain either the 15 or 18 digit record id of the user, group or role to find the right users (select &quot;Id&quot; if so), or can contain the relevant Role Name or Group Name (select &quot;Name&quot; if this is the case) --></help>
+        <label><!-- Shared To Field Type --></label>
+        <name>sdfs__Shared_To_Field_Type__c</name>
+        <picklistValues>
+            <masterLabel>Id</masterLabel>
+            <translation><!-- Id --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Name</masterLabel>
+            <translation><!-- Name --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- The field on the shared object which contains the name or id of the entity this rule should share to --></help>
+        <label><!-- Shared To Field --></label>
+        <name>sdfs__Shared_To__c</name>
+    </fields>
+    <fields>
+        <label><!-- Sharing Reason --></label>
+        <name>sdfs__Sharing_Reason__c</name>
+    </fields>
+    <layouts>
+        <layout>FormulaShare Rule Layout</layout>
+        <sections>
+            <label><!-- Account Related Object Sharing (complete when shared object is Account) --></label>
+            <section>Account Related Object Sharing (complete when shared object is Account)</section>
+        </sections>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Field on shared record with user, role or group --></label>
+            <section>Field on shared record with user, role or group</section>
+        </sections>
+        <sections>
+            <label><!-- Path to field on related object with user, role or group --></label>
+            <section>Path to field on related object with user, role or group</section>
+        </sections>
+        <sections>
+            <label><!-- Sharing required --></label>
+            <section>Sharing required</section>
+        </sections>
+    </layouts>
+    <validationRules>
+        <errorMessage><!-- Case Access must be set for account sharing. Select a level of sharing which is the same or more permissive than the org-wide default for cases --></errorMessage>
+        <name>sdfs__Account_related_object_access_case</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Contact Access must be set for account sharing. If organisation-wide default sharing for Contact is &quot;Controlled by Parent&quot; select this as the option, otherwise select a level of sharing which is the same or more permissive than the org-wide default --></errorMessage>
+        <name>sdfs__Account_related_object_access_contact</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Opportunity Access must be set for account sharing. Select a level of sharing which is the same or more permissive than the org-wide default for opportunities --></errorMessage>
+        <name>sdfs__Account_related_object_access_opps</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Sharing reasons must be appended with &quot;__c&quot; --></errorMessage>
+        <name>sdfs__Sharing_reason_must_end_underscores_c</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Rules sharing to users must be based on a field returning the user Id (either a lookup or formula field) --></errorMessage>
+        <name>sdfs__Users_must_be_shared_to_by_Id_field</name>
+    </validationRules>
+</CustomObjectTranslation>

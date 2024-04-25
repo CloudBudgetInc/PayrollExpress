@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Settings for object-specific configuration</description>
+    <fields>
+        <fullName>sdfs__Allow_Recursive_Reassessment__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <description>If ticked, sharing reassessments for a record in the same transaction can take place up to the specified number of times</description>
+        <externalId>false</externalId>
+        <fieldManageability>DeveloperControlled</fieldManageability>
+        <label>Allow Recursive Assessment</label>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>sdfs__Maximum_Recursive_Reassessments__c</fullName>
+        <deprecated>false</deprecated>
+        <description>The maximum number of times per transaction a record of this type can be assessed for sharing changes</description>
+        <externalId>false</externalId>
+        <fieldManageability>DeveloperControlled</fieldManageability>
+        <label>Maximum Recursive Reassessments</label>
+        <precision>2</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>sdfs__Retain_Sharing_After_Record_Changes__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <description>If ticked, sharing on this object won&apos;t be removed if it&apos;s not within the current scope of any rules. For standard objects, this will any include manual/apex sharing not applied by FormulaShare</description>
+        <externalId>false</externalId>
+        <fieldManageability>DeveloperControlled</fieldManageability>
+        <label>Retain Sharing After Record Changes</label>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>sdfs__Sharing_Calculation_Schedule__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <fieldManageability>DeveloperControlled</fieldManageability>
+        <label>Sharing Calculation Schedule</label>
+        <required>false</required>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Full Recalculation on Batch</fullName>
+                    <default>true</default>
+                    <label>Full Recalculation on Batch</label>
+                </value>
+                <value>
+                    <fullName>Targeted Calculation Jobs Only</fullName>
+                    <default>false</default>
+                    <label>Targeted Calculation Jobs Only</label>
+                </value>
+                <value>
+                    <fullName>Targeted Calculation Jobs and Full Recalculation on Batch</fullName>
+                    <default>false</default>
+                    <label>Targeted Calculation Jobs and Full Recalculation on Batch</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>sdfs__Standard_Object_to_Remove_Sharing__c</fullName>
+        <deprecated>false</deprecated>
+        <description>API Name relates to legacy usage of this field - both standard and custom objects can be selected and settings are now controlled by other fields on these custom metadata records</description>
+        <externalId>false</externalId>
+        <fieldManageability>DeveloperControlled</fieldManageability>
+        <label>Object</label>
+        <referenceTo>EntityDefinition</referenceTo>
+        <relationshipLabel>FormulaShare Object Settings</relationshipLabel>
+        <relationshipName>FormulaShare_Std_Objcts_to_Remove_Shares</relationshipName>
+        <required>false</required>
+        <type>MetadataRelationship</type>
+        <unique>false</unique>
+    </fields>
+    <label>FormulaShare Object Settings</label>
+    <listViews>
+        <fullName>sdfs__All_Settings</fullName>
+        <columns>MasterLabel</columns>
+        <columns>DeveloperName</columns>
+        <columns>sdfs__Standard_Object_to_Remove_Sharing__c</columns>
+        <columns>sdfs__Retain_Sharing_After_Record_Changes__c</columns>
+        <columns>sdfs__Allow_Recursive_Reassessment__c</columns>
+        <columns>sdfs__Maximum_Recursive_Reassessments__c</columns>
+        <columns>sdfs__Sharing_Calculation_Schedule__c</columns>
+        <columns>NamespacePrefix</columns>
+        <filterScope>Everything</filterScope>
+        <label>All Settings</label>
+    </listViews>
+    <pluralLabel>FormulaShare Object Settings</pluralLabel>
+    <visibility>Public</visibility>
+</CustomObject>

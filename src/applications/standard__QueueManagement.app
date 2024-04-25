@@ -6,5 +6,6 @@
     <label>Queue Management</label>
     <navType>Standard</navType>
     <tabs>standard-Location</tabs>
+    <tabs>CBCategory__c</tabs>
     <uiType>Lightning</uiType>
 </CustomApplication>

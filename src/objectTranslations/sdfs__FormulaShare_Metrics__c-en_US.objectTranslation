@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fields>
+        <label><!-- Context --></label>
+        <name>sdfs__Context__c</name>
+    </fields>
+    <fields>
+        <label><!-- Failed Inserts --></label>
+        <name>sdfs__Failed_Inserts__c</name>
+    </fields>
+    <fields>
+        <label><!-- FormulaShare Rule Name --></label>
+        <name>sdfs__FormulaShare_Rule_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Last Batch Run --></label>
+        <name>sdfs__Last_Batch_Run__c</name>
+        <relationshipLabel><!-- FormulaShare Metrics --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Last Failed Batch --></label>
+        <name>sdfs__Last_Failed_Batch__c</name>
+    </fields>
+    <fields>
+        <label><!-- Last Failed Operation --></label>
+        <name>sdfs__Last_Failed_Operation__c</name>
+    </fields>
+    <fields>
+        <label><!-- Last Successful Batch --></label>
+        <name>sdfs__Last_Successful_Batch__c</name>
+    </fields>
+    <fields>
+        <label><!-- Last Successful Operation --></label>
+        <name>sdfs__Last_Successful_Operation__c</name>
+    </fields>
+    <fields>
+        <label><!-- Object --></label>
+        <name>sdfs__Object__c</name>
+    </fields>
+    <fields>
+        <label><!-- Successful Inserts --></label>
+        <name>sdfs__Successful_Inserts__c</name>
+    </fields>
+</CustomObjectTranslation>

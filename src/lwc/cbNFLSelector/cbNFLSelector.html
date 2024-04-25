@@ -1,0 +1,82 @@
+<template>
+
+	<section role="dialog" tabindex="-1" aria-modal="true" aria-labelledby="modal-heading-01"
+			 class="slds-modal slds-fade-in-open slds-modal_small">
+		<div class="slds-modal__container">
+			<button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
+					onclick={closeDialog}>
+				<svg class="slds-button__icon slds-button__icon_large" aria-hidden="true">
+					<use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#close"></use>
+				</svg>
+				<span class="slds-assistive-text">Cancel and close</span>
+			</button>
+			<template lwc:if={readyToRender}>
+				<div class="slds-modal__header">
+					<h1 id="modal-heading-01" class="slds-modal__title slds-hyphenate">Non Financial Libraries
+						Catalog</h1>
+				</div>
+				<div class="slds-modal__content slds-p-around_medium">
+					<p style="font-weight: bold; padding-bottom: 10px;">Recent Non Financial Libraries</p>
+
+					<lightning-layout>
+						<lightning-layout-item size="6">
+							<template for:each={recentNFLs} for:item="nfl">
+								<div key={nfl} class="slds-box" id={nfl.Id} onmouseover={renderNFLHint}
+									 onclick={applyRecentNFL}
+									 onmouseleave={hideNFLHint}> {nfl.Name}
+									({nfl.cb5__LayerTitle__c})
+								</div>
+							</template>
+						</lightning-layout-item>
+						<lightning-layout-item size="6">
+							<p style="font-weight: bold; padding-bottom: 10px;">Search</p>
+							<lightning-record-edit-form object-api-name="CBCategory__c">
+								<lightning-input-field
+										name="CBNFL1__c"
+										field-name="NFL1__c"
+										value={selectedNFL}
+										onchange={handleSearchedNFL}
+								></lightning-input-field>
+							</lightning-record-edit-form>
+						</lightning-layout-item>
+					</lightning-layout>
+
+
+					<template lwc:if={showNFLHint}>
+						<div style="position: absolute; top:3%; background-color: #ffffff; opacity: 0.8;"
+							 class="slds-box">
+							<p style="font-weight: bold; padding-bottom: 10px;">{NFLHint.Name}</p>
+							<lightning-layout>
+								<template for:each={NFLHint.cb5__NonFinancialItems__r} for:item="item">
+									<lightning-layout-item key={item}>
+										<lightning-input type="number" label={item.cb5__CBPeriod__r.Name}
+														 value={item.cb5__Value__c}
+														 formatter="currency" name={item.Id}
+														 disabled class="dec"
+														 step="0.01"></lightning-input>
+									</lightning-layout-item>
+								</template>
+							</lightning-layout>
+						</div>
+
+
+					</template>
+				</div>
+
+
+			</template>
+			<template lwc:else>
+				<!-- SPINNER -->
+				<c-cb-spinner show={showSpinner}></c-cb-spinner>
+				<!-- SPINNER -->
+			</template>
+			<div class="slds-modal__footer">
+				<lightning-button label="Cancel" onclick={closeDialog}>
+
+				</lightning-button>
+			</div>
+		</div>
+	</section>
+	<div class="slds-backdrop slds-backdrop_open"></div>
+
+</template>

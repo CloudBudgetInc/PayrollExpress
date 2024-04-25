@@ -60,6 +60,14 @@
         <fields>NAME</fields>
         <relatedList>cb5__CBInvoice__c.cb5__CBDivision__c</relatedList>
     </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <relatedList>CBCategory__c.CBDivision__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <relatedList>cb5__CBVariable5__c.CBDivision__c</relatedList>
+    </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>
     <showHighlightsPanel>false</showHighlightsPanel>
     <showInteractionLogPanel>false</showInteractionLogPanel>

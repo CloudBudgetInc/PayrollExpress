@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fields>
+        <label><!-- Error --></label>
+        <name>sdfs__Error__c</name>
+    </fields>
+    <fields>
+        <label><!-- Successful --></label>
+        <name>sdfs__Successful__c</name>
+    </fields>
+    <fields>
+        <label><!-- Type --></label>
+        <name>sdfs__Type__c</name>
+    </fields>
+</CustomObjectTranslation>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fields>
+        <label><!-- Allow Recursive Assessment --></label>
+        <name>sdfs__Allow_Recursive_Reassessment__c</name>
+    </fields>
+    <fields>
+        <label><!-- Maximum Recursive Reassessments --></label>
+        <name>sdfs__Maximum_Recursive_Reassessments__c</name>
+    </fields>
+    <fields>
+        <label><!-- Retain Sharing After Record Changes --></label>
+        <name>sdfs__Retain_Sharing_After_Record_Changes__c</name>
+    </fields>
+    <fields>
+        <label><!-- Sharing Calculation Schedule --></label>
+        <name>sdfs__Sharing_Calculation_Schedule__c</name>
+        <picklistValues>
+            <masterLabel>Full Recalculation on Batch</masterLabel>
+            <translation><!-- Full Recalculation on Batch --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Targeted Calculation Jobs Only</masterLabel>
+            <translation><!-- Targeted Calculation Jobs Only --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Targeted Calculation Jobs and Full Recalculation on Batch</masterLabel>
+            <translation><!-- Targeted Calculation Jobs and Full Recalculation on Batch --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Object --></label>
+        <name>sdfs__Standard_Object_to_Remove_Sharing__c</name>
+    </fields>
+    <layouts>
+        <layout>FormulaShare Std Object to Remove Shares Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+</CustomObjectTranslation>

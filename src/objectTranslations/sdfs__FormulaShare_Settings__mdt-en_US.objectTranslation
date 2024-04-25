@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fields>
+        <help><!-- Only one group of settings can be acitve at once --></help>
+        <label><!-- Active --></label>
+        <name>sdfs__Active__c</name>
+    </fields>
+    <fields>
+        <label><!-- All Record Errors Report Name --></label>
+        <name>sdfs__All_Record_Errors_Report_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- All Record Logs Report Name --></label>
+        <name>sdfs__All_Record_Logs_Report_Name__c</name>
+    </fields>
+    <fields>
+        <help><!-- Allows sharing to be assessed for the same record more than once in a transaction. This may be required for real time reassessment in complex scenarios with cascading updates, but could contribute to performance issues so should be disabled unless it&apos;s needed --></help>
+        <label><!-- Allow Recursive Reassessment --></label>
+        <name>sdfs__Allow_Recursive_Reassessment__c</name>
+    </fields>
+    <fields>
+        <label><!-- Batch Errors Report Name --></label>
+        <name>sdfs__Batch_Errors_Report_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Days to Retain Batch Logs --></label>
+        <name>sdfs__Days_to_Retain_Batch_Logs__c</name>
+    </fields>
+    <fields>
+        <label><!-- Days to Retain Record Logs --></label>
+        <name>sdfs__Days_to_Retain_Record_Logs__c</name>
+    </fields>
+    <fields>
+        <label><!-- Log Processing Events --></label>
+        <name>sdfs__Log_Processing_Events__c</name>
+        <picklistValues>
+            <masterLabel>All</masterLabel>
+            <translation><!-- All --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>None</masterLabel>
+            <translation><!-- None --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Logs Removal Batch Size --></label>
+        <name>sdfs__Logs_Removal_Batch_Size__c</name>
+    </fields>
+    <fields>
+        <label><!-- Max Parallel Targeted Job Submissions --></label>
+        <name>sdfs__Max_Parallel_Targeted_Job_Submissions__c</name>
+    </fields>
+    <fields>
+        <label><!-- Rec. Errors Since Last Batch Report Name --></label>
+        <name>sdfs__Rec_Errors_Since_Last_Batch_Report_Name__c</name>
+    </fields>
+    <fields>
+        <help><!-- Number of records processed in each scheduled recalculation. Setting to 200 will ensure processing is as fast as possible --></help>
+        <label><!-- Recalculation Batch Size --></label>
+        <name>sdfs__Recalculation_Batch_Size__c</name>
+    </fields>
+    <fields>
+        <label><!-- Record Logs Since Last Batch Report Name --></label>
+        <name>sdfs__Record_Logs_Since_Last_Batch_Report_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Targeted Jobs Assessment Interval --></label>
+        <name>sdfs__Targeted_Jobs_Assessment_Interval__c</name>
+    </fields>
+    <fields>
+        <label><!-- Trigger Helper Class Override --></label>
+        <name>sdfs__Trigger_Helper_Class_Override__c</name>
+    </fields>
+    <layouts>
+        <layout>FormulaShare Settings Layout</layout>
+        <sections>
+            <label><!-- Batch and Trigger Configuration --></label>
+            <section>Batch and Trigger Configuration</section>
+        </sections>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Logging and Record Retention --></label>
+            <section>Logging and Record Retention</section>
+        </sections>
+        <sections>
+            <label><!-- Parameterised Reports --></label>
+            <section>Parameterised Reports</section>
+        </sections>
+    </layouts>
+</CustomObjectTranslation>

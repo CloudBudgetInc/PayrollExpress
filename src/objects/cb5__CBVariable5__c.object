@@ -155,6 +155,42 @@
     <enableStreamingApi>true</enableStreamingApi>
     <externalSharingModel>ReadWrite</externalSharingModel>
     <fields>
+        <fullName>CBDivision__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>CB Division</label>
+        <referenceTo>cb5__CBDivision__c</referenceTo>
+        <relationshipLabel>CB Variables 5</relationshipLabel>
+        <relationshipName>CB_Variables_5</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Position__c</fullName>
+        <externalId>false</externalId>
+        <label>Position</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Manager</fullName>
+                    <default>false</default>
+                    <label>Manager</label>
+                </value>
+                <value>
+                    <fullName>Consultant</fullName>
+                    <default>false</default>
+                    <label>Consultant</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
         <fullName>cb5__Code__c</fullName>
         <deprecated>false</deprecated>
         <externalId>false</externalId>
@@ -188,6 +224,9 @@
     <label>CB Variable 5</label>
     <listViews>
         <fullName>cb5__All</fullName>
+        <columns>NAME</columns>
+        <columns>CBDivision__c</columns>
+        <columns>Position__c</columns>
         <filterScope>Everything</filterScope>
         <label>All</label>
     </listViews>

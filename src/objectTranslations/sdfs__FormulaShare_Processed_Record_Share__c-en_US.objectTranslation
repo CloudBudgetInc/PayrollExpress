@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fields>
+        <label><!-- Access Level --></label>
+        <name>sdfs__Access_Level__c</name>
+    </fields>
+    <fields>
+        <label><!-- FormulaShare Rule Name --></label>
+        <name>sdfs__FormulaShare_Rule_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Operation --></label>
+        <name>sdfs__Operation__c</name>
+        <picklistValues>
+            <masterLabel>Delete</masterLabel>
+            <translation><!-- Delete --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Insert</masterLabel>
+            <translation><!-- Insert --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Processed Record --></label>
+        <name>sdfs__Processed_Record__c</name>
+        <relationshipLabel><!-- Processed Record Shares --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Share With --></label>
+        <name>sdfs__Share_With__c</name>
+    </fields>
+    <fields>
+        <label><!-- Shared to Role or Group --></label>
+        <name>sdfs__Shared_to_Role_or_Group__c</name>
+    </fields>
+    <fields>
+        <label><!-- Shared to User --></label>
+        <name>sdfs__Shared_to_User__c</name>
+        <relationshipLabel><!-- FormulaShare Processed Record Shares --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Sharing Reason --></label>
+        <name>sdfs__Sharing_Reason__c</name>
+    </fields>
+    <fields>
+        <label><!-- Status Reason --></label>
+        <name>sdfs__Status_Reason__c</name>
+    </fields>
+    <fields>
+        <label><!-- Status --></label>
+        <name>sdfs__Status__c</name>
+        <picklistValues>
+            <masterLabel>Error</masterLabel>
+            <translation><!-- Error --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Success</masterLabel>
+            <translation><!-- Success --></translation>
+        </picklistValues>
+    </fields>
+    <layouts>
+        <layout>FormulaShare Processed Record Share Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Sharing Context --></label>
+            <section>Sharing Context</section>
+        </sections>
+    </layouts>
+</CustomObjectTranslation>

@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fields>
+        <label><!-- All Deleted Sharing Successful --></label>
+        <name>sdfs__All_Deleted_Sharing_Successful__c</name>
+    </fields>
+    <fields>
+        <label><!-- All Inserted Sharing Successful --></label>
+        <name>sdfs__All_Inserted_Sharing_Successful__c</name>
+    </fields>
+    <fields>
+        <help><!-- Ture if all FormulaShare sharing for this record has been removed. When this is the case, total records shared tracked in FormulaShare usage will be reduced by 1 --></help>
+        <label><!-- All Sharing Removed --></label>
+        <name>sdfs__All_Sharing_Removed__c</name>
+    </fields>
+    <fields>
+        <label><!-- Assessment Type Override --></label>
+        <name>sdfs__Assessment_Type_Override__c</name>
+    </fields>
+    <fields>
+        <help><!-- &quot;Full Assessment&quot; indicates all rules were evaluated for this record during sharing assessment, and is the default mode for batch assessment, as well as being an option for assessment triggered by flows. &quot;Transaction Safe&quot; means only rules which could be evaluated without querying and iterating collections of records were applied, and is the default for triggers and an option in flows --></help>
+        <label><!-- Assessment Type --></label>
+        <name>sdfs__Assessment_Type__c</name>
+    </fields>
+    <fields>
+        <label><!-- Batch Log Id --></label>
+        <name>sdfs__Batch_Log_Id__c</name>
+    </fields>
+    <fields>
+        <label><!-- Context Detail --></label>
+        <name>sdfs__Context_Detail__c</name>
+    </fields>
+    <fields>
+        <label><!-- Context --></label>
+        <name>sdfs__Context__c</name>
+    </fields>
+    <fields>
+        <label><!-- FormulaShare Batch Log --></label>
+        <name>sdfs__FormulaShare_Batch_Log__c</name>
+        <relationshipLabel><!-- FormulaShare Record Logs --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Rule in Batch (Required for Test Class) --></label>
+        <name>sdfs__FormulaShare_Rule_in_Batch__c</name>
+        <relationshipLabel><!-- FormulaShare Record Logs --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Number Processed Record Share Deletes --></label>
+        <name>sdfs__Number_Processed_Record_Share_Deletes__c</name>
+    </fields>
+    <fields>
+        <label><!-- Number Processed Record Share Inserts --></label>
+        <name>sdfs__Number_Processed_Record_Share_Inserts__c</name>
+    </fields>
+    <fields>
+        <label><!-- Number Successful Record Share Deletes --></label>
+        <name>sdfs__Number_Successful_Record_Share_Deletes__c</name>
+    </fields>
+    <fields>
+        <label><!-- Number Successful Record Share Inserts --></label>
+        <name>sdfs__Number_Successful_Record_Share_Inserts__c</name>
+    </fields>
+    <fields>
+        <label><!-- Object --></label>
+        <name>sdfs__Object__c</name>
+    </fields>
+    <fields>
+        <label><!-- Processed Date / Time Epoch --></label>
+        <name>sdfs__Processed_Date_Time_Epoch__c</name>
+    </fields>
+    <fields>
+        <label><!-- Processed Date / Time --></label>
+        <name>sdfs__Processed_Date_Time__c</name>
+    </fields>
+    <fields>
+        <label><!-- Record Id --></label>
+        <name>sdfs__Record_Id__c</name>
+    </fields>
+    <fields>
+        <label><!-- Record --></label>
+        <name>sdfs__Record__c</name>
+    </fields>
+    <fields>
+        <help><!-- True if the sharing created is the first FormulaShare sharing detected on this record. When this is the case, total records shared tracked in FormulaShare usage will be increased by 1 --></help>
+        <label><!-- Sharing Applied for First Time --></label>
+        <name>sdfs__Sharing_Applied_for_First_Time__c</name>
+    </fields>
+    <layouts>
+        <layout>FormulaShare Processed Record Layout</layout>
+        <sections>
+            <label><!-- Contribution to FormulaShare Usage --></label>
+            <section>Contribution to FormulaShare Usage</section>
+        </sections>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Status --></label>
+            <section>Status</section>
+        </sections>
+    </layouts>
+    <sharingReasons>
+        <label><!-- FormulaShare Record Log Share --></label>
+        <name>sdfs__FormulaShare_Record_Log_Share</name>
+    </sharingReasons>
+</CustomObjectTranslation>

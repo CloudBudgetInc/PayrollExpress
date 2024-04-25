@@ -96,4 +96,12 @@
         <name>cb5__CloudBudget</name>
         <type>CustomApplication</type>
     </appMenuItems>
+    <appMenuItems>
+        <name>sdfs__FormulaShare_Classic</name>
+        <type>CustomApplication</type>
+    </appMenuItems>
+    <appMenuItems>
+        <name>sdfs__FormulaShare</name>
+        <type>CustomApplication</type>
+    </appMenuItems>
 </AppMenu>
