@@ -50,7 +50,7 @@
 
 			<template lwc:if={readyToRender}>
 
-				<table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered">
+				<table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_striped">
 					<thead>
 					<tr>
 						<th>Name</th>
@@ -58,10 +58,12 @@
 						<th>Position</th>
 						<template for:each={categoryTypes} for:item="type">
 							<th key={type}>
-								{type}
+								<div class="dec">{type}</div>
 							</th>
 						</template>
-						<th>Yearly Total</th>
+						<th>
+							<div class="dec">Yearly Total</div>
+						</th>
 					</tr>
 					</thead>
 
@@ -76,16 +78,14 @@
 							<td>{emp.divisionName}</td>
 							<td>{emp.positionName}</td>
 							<template for:each={emp.categoryValues} for:item="val">
-								<td key={val}>
-									<lightning-input type="number" label="" value={val} formatter="currency"
-													 variant="label-hidden" disabled
-													 step="0.01"></lightning-input>
+								<td key={val} class="dec">
+									<lightning-formatted-number value={val} format-style="currency"
+																currency-code="USD"></lightning-formatted-number>
 								</td>
 							</template>
-							<td>
-								<lightning-input type="number" label="" value={emp.total} formatter="currency"
-												 variant="label-hidden" disabled
-												 step="0.01"></lightning-input>
+							<td class="dec">
+								<lightning-formatted-number value={emp.total} format-style="currency" class="dec"
+															currency-code="USD"></lightning-formatted-number>
 							</td>
 						</tr>
 					</template>

@@ -17,8 +17,8 @@ const calculateResult = () => {
 			Object.keys(args).forEach(key => updatedFormula = updatedFormula.replace(new RegExp(key, 'g'), args[key]));
 			item.cb5__Value__c = eval(updatedFormula);
 		} catch (e) {
-			item.cb5__Value__c = -1;
-			_message('error', 'Formula Error: ' + e);
+			item.cb5__Value__c = 0;
+			console.error('Formula Error: ' + e);
 		}
 	});
 };

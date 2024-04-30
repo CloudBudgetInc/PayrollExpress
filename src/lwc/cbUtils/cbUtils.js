@@ -20,7 +20,8 @@ const _isFakeId = (Id) => _isInvalid(Id) ? false : Id.startsWith(FAKE_STR);
  */
 const _applyDecStyle = () => {
 	const inputAlignCenter = document.createElement('style');
-	inputAlignCenter.innerText = `.dec input{ text-align: right!important; padding-left: 3px!important; padding-right: 3px!important }`;
+	inputAlignCenter.innerText = `.dec { text-align: right!important; } 
+	.dec input { text-align: right!important; padding-left: 3px!important; padding-right: 3px!important }`;
 	document.body.appendChild(inputAlignCenter);
 };
 

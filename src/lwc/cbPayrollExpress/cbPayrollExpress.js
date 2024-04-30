@@ -24,10 +24,9 @@ OF THE POSSIBILITY OF SUCH DAMAGE.
 
  */
 import {LightningElement, track} from 'lwc';
-import {_message, _parseServerError} from "c/cbUtils";
+import {_message, _parseServerError, _applyDecStyle} from "c/cbUtils";
 import getEmployeesServer from '@salesforce/apex/CBPayrollExpressPageController.getEmployeesServer';
 import getAnalyticsServer from '@salesforce/apex/CBPayrollExpressPageController.getAnalyticsServer';
-import getCbCubesServer from '@salesforce/apex/CBPayrollExpressPageController.getCbCubesServer';
 
 export default class CBPayrollExpress extends LightningElement {
 
@@ -46,23 +45,16 @@ export default class CBPayrollExpress extends LightningElement {
 
 
 	async connectedCallback() {
-		this.getCubes();
-		/*this.showSpinner = true;
+		this.showSpinner = true;
 		this.readyToRender = false;
+		_applyDecStyle();
 		await this.getAnalytics();
 		await this.getListOfEmployee();
 		this.getCategoryTypes();
 		this.populateEmployeeRecords();
 		this.showSpinner = false;
-		this.readyToRender = true;*/
-	};
+		this.readyToRender = true;
 
-	getCubes = async () => {
-		const start = performance.now();
-		const cubes = await getCbCubesServer();
-		const end = performance.now();
-		console.log(`Execution time: ${end - start} ms`);
-		console.log(`Cubes size: ${cubes.length}`);
 	};
 
 	getAnalytics = async () => {

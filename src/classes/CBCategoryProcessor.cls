@@ -30,6 +30,8 @@ public with sharing class CBCategoryProcessor {
 	private static String employeeId;
 	private static Set<String> budgetLineIdsToDelete = new Set<String>();
 	private static List<BudgetLineWrapper> budgetLineWrappersToInsert = new List<BudgetLineWrapper>();
+	private static List<cb5__CBNonFinancialLibrary__c> NFLToUpdate = new List<cb5__CBNonFinancialLibrary__c>();
+	private static List<cb5__CBNonFinancialItem__c> NFLItemsToUpdate = new List<cb5__CBNonFinancialItem__c>();
 	private static List<CBCategory__c> categoriesToUpdate = new List<CBCategory__c>();
 	private static List<cb5__CBPeriod__c> periods {
 		get {
@@ -49,39 +51,51 @@ public with sharing class CBCategoryProcessor {
 		set;
 	}
 
+	private static List<CBCategory__c> categories {
+		get {
+			if (categories == null) {
+				Map<String, String> params = new Map<String, String>{
+						'budgetYearId' => budgetYearId,
+						'employeeId' => employeeId
+				};
+				categories = CBCategorySelector.getCategories(params);
+			}
+			return categories;
+		}
+		set;
+	}
+
+	private static Map<String, cb5__CBNonFinancialLibrary__c> resultNFLMap { // key is category Id, value is result NFL
+		get {
+			if (resultNFLMap == null) {
+				resultNFLMap = new Map<String, cb5__CBNonFinancialLibrary__c>();
+				List<String> resultNFLIds = new List<String>();
+				for (CBCategory__c c : categories) resultNFLIds.add(c.NFLResult__c);
+				for (cb5__CBNonFinancialLibrary__c resultNFL : CBPayrollExpressPageController.getNFLServer(resultNFLIds, budgetYearId)) {
+					for (CBCategory__c c : categories) {
+						if (c.NFLResult__c == resultNFL.Id) resultNFLMap.put(c.Id, resultNFL);
+					}
+				}
+			}
+			return resultNFLMap;
+		}
+		set;
+	}
+
 	public static void updateEmployeeCategories(String empId, String byId) {
 		budgetYearId = byId;
 		employeeId = empId;
-		Map<String, String> params = new Map<String, String>{
-				'budgetYearId' => byId,
-				'employeeId' => empId
-		};
-		for (CBCategory__c category : CBCategorySelector.getCategories(params)) {
-			System.debug('IN PROGRESS:' + category.Name);
+		for (CBCategory__c category : categories) {
 			List<cb5__CBAmount__c> calculatedAmounts = updateBudgetLineAndReturnCalculatedAmounts(category);
 			updateCategoryResult(category, calculatedAmounts);
 		}
 		finalizeDLS();
 	}
 
-	private static void updateCategoryResult(CBCategory__c category, List<cb5__CBAmount__c> calculatedAmounts) {
-		cb5__CBNonFinancialLibrary__c resultNFL = CBPayrollExpressPageController.getNFLServer(new List<String>{
-				category.NFLResult__c
-		}, budgetYearId) [0];
-		category.Value__c = 0;
-		for (Integer i = 0; i < calculatedAmounts.size(); i++) {
-			resultNFL.cb5__NonFinancialItems__r[i].cb5__Value__c = calculatedAmounts[i].cb5__Value__c;
-			category.Value__c += calculatedAmounts[i].cb5__Value__c;
-		}
-		update resultNFL.cb5__NonFinancialItems__r;
-		categoriesToUpdate.add(category);
-	}
-
 	private static List<cb5__CBAmount__c> updateBudgetLineAndReturnCalculatedAmounts(CBCategory__c category) {
-		budgetLineIdsToDelete.add(category.Id);
-
 		BudgetLineWrapper blw = new BudgetLineWrapper();
-		budgetLineWrappersToInsert.add(blw);
+		budgetLineIdsToDelete.add(category.Id); // old budget line must be deleted
+		budgetLineWrappersToInsert.add(blw); // new budget line must be added
 		cb5__CBBudgetLine__c bl = new cb5__CBBudgetLine__c(cb5__CBBudgetYear__c = budgetYearId);
 		bl.cb5__CBDivision__c = category.CBDivision__c != null ? category.CBDivision__c : employee.CBDivision__c;
 		bl.Name = (employee.Name + ' (' + category.Name + ')').left(80);
@@ -94,27 +108,63 @@ public with sharing class CBCategoryProcessor {
 
 		List<cb5__CBAmount__c> amounts = new List<cb5__CBAmount__c>();
 		for (cb5__CBPeriod__c period : periods) amounts.add(new cb5__CBAmount__c(cb5__Value__c = 0, cb5__CBPeriod__c = period.Id));
+
+		if (category.NFL1__c == null || category.Formula__c == null) { // category without formula
+			cb5__CBNonFinancialLibrary__c resultNFL = resultNFLMap.get(category.Id);
+			for (Integer i = 0; i < resultNFL.cb5__NonFinancialItems__r.size(); i++) {
+				amounts[i].cb5__Value__c = resultNFL.cb5__NonFinancialItems__r[i].cb5__Value__c;
+			}
+			blw.amounts = amounts;
+			return blw.amounts;
+		}
+
 		List<String> nflIds = new List<String>();
 		if (category.NFL1__c != null) nflIds.add(category.NFL1__c);
 		if (category.NFL2__c != null) nflIds.add(category.NFL2__c);
 		if (category.NFL3__c != null) nflIds.add(category.NFL3__c);
 		if (category.NFL4__c != null) nflIds.add(category.NFL4__c);
 		if (category.NFL5__c != null) nflIds.add(category.NFL5__c);
-		List<List<cb5__CBNonFinancialItem__c>> sourceLines = new List<List<cb5__CBNonFinancialItem__c>>();
+		List<List<cb5__CBNonFinancialItem__c>> sourceNFLItems = new List<List<cb5__CBNonFinancialItem__c>>();
 		List<cb5__CBNonFinancialLibrary__c> libraries = CBPayrollExpressPageController.getNFLServer(nflIds, budgetYearId);
 		List<cb5__CBNonFinancialLibrary__c> sortedLibraries = new List<cb5__CBNonFinancialLibrary__c>();
-		for (String nflID : nflIds) {
+		for (String nflID : nflIds) { // sort libraries #1...#2...#3.....
 			for (cb5__CBNonFinancialLibrary__c nfl : libraries) if (nfl.Id == nflID) sortedLibraries.add(nfl);
 		}
-		for (cb5__CBNonFinancialLibrary__c nfl : sortedLibraries) sourceLines.add(nfl.cb5__NonFinancialItems__r);
-		blw.amounts = cb5.CBFormulaService.calculateFormulaTotals(amounts, sourceLines, category.Formula__c);
+		for (cb5__CBNonFinancialLibrary__c nfl : sortedLibraries) sourceNFLItems.add(nfl.cb5__NonFinancialItems__r);
+		try {
+			blw.amounts = cb5.CBFormulaService.calculateFormulaTotals(amounts, sourceNFLItems, category.Formula__c);
+		} catch (Exception e) {
+			System.debug('Calculation Error: ' + e);
+		}
 		return blw.amounts;
+	}
+
+	/**
+	 * Each category has Result NFL with calculated amounts
+	 * This method updates numbers in result NFL and a total value for a category
+	 *
+	 * @param category processed category
+	 * @param calculatedAmounts calculated amounts
+	 */
+	private static void updateCategoryResult(CBCategory__c category, List<cb5__CBAmount__c> calculatedAmounts) {
+		cb5__CBNonFinancialLibrary__c resultNFL = resultNFLMap.get(category.Id);
+		category.Value__c = 0;
+		for (Integer i = 0; i < calculatedAmounts.size(); i++) {
+			resultNFL.cb5__NonFinancialItems__r[i].cb5__Value__c = calculatedAmounts[i].cb5__Value__c;
+			category.Value__c += calculatedAmounts[i].cb5__Value__c;
+		}
+		resultNFL.Name = 'Category Result ' + category.Name;
+		NFLToUpdate.add(resultNFL);
+		NFLItemsToUpdate.addAll(resultNFL.cb5__NonFinancialItems__r);
+		categoriesToUpdate.add(category);
 	}
 
 	private static void finalizeDLS() {
 		delete [SELECT Id FROM cb5__CBBudgetLine__c WHERE CBCategory__c IN:budgetLineIdsToDelete];
 		new BudgetLineWrapper().insertBudgetLineWrappers(budgetLineWrappersToInsert);
 		update categoriesToUpdate;
+		update NFLItemsToUpdate;
+		update NFLToUpdate;
 	}
 
 	/**

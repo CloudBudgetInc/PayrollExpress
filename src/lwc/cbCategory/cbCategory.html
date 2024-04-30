@@ -97,9 +97,9 @@
 
 					<lightning-layout>
 						<template for:each={nfl.cb5__NonFinancialItems__r} for:item="item">
-							<lightning-layout-item key={item}>
+							<lightning-layout-item key={item} class="dec">
 								<lightning-input type="number" value={item.cb5__Value__c}
-												 formatter="currency" variant="label-hidden" class="dec"
+												 formatter="currency" variant="label-hidden"
 												 disabled
 												 step="0.01"></lightning-input>
 							</lightning-layout-item>

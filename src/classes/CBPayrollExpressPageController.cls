@@ -126,9 +126,43 @@ public class CBPayrollExpressPageController {
 		return [SELECT Id,Name,cb5__LayerTitle__c FROM cb5__CBNonFinancialLibrary__c WHERE Id IN:recentNFLs];
 	}
 
-	@AuraEnabled (cacheable=true)
-	public static List<cb5__CBCube__c> getCbCubesServer() {
-		return [SELECT Id, cb5__CBDivision__c,cb5__CBPeriod__c,cb5__Actual__c,cb5__Budget__c,cb5__CBVariable1__c,NAme FROM cb5__CBCube__c];
+	@AuraEnabled
+	public static List<cb5__CBNonFinancialLibrary__c> getTaxThresholdsServer() {
+		return [
+				SELECT Id,Name,NFL1__c,NFL2__c,NFL3__c,NFL4__c,NFL5__c,
+						NFL1__r.From__c,NFL1__r.Till__c,NFL1__r.cb5__SingleValue__c,
+						NFL2__r.From__c,NFL2__r.Till__c,NFL2__r.cb5__SingleValue__c,
+						NFL3__r.From__c,NFL3__r.Till__c,NFL3__r.cb5__SingleValue__c,
+						NFL4__r.From__c,NFL4__r.Till__c,NFL4__r.cb5__SingleValue__c,
+						NFL5__r.From__c,NFL5__r.Till__c,NFL5__r.cb5__SingleValue__c
+				FROM cb5__CBNonFinancialLibrary__c
+				WHERE cb5__Type__c = 'Tax'
+				LIMIT 100
+		];
 	}
+
+	@AuraEnabled
+	public static void saveTaxThresholdsServer(cb5__CBNonFinancialLibrary__c nflLib) {
+		upsert nflLib;
+	}
+
+	@AuraEnabled
+	public static void saveNFLibraryServer(cb5__CBNonFinancialLibrary__c library) {
+		List<cb5__CBNonFinancialItem__c> items = [SELECT Id FROM cb5__CBNonFinancialItem__c WHERE cb5__NonFinancialLibrary__c = :library.Id];
+		for (cb5__CBNonFinancialItem__c item : items) item.cb5__Value__c = library.cb5__SingleValue__c;
+		upsert library;
+	}
+
+	@AuraEnabled
+	public static void addTaxThresholdServer() {
+		List<cb5__CBLayer__c> layers = [SELECT Id FROM cb5__CBLayer__c WHERE Name LIKE '%tax%'];
+		insert new cb5__CBNonFinancialLibrary__c(Name = 'New', cb5__Type__c = 'Tax', cb5__Layer__c = layers[0].Id);
+	}
+
+	@AuraEnabled
+	public static void deleteTaxThresholdServer(String nflId) {
+		Database.delete(nflId);
+	}
+
 
 }

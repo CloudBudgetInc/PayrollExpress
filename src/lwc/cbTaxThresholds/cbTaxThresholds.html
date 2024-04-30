@@ -1,0 +1,244 @@
+<template>
+
+
+	<lightning-card title="CB Tax Thresholds">
+
+		<lightning-layout slot="actions">
+			<lightning-layout-item>
+				<div class="slds-m-top_large">
+					<lightning-button label="Add" icon-name="utility:add" onclick={addTaxThreshold}></lightning-button>
+					<lightning-button label="Refresh" icon-name="utility:refresh" onclick={connectedCallback}
+									  variant="brand"></lightning-button>
+				</div>
+			</lightning-layout-item>
+
+		</lightning-layout>
+
+
+		<div class="slds-m-around_small slds-p-horizontal_small"
+			 style=" overflow-y: auto;">
+
+			<!-- SPINNER -->
+			<c-cb-spinner show={showSpinner}></c-cb-spinner>
+			<!-- SPINNER -->
+
+			<template lwc:if={readyToRender}>
+
+				<table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_striped">
+					<thead>
+					<tr>
+						<th></th>
+						<th>Thresholds</th>
+						<th>Details</th>
+					</tr>
+					</thead>
+
+					<tbody>
+					<template for:each={taxThresholds} for:item="tt">
+						<tr key={tt}>
+							<td>
+								<div id={tt.Id}>
+
+									<lightning-input value={tt.Name}
+													 name={tt.Id} onfocusout={handleTTChange}
+													 label="Name"></lightning-input>
+									<div style="position: absolute; bottom:10px;">
+										<lightning-button label="Delete" icon-name="utility:delete"
+														  variant="destructive"
+														  value={tt.Id}
+														  onclick={deleteTaxThreshold}></lightning-button>
+									</div>
+								</div>
+							</td>
+							<td>
+								<lightning-record-edit-form object-api-name="cb5__CBNonFinancialLibrary__c">
+									<lightning-input-field
+											name="NFL1__c"
+											label={tt.Id}
+											field-name="NFL1__c"
+											value={tt.NFL1__c}
+											onchange={handleAnalyticChange}
+									></lightning-input-field>
+								</lightning-record-edit-form>
+								<lightning-record-edit-form object-api-name="cb5__CBNonFinancialLibrary__c">
+									<lightning-input-field
+											name="NFL2__c"
+											label={tt.Id}
+											field-name="NFL2__c"
+											value={tt.NFL2__c}
+											onchange={handleAnalyticChange}
+									></lightning-input-field>
+								</lightning-record-edit-form>
+								<lightning-record-edit-form object-api-name="cb5__CBNonFinancialLibrary__c">
+									<lightning-input-field
+											name="NFL3__c"
+											label={tt.Id}
+											field-name="NFL3__c"
+											value={tt.NFL3__c}
+											onchange={handleAnalyticChange}
+									></lightning-input-field>
+								</lightning-record-edit-form>
+								<lightning-record-edit-form object-api-name="cb5__CBNonFinancialLibrary__c">
+									<lightning-input-field
+											name="NFL4__c"
+											label={tt.Id}
+											field-name="NFL4__c"
+											value={tt.NFL4__c}
+											onchange={handleAnalyticChange}
+									></lightning-input-field>
+								</lightning-record-edit-form>
+								<lightning-record-edit-form object-api-name="cb5__CBNonFinancialLibrary__c">
+									<lightning-input-field
+											name="NFL5__c"
+											label={tt.Id}
+											field-name="NFL5__c"
+											value={tt.NFL5__c}
+											onchange={handleAnalyticChange}
+									></lightning-input-field>
+								</lightning-record-edit-form>
+							</td>
+							<td style="vertical-align: top !important;">
+
+								<template lwc:if={tt.NFL1__r}>
+									<div class="">
+										<lightning-layout>
+											<lightning-layout-item>
+												<lightning-input value={tt.NFL1__r.From__c} class="dec"
+																 formatter="currency" step="0.01" type="number"
+																 name={tt.NFL1__c} onfocusout={handleParamsChange}
+																 label="From"></lightning-input>
+											</lightning-layout-item>
+											<lightning-layout-item>
+												<lightning-input value={tt.NFL1__r.Till__c} class="dec"
+																 formatter="currency" step="0.01" type="number"
+																 name={tt.NFL1__c} onfocusout={handleParamsChange}
+																 label="Till"></lightning-input>
+											</lightning-layout-item>
+											<lightning-layout-item>
+												<lightning-input value={tt.NFL1__r.cb5__SingleValue__c} class="dec"
+																 name={tt.NFL1__c} onfocusout={handleParamsChange}
+																 label="Value"></lightning-input>
+											</lightning-layout-item>
+										</lightning-layout>
+									</div>
+								</template>
+
+								<template lwc:if={tt.NFL2__r}>
+									<div class="slds-p-top_x-small">
+										<lightning-layout>
+											<lightning-layout-item>
+												<lightning-input value={tt.NFL2__r.From__c} class="dec"
+																 formatter="currency" step="0.01" type="number"
+																 name={tt.NFL2__c} onfocusout={handleParamsChange}
+																 label="From"></lightning-input>
+											</lightning-layout-item>
+											<lightning-layout-item>
+												<lightning-input value={tt.NFL2__r.Till__c} class="dec"
+																 formatter="currency" step="0.01" type="number"
+																 name={tt.NFL2__c} onfocusout={handleParamsChange}
+																 label="Till"></lightning-input>
+											</lightning-layout-item>
+											<lightning-layout-item>
+												<lightning-input value={tt.NFL2__r.cb5__SingleValue__c} class="dec"
+																 name={tt.NFL2__c} onfocusout={handleParamsChange}
+																 label="Value"></lightning-input>
+											</lightning-layout-item>
+										</lightning-layout>
+									</div>
+								</template>
+
+								<template lwc:if={tt.NFL3__r}>
+									<div class="slds-p-top_x-small">
+										<lightning-layout>
+											<lightning-layout-item>
+												<lightning-input value={tt.NFL3__r.From__c} class="dec"
+																 formatter="currency" step="0.01" type="number"
+																 name={tt.NFL3__c} onfocusout={handleParamsChange}
+																 label="From"></lightning-input>
+											</lightning-layout-item>
+											<lightning-layout-item>
+												<lightning-input value={tt.NFL3__r.Till__c} class="dec"
+																 formatter="currency" step="0.01" type="number"
+																 name={tt.NFL3__c} onfocusout={handleParamsChange}
+																 label="Till"></lightning-input>
+											</lightning-layout-item>
+											<lightning-layout-item>
+												<lightning-input value={tt.NFL3__r.cb5__SingleValue__c} class="dec"
+																 name={tt.NFL3__c} onfocusout={handleParamsChange}
+																 label="Value"></lightning-input>
+											</lightning-layout-item>
+										</lightning-layout>
+									</div>
+								</template>
+
+								<template lwc:if={tt.NFL4__r}>
+									<div class="slds-p-top_x-small">
+										<lightning-layout>
+											<lightning-layout-item>
+												<lightning-input value={tt.NFL4__r.From__c} class="dec"
+																 formatter="currency" step="0.01" type="number"
+																 name={tt.NFL4__c} onfocusout={handleParamsChange}
+																 label="From"></lightning-input>
+											</lightning-layout-item>
+											<lightning-layout-item>
+												<lightning-input value={tt.NFL4__r.Till__c} class="dec"
+																 name={tt.NFL4__c} onfocusout={handleParamsChange}
+																 formatter="currency" step="0.01" type="number"
+																 label="Till"></lightning-input>
+											</lightning-layout-item>
+											<lightning-layout-item>
+												<lightning-input value={tt.NFL4__r.cb5__SingleValue__c} class="dec"
+																 name={tt.NFL4__c} onfocusout={handleParamsChange}
+																 label="Value"></lightning-input>
+											</lightning-layout-item>
+										</lightning-layout>
+									</div>
+								</template>
+
+								<template lwc:if={tt.NFL5__r}>
+									<div class="slds-p-top_x-small">
+										<lightning-layout>
+											<lightning-layout-item>
+												<lightning-input value={tt.NFL5__r.From__c} class="dec"
+																 name={tt.NFL5__c} onfocusout={handleParamsChange}
+																 formatter="currency" step="0.01" type="number"
+
+																 label="From"></lightning-input>
+											</lightning-layout-item>
+											<lightning-layout-item>
+												<lightning-input value={tt.NFL5__r.Till__c} class="dec"
+																 name={tt.NFL5__c}
+																 formatter="currency" step="0.01" type="number"
+																 onfocusout={handleParamsChange}
+																 label="Till"></lightning-input>
+											</lightning-layout-item>
+											<lightning-layout-item>
+												<lightning-input value={tt.NFL5__r.cb5__SingleValue__c} class="dec"
+																 name={tt.NFL5__c}
+																 onfocusout={handleParamsChange}
+																 label="Value"></lightning-input>
+
+											</lightning-layout-item>
+										</lightning-layout>
+									</div>
+								</template>
+
+							</td>
+						</tr>
+					</template>
+					</tbody>
+
+				</table>
+
+			</template>
+
+		</div>
+
+		<!-- SPINNER -->
+		<c-cb-spinner show={showSpinner}></c-cb-spinner>
+		<!-- SPINNER -->
+
+	</lightning-card>
+
+
+</template>
