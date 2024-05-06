@@ -85,7 +85,9 @@ export default class CBPayrollDialog extends LightningElement {
 	saveEmployee = async () => {
 		this.showSpinner = true;
 		this.readyToRender = false;
-		await saveEmployeeServer({employee: this.employee})
+		const params = {employee: this.employee, byId: this.budgetYearId};
+		console.log('PARAMS: ' + JSON.stringify(params));
+		await saveEmployeeServer({employee: this.employee, byId: this.budgetYearId})
 			.then(employee => {
 				this.recordId = employee.Id;
 				this.connectedCallback();

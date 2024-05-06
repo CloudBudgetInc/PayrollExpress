@@ -37,6 +37,16 @@
 				</lightning-record-edit-form>
 			</lightning-layout-item>
 			<lightning-layout-item>
+				<lightning-record-edit-form object-api-name="CBCategory__c">
+					<lightning-input-field
+							name="TaxThreshold__c"
+							field-name="TaxThreshold__c"
+							value={category.TaxThreshold__c}
+							onchange={handleAnalyticChange}
+					></lightning-input-field>
+				</lightning-record-edit-form>
+			</lightning-layout-item>
+			<lightning-layout-item>
 				<lightning-input value={category.Index__c} label='Index' disabled></lightning-input>
 			</lightning-layout-item>
 			<lightning-layout-item>

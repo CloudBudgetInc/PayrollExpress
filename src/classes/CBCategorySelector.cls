@@ -30,7 +30,8 @@ public with sharing class CBCategorySelector {
 		String divisionId = params.get('divisionId');
 		String employeeId = params.get('employeeId');
 		String categoryId = params.get('categoryId');
-		String s = 'SELECT Id,Name,Type__c,CBEmployee__c,Formula__c,CBAccount__c,CBDivision__c,NFLResult__c,NFL1__c,NFL2__c,NFL3__c,NFL4__c,NFL5__c,ParentCategory__c,Value__c,Index__c,CBBudgetYear__c,Allocation__c ';
+		String s = 'SELECT Id,Name,Type__c,CBEmployee__c,Formula__c,CBAccount__c,CBDivision__c,NFLResult__c,NFL1__c,NFL2__c,NFL3__c,NFL4__c,NFL5__c,' +
+				'ParentCategory__c,Value__c,Index__c,CBBudgetYear__c,Allocation__c,TaxThreshold__c ';
 		String f = ' FROM CBCategory__c ';
 		String w = ' WHERE CBEmployee__c != null ';
 		if (byId != null) w += ' AND CBBudgetYear__c = \'' + byId + '\' ';

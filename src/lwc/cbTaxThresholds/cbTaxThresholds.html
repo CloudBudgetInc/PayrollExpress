@@ -96,6 +96,15 @@
 											onchange={handleAnalyticChange}
 									></lightning-input-field>
 								</lightning-record-edit-form>
+								<lightning-record-edit-form object-api-name="cb5__CBNonFinancialLibrary__c">
+									<lightning-input-field
+											name="NFL5__c"
+											label={tt.Id}
+											field-name="NFL6__c"
+											value={tt.NFL6__c}
+											onchange={handleAnalyticChange}
+									></lightning-input-field>
+								</lightning-record-edit-form>
 							</td>
 							<td style="vertical-align: top !important;">
 
@@ -217,7 +226,31 @@
 																 name={tt.NFL5__c}
 																 onfocusout={handleParamsChange}
 																 label="Value"></lightning-input>
-
+											</lightning-layout-item>
+										</lightning-layout>
+									</div>
+								</template>
+								<template lwc:if={tt.NFL6__r}>
+									<div class="slds-p-top_x-small">
+										<lightning-layout>
+											<lightning-layout-item>
+												<lightning-input value={tt.NFL6__r.From__c} class="dec"
+																 name={tt.NFL6__c} onfocusout={handleParamsChange}
+																 formatter="currency" step="0.01" type="number"
+																 label="From"></lightning-input>
+											</lightning-layout-item>
+											<lightning-layout-item>
+												<lightning-input value={tt.NFL6__r.Till__c} class="dec"
+																 name={tt.NFL6__c}
+																 formatter="currency" step="0.01" type="number"
+																 onfocusout={handleParamsChange}
+																 label="Till"></lightning-input>
+											</lightning-layout-item>
+											<lightning-layout-item>
+												<lightning-input value={tt.NFL6__r.cb5__SingleValue__c} class="dec"
+																 name={tt.NFL6__c}
+																 onfocusout={handleParamsChange}
+																 label="Value"></lightning-input>
 											</lightning-layout-item>
 										</lightning-layout>
 									</div>

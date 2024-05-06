@@ -82,10 +82,32 @@ public with sharing class CBCategoryProcessor {
 		set;
 	}
 
+	private static Map<Id, cb5__CBNonFinancialLibrary__c> engagedSourceNFLMap {
+		get {
+			if (engagedSourceNFLMap == null) {
+				engagedSourceNFLMap = new Map<Id, cb5__CBNonFinancialLibrary__c>();
+				Set<String> sourceNFLIds = new Set<String>();
+				for (CBCategory__c c : categories) {
+					sourceNFLIds.add(c.NFL1__c);
+					sourceNFLIds.add(c.NFL2__c);
+					sourceNFLIds.add(c.NFL3__c);
+					sourceNFLIds.add(c.NFL4__c);
+					sourceNFLIds.add(c.NFL5__c);
+				}
+				for (cb5__CBNonFinancialLibrary__c library : CBPayrollExpressPageController.getNFLServer(new List<String>(sourceNFLIds), budgetYearId)) {
+					engagedSourceNFLMap.put(library.Id, library);
+				}
+			}
+			return engagedSourceNFLMap;
+		}
+		set;
+	}
+
 	public static void updateEmployeeCategories(String empId, String byId) {
 		budgetYearId = byId;
 		employeeId = empId;
 		for (CBCategory__c category : categories) {
+			System.debug('CATEGORY PROCESS: ' + category.Name);
 			List<cb5__CBAmount__c> calculatedAmounts = updateBudgetLineAndReturnCalculatedAmounts(category);
 			updateCategoryResult(category, calculatedAmounts);
 		}
@@ -118,21 +140,18 @@ public with sharing class CBCategoryProcessor {
 			return blw.amounts;
 		}
 
-		List<String> nflIds = new List<String>();
-		if (category.NFL1__c != null) nflIds.add(category.NFL1__c);
-		if (category.NFL2__c != null) nflIds.add(category.NFL2__c);
-		if (category.NFL3__c != null) nflIds.add(category.NFL3__c);
-		if (category.NFL4__c != null) nflIds.add(category.NFL4__c);
-		if (category.NFL5__c != null) nflIds.add(category.NFL5__c);
 		List<List<cb5__CBNonFinancialItem__c>> sourceNFLItems = new List<List<cb5__CBNonFinancialItem__c>>();
-		List<cb5__CBNonFinancialLibrary__c> libraries = CBPayrollExpressPageController.getNFLServer(nflIds, budgetYearId);
-		List<cb5__CBNonFinancialLibrary__c> sortedLibraries = new List<cb5__CBNonFinancialLibrary__c>();
-		for (String nflID : nflIds) { // sort libraries #1...#2...#3.....
-			for (cb5__CBNonFinancialLibrary__c nfl : libraries) if (nfl.Id == nflID) sortedLibraries.add(nfl);
-		}
-		for (cb5__CBNonFinancialLibrary__c nfl : sortedLibraries) sourceNFLItems.add(nfl.cb5__NonFinancialItems__r);
+		if (category.NFL1__c != null) sourceNFLItems.add(engagedSourceNFLMap.get(category.NFL1__c).cb5__NonFinancialItems__r);
+		if (category.NFL2__c != null) sourceNFLItems.add(engagedSourceNFLMap.get(category.NFL2__c).cb5__NonFinancialItems__r);
+		if (category.NFL3__c != null) sourceNFLItems.add(engagedSourceNFLMap.get(category.NFL3__c).cb5__NonFinancialItems__r);
+		if (category.NFL4__c != null) sourceNFLItems.add(engagedSourceNFLMap.get(category.NFL4__c).cb5__NonFinancialItems__r);
+		if (category.NFL5__c != null) sourceNFLItems.add(engagedSourceNFLMap.get(category.NFL5__c).cb5__NonFinancialItems__r);
+
 		try {
 			blw.amounts = cb5.CBFormulaService.calculateFormulaTotals(amounts, sourceNFLItems, category.Formula__c);
+			if (category.TaxThreshold__c != null) {
+				CBTaxThresholdProcessor.applyTaxThresholds(blw, category.TaxThreshold__c);
+			}
 		} catch (Exception e) {
 			System.debug('Calculation Error: ' + e);
 		}
@@ -171,8 +190,8 @@ public with sharing class CBCategoryProcessor {
 	 * Wrapper for budget lines and amounts
 	 */
 	public class BudgetLineWrapper {
-		cb5__CBBudgetLine__c budgetLine;
-		List<cb5__CBAmount__c> amounts = new List<cb5__CBAmount__c>();
+		public cb5__CBBudgetLine__c budgetLine;
+		public List<cb5__CBAmount__c> amounts = new List<cb5__CBAmount__c>();
 		public void insertBudgetLineWrappers(List<BudgetLineWrapper> budgetLineWrappers) {
 			List<cb5__CBBudgetLine__c> budgetLines = new List<cb5__CBBudgetLine__c>();
 			List<cb5__CBAmount__c> amounts = new List<cb5__CBAmount__c>();

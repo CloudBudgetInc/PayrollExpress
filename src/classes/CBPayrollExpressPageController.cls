@@ -39,8 +39,8 @@ public class CBPayrollExpressPageController {
 	public static List<cb5__CBNonFinancialLibrary__c> getNFLServer(List<String> nflIds, String budgetYearId) {
 		Set<String> nflIdSet = new Set<String> (nflIds);
 		return [
-				SELECT Id, Name, cb5__Layer__c, cb5__LayerTitle__c, (
-						SELECT Id, cb5__Value__c, cb5__CBPeriod__c, cb5__CBPeriod__r.Name
+				SELECT Id,Name,cb5__Layer__c,cb5__LayerTitle__c,cb5__Type__c, (
+						SELECT Id,cb5__Value__c,cb5__CBPeriod__c,cb5__CBPeriod__r.Name
 						FROM cb5__NonFinancialItems__r
 						WHERE cb5__CBPeriod__r.cb5__CBBudgetYear__c = :budgetYearId
 						ORDER BY cb5__CBPeriod__r.cb5__Start__c
@@ -71,8 +71,9 @@ public class CBPayrollExpressPageController {
 	}
 
 	@AuraEnabled
-	public static cb5__CBVariable5__c saveEmployeeServer(cb5__CBVariable5__c employee) {
+	public static cb5__CBVariable5__c saveEmployeeServer(cb5__CBVariable5__c employee, String byId) {
 		update employee;
+		CBCategoryProcessor.updateEmployeeCategories(employee.Id, byId);
 		return employee;
 	}
 
@@ -80,7 +81,6 @@ public class CBPayrollExpressPageController {
 	public static String saveCategoryServer(CBCategory__c category, List<cb5__CBNonFinancialItem__c> resultItems) {
 		update resultItems;
 		update category;
-		CBCategoryProcessor.updateEmployeeCategories(category.CBEmployee__c, category.CBBudgetYear__c);
 		return category.Id;
 	}
 

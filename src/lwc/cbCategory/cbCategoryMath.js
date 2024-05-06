@@ -1,11 +1,10 @@
-import {_message} from "c/cbUtils";
-
 let c; // context
 
 const setContext = (_this) => c = _this;
 
 const calculateResult = () => {
 	const formula = c.category.Formula__c;
+	if (c.category.TaxThreshold__c) return;
 	c.resultNFL.cb5__NonFinancialItems__r.forEach((item, idx) => {
 		try {
 			const args = c?.nfls.reduce((r, nfl, idx) => {
