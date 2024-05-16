@@ -1,7 +1,5 @@
 <template>
-
 	<lightning-card title="CB Payroll Express">
-
 		<lightning-layout slot="actions">
 			<lightning-layout-item>
 				<div class="slds-m-top_large">
@@ -36,21 +34,15 @@
 						onchange={handleChange}
 				></lightning-select>
 			</lightning-layout-item>
-
-
 		</lightning-layout>
 
-
-		<div class="slds-m-around_small slds-p-horizontal_small"
-			 style="height: 500px;">
-
+		<div class="slds-m-around_small slds-p-horizontal_small" style="height: 500px;">
 			<!-- SPINNER -->
 			<c-cb-spinner show={showSpinner}></c-cb-spinner>
 			<!-- SPINNER -->
 
 			<template lwc:if={readyToRender}>
-
-				<table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_striped">
+				<table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_striped custom-table">
 					<thead>
 					<tr>
 						<th>Name</th>
@@ -69,7 +61,7 @@
 
 					<tbody>
 					<template for:each={employees} for:item="emp">
-						<tr key={emp}>
+						<tr key={emp.Id}>
 							<td>
 								<div onclick={openEmployeeDialog} id={emp.Id}>
 									{emp.Name}
@@ -90,19 +82,13 @@
 						</tr>
 					</template>
 					</tbody>
-
 				</table>
-
 			</template>
-
 		</div>
-
 	</lightning-card>
 
 	<template if:true={showEmployeeDialog}>
 		<c-cb-payroll-dialog record-id={selectedEmployeeId} budget-year-id={params.budgetYearId}
 							 close-dialog-function={closeEmployeeDialog}></c-cb-payroll-dialog>
 	</template>
-
-
 </template>

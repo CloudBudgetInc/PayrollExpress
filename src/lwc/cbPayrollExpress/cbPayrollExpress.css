@@ -1,33 +1,45 @@
-.excelHeader {
+.custom-table {
+    border-collapse: separate;
+    border-spacing: 0;
+    border: 1px solid #d8dde6;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.custom-table th,
+.custom-table td {
+    padding: 8px;
+    text-align: left;
+    border-right: 1px solid #d8dde6;
+    border-bottom: 1px solid #d8dde6;
+}
+
+.custom-table th:last-child,
+.custom-table td:last-child {
+    border-right: none;
+}
+
+.custom-table tr:last-child td {
+    border-bottom: none;
+}
+
+.custom-table th {
     background-color: #f4f4f4;
-    overflow: hidden;
-    text-align: center !important;
-    font-size: larger;
+    font-weight: bold;
 }
 
-.exTable {
-    table-layout: fixed;
-    display: block;
+.custom-table tbody tr:nth-child(odd) {
+    background-color: #fafafa;
 }
 
-.exTable td {
-    overflow: hidden !important;
-    text-overflow: ellipsis;
-    border: 1px solid #cecece;
+.custom-table tbody tr:hover {
+    background-color: #f1f1f1;
 }
 
-.exTable tr:first-child td {
-    background: white;
-    position: sticky;
-    top: 0;
-    box-shadow: 0 2px 2px -1px rgba(0, 0, 0, 0.4);
-    border: 1px solid #cecece;
+.custom-table .dec {
+    text-align: center;
 }
 
-td div {
-    overflow: hidden;
-}
-
-.exTable, th, td {
-    border: 1px solid;
+.slds-table th {
+    border-bottom: none;
 }
