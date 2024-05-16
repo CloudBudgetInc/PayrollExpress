@@ -1,39 +1,39 @@
 <template>
-
 	<template lwc:if={readyToRender}>
 		<lightning-badge label={category.Index__c} class="slds-badge_inverse slds-float_right"></lightning-badge>
+
 		<template lwc:if={styleClass}>
 			<div class={styleClass}></div>
 		</template>
+
 		<lightning-layout>
 			<lightning-layout-item>
-				<lightning-input value={category.Name} label='Name' name="Name"
-								 onfocusout={handleAnalyticChange}></lightning-input>
+				<lightning-input value={category.Name} label="Name" name="Name" onfocusout={handleAnalyticChange}></lightning-input>
 			</lightning-layout-item>
+
 			<lightning-layout-item>
 				<lightning-record-edit-form object-api-name="CBCategory__c">
 					<lightning-input-field
-							name="Type__c"
 							field-name="Type__c"
 							value={category.Type__c}
 							onfocusout={handleAnalyticChange}
 					></lightning-input-field>
 				</lightning-record-edit-form>
 			</lightning-layout-item>
+
 			<lightning-layout-item>
 				<lightning-record-edit-form object-api-name="CBCategory__c">
 					<lightning-input-field
-							name="CBAccount__c"
 							field-name="CBAccount__c"
 							value={category.CBAccount__c}
 							onchange={handleAnalyticChange}
 					></lightning-input-field>
 				</lightning-record-edit-form>
 			</lightning-layout-item>
+
 			<lightning-layout-item>
 				<lightning-record-edit-form object-api-name="CBCategory__c">
 					<lightning-input-field
-							name="CBDivision__c"
 							field-name="CBDivision__c"
 							value={category.CBDivision__c}
 							onchange={handleAnalyticChange}
@@ -45,7 +45,6 @@
 				<lightning-layout-item class="dec">
 					<lightning-record-edit-form object-api-name="CBCategory__c">
 						<lightning-input-field
-								name="Allocation__c"
 								field-name="Allocation__c"
 								value={category.Allocation__c}
 								onchange={handleAnalyticChange}
@@ -53,113 +52,119 @@
 					</lightning-record-edit-form>
 				</lightning-layout-item>
 			</template>
-			<template lwc:else>
 
+			<template lwc:else>
 				<lightning-layout-item>
 					<lightning-record-edit-form object-api-name="CBCategory__c">
 						<lightning-input-field
-								name="TaxThreshold__c"
 								field-name="TaxThreshold__c"
 								value={category.TaxThreshold__c}
 								onchange={handleAnalyticChange}
 						></lightning-input-field>
 					</lightning-record-edit-form>
 				</lightning-layout-item>
+
 				<lightning-layout-item>
-					<lightning-input value={category.Formula__c} name="Formula__c" label='Formula'
-									 onfocusout={handleAnalyticChange}></lightning-input>
+					<lightning-input value={category.Formula__c} name="Formula__c" label="Formula" onfocusout={handleAnalyticChange}></lightning-input>
 				</lightning-layout-item>
-
 			</template>
-
-
 		</lightning-layout>
+
 		<lightning-layout>
 			<lightning-layout-item size="3">
-				<lightning-input value="Result" label='Title' disabled></lightning-input>
+				<lightning-input value="Result" label="Title" disabled></lightning-input>
 			</lightning-layout-item>
-			<lightning-layout-item size="8">
 
+			<lightning-layout-item size="8">
 				<lightning-layout>
 					<template for:each={resultNFL.cb5__NonFinancialItems__r} for:item="item">
 						<lightning-layout-item key={item}>
-							<lightning-input type="number" label={item.cb5__CBPeriod__r.Name} value={item.cb5__Value__c}
-											 formatter="currency" name={item.Id} onfocusout={handleResultItemsChange}
-											 disabled={resultDisabled} class="dec"
-											 step="0.01"></lightning-input>
+							<lightning-input
+									type="number"
+									label={item.cb5__CBPeriod__r.Name}
+									value={item.cb5__Value__c}
+									formatter="currency"
+									name={item.Id}
+									onfocusout={handleResultItemsChange}
+									disabled={resultDisabled}
+									class="dec"
+									step="0.01"
+							></lightning-input>
 						</lightning-layout-item>
 					</template>
 				</lightning-layout>
-
 			</lightning-layout-item>
+
 			<lightning-layout-item size="1">
-				<lightning-input type="number" label='Total' value={category.Value__c}
-								 formatter="currency" class="dec total"
-								 disabled
-								 step="0.01"></lightning-input>
+				<lightning-input
+						type="number"
+						label="Total"
+						value={category.Value__c}
+						formatter="currency"
+						class="dec total"
+						disabled
+						step="0.01"
+				></lightning-input>
 			</lightning-layout-item>
 		</lightning-layout>
+
 		<template for:each={nfls} for:item="nfl">
-			<lightning-layout key={nfl}>
+			<lightning-layout key={nfl.Id}>
 				<lightning-layout-item size="3">
 					<lightning-layout>
 						<lightning-layout-item size="1">
-							<div> {nfl.idx}</div>
+							<div>{nfl.idx}</div>
 						</lightning-layout-item>
 						<lightning-layout-item size="1">
-							<!--<lightning-button-icon icon-name="utility:edit" value={nfl.idx}
-												   onclick={renderNFLSelector}></lightning-button-icon>
-							<lightning-button-icon icon-name="utility:delete" value={nfl.idx}
-												   onclick={deleteNFL}></lightning-button-icon> -->
-
-							<lightning-icon icon-name="utility:edit" value={nfl.idx} size="x-small"
-											onclick={renderNFLSelector}></lightning-icon>
-							<lightning-icon icon-name="utility:delete" value={nfl.Id} size="x-small"
-											onclick={deleteNFL}></lightning-icon>
+							<lightning-icon icon-name="utility:edit" value={nfl.idx} size="x-small" onclick={renderNFLSelector}></lightning-icon>
+							<lightning-icon icon-name="utility:delete" value={nfl.Id} size="x-small" onclick={deleteNFL}></lightning-icon>
 						</lightning-layout-item>
 						<lightning-layout-item size="10">
-							<lightning-input value={nfl.Name} label='Title' disabled
-											 variant="label-hidden"></lightning-input>
+							<lightning-input value={nfl.Name} label="Title" disabled variant="label-hidden"></lightning-input>
 						</lightning-layout-item>
 					</lightning-layout>
 				</lightning-layout-item>
-				<lightning-layout-item size="8">
 
+				<lightning-layout-item size="8">
 					<lightning-layout>
 						<template for:each={nfl.cb5__NonFinancialItems__r} for:item="item">
-							<lightning-layout-item key={item} class="dec">
-								<lightning-input type="number" value={item.cb5__Value__c}
-												 formatter="currency" variant="label-hidden"
-												 disabled
-												 step="0.01"></lightning-input>
+							<lightning-layout-item key={item.Id} class="dec">
+								<lightning-input
+										type="number"
+										value={item.cb5__Value__c}
+										formatter="currency"
+										variant="label-hidden"
+										disabled
+										step="0.01"
+								></lightning-input>
 							</lightning-layout-item>
 						</template>
 					</lightning-layout>
+				</lightning-layout-item>
 
-				</lightning-layout-item>
-				<lightning-layout-item size="1">
-					<!--<lightning-input type="number" label='Total' value={nfl.total}
-									 formatter="currency" variant="label-hidden"
-									 disabled class="dec total"
-									 step="0.01"></lightning-input>-->
-				</lightning-layout-item>
+				<lightning-layout-item size="1"></lightning-layout-item>
 			</lightning-layout>
 		</template>
+
 		<lightning-button label="Add" icon-name="utility:add" onclick={addNFL}></lightning-button>
-		<template lwc:if={category.ParentCategory__c}></template>
-		<template lwc:else>
-			<lightning-button label="Allocate" icon-name="utility:hierarchy"
-							  onclick={addChildCategory}></lightning-button>
+
+		<template lwc:if={category.ParentCategory__c}>
+			<!-- Placeholder for potential future use -->
 		</template>
-		<lightning-button label="Delete" icon-name="utility:delete" variant="destructive"
-						  onclick={deleteCategory}></lightning-button>
+
+		<template lwc:else>
+			<lightning-button label="Allocate" icon-name="utility:hierarchy" onclick={addChildCategory}></lightning-button>
+		</template>
+
+		<lightning-button label="Delete" icon-name="utility:delete" variant="destructive" onclick={deleteCategory}></lightning-button>
 	</template>
 
 	<template lwc:if={showNFLSelector}>
-		<c-cb-n-f-l-selector budget-year-id={category.CBBudgetYear__c} employee-id={category.CBEmployee__c}
-							 apply-selected-function={applySelectedNFL}
-							 close-dialog-function={closeNFLSelector}></c-cb-n-f-l-selector>
+		<c-cb-n-f-l-selector
+				budget-year-id={category.CBBudgetYear__c}
+				employee-id={category.CBEmployee__c}
+				apply-selected-function={applySelectedNFL}
+				close-dialog-function={closeNFLSelector}
+		></c-cb-n-f-l-selector>
 	</template>
-
-
 </template>
