@@ -79,8 +79,8 @@ public class CBPayrollExpressPageController {
 
 	@AuraEnabled
 	public static String saveCategoryServer(CBCategory__c category, List<cb5__CBNonFinancialItem__c> resultItems) {
-		update resultItems;
-		update category;
+		if (resultItems != null && resultItems.size() > 0) update resultItems;
+		upsert category;
 		return category.Id;
 	}
 
@@ -162,6 +162,14 @@ public class CBPayrollExpressPageController {
 	@AuraEnabled
 	public static void deleteTaxThresholdServer(String nflId) {
 		Database.delete(nflId);
+	}
+
+	@AuraEnabled
+	public static Decimal setAllocatedAndGetChildIndexServer(String parentCategoryId) {
+		CBCategory__c parentCategory = [SELECT Id,Index__c, (SELECT Id FROM CBCategories__r) FROM CBCategory__c WHERE Id = :parentCategoryId];
+		parentCategory.isAllocated__c = true;
+		update parentCategory;
+		return parentCategory.Index__c + Decimal.valueOf((parentCategory.CBCategories__r.size() + 1)) / 10;
 	}
 
 

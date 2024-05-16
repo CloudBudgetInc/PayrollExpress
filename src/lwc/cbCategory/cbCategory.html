@@ -1,6 +1,10 @@
 <template>
 
 	<template lwc:if={readyToRender}>
+		<lightning-badge label={category.Index__c} class="slds-badge_inverse slds-float_right"></lightning-badge>
+		<template lwc:if={styleClass}>
+			<div class={styleClass}></div>
+		</template>
 		<lightning-layout>
 			<lightning-layout-item>
 				<lightning-input value={category.Name} label='Name' name="Name"
@@ -36,23 +40,39 @@
 					></lightning-input-field>
 				</lightning-record-edit-form>
 			</lightning-layout-item>
-			<lightning-layout-item>
-				<lightning-record-edit-form object-api-name="CBCategory__c">
-					<lightning-input-field
-							name="TaxThreshold__c"
-							field-name="TaxThreshold__c"
-							value={category.TaxThreshold__c}
-							onchange={handleAnalyticChange}
-					></lightning-input-field>
-				</lightning-record-edit-form>
-			</lightning-layout-item>
-			<lightning-layout-item>
-				<lightning-input value={category.Index__c} label='Index' disabled></lightning-input>
-			</lightning-layout-item>
-			<lightning-layout-item>
-				<lightning-input value={category.Formula__c} name="Formula__c" label='Formula'
-								 onfocusout={handleAnalyticChange}></lightning-input>
-			</lightning-layout-item>
+
+			<template lwc:if={category.ParentCategory__c}>
+				<lightning-layout-item class="dec">
+					<lightning-record-edit-form object-api-name="CBCategory__c">
+						<lightning-input-field
+								name="Allocation__c"
+								field-name="Allocation__c"
+								value={category.Allocation__c}
+								onchange={handleAnalyticChange}
+						></lightning-input-field>
+					</lightning-record-edit-form>
+				</lightning-layout-item>
+			</template>
+			<template lwc:else>
+
+				<lightning-layout-item>
+					<lightning-record-edit-form object-api-name="CBCategory__c">
+						<lightning-input-field
+								name="TaxThreshold__c"
+								field-name="TaxThreshold__c"
+								value={category.TaxThreshold__c}
+								onchange={handleAnalyticChange}
+						></lightning-input-field>
+					</lightning-record-edit-form>
+				</lightning-layout-item>
+				<lightning-layout-item>
+					<lightning-input value={category.Formula__c} name="Formula__c" label='Formula'
+									 onfocusout={handleAnalyticChange}></lightning-input>
+				</lightning-layout-item>
+
+			</template>
+
+
 		</lightning-layout>
 		<lightning-layout>
 			<lightning-layout-item size="3">
@@ -126,7 +146,11 @@
 			</lightning-layout>
 		</template>
 		<lightning-button label="Add" icon-name="utility:add" onclick={addNFL}></lightning-button>
-		<lightning-button label="Allocate" icon-name="utility:hierarchy"></lightning-button>
+		<template lwc:if={category.ParentCategory__c}></template>
+		<template lwc:else>
+			<lightning-button label="Allocate" icon-name="utility:hierarchy"
+							  onclick={addChildCategory}></lightning-button>
+		</template>
 		<lightning-button label="Delete" icon-name="utility:delete" variant="destructive"
 						  onclick={deleteCategory}></lightning-button>
 	</template>

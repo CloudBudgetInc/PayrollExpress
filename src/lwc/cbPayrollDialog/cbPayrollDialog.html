@@ -46,7 +46,7 @@
 						Categories
 						<template for:each={categories} for:item="cat">
 							<div key={cat} class="slds-box">
-								<c-cb-category record-id={cat.Id} refresh-parent={refreshDialog}></c-cb-category>
+								<c-cb-category record-id={cat.Id} style-class={cat.styleClass} refresh-parent={refreshDialog}></c-cb-category>
 							</div>
 						</template>
 					</template>

@@ -28,6 +28,8 @@ import {_applyDecStyle, _confirm, _getCopy, _message, _parseServerError} from "c
 import getCategoriesServer from '@salesforce/apex/CBPayrollExpressPageController.getCategoriesServer';
 import getNFLServer from '@salesforce/apex/CBPayrollExpressPageController.getNFLServer';
 import deleteCategoryServer from '@salesforce/apex/CBPayrollExpressPageController.deleteCategoryServer';
+import setAllocatedAndGetChildIndexServer
+	from '@salesforce/apex/CBPayrollExpressPageController.setAllocatedAndGetChildIndexServer';
 import saveCategoryServer from '@salesforce/apex/CBPayrollExpressPageController.saveCategoryServer';
 import categoryCanBeDeletedSafelyServer
 	from '@salesforce/apex/CBPayrollExpressPageController.categoryCanBeDeletedSafelyServer';
@@ -38,6 +40,7 @@ export default class CBCategory extends LightningElement {
 
 	@api recordId;
 	@api refreshParent;
+	@api styleClass = '';
 	@track showSpinner = false;
 	@track showNFLSelector = false;
 	@track readyToRender = false;
@@ -189,6 +192,29 @@ export default class CBCategory extends LightningElement {
 
 	closeNFLSelector = () => {
 		this.showNFLSelector = false;
-	}
+	};
+
+	addChildCategory = async () => {
+		const decision = await _confirm('Are you sure to allocate the category?', 'Confirm', 'warning');
+		if (!decision) return null;
+		const childIndex = await setAllocatedAndGetChildIndexServer({parentCategoryId: this.category.Id}).catch(e => _parseServerError('Get Child Index Error: ', e));
+		try {
+			const category = {
+				Name: 'New',
+				CBEmployee__c: this.category.CBEmployee__c,
+				CBAccount__c: this.category.CBAccount__c,
+				CBBudgetYear__c: this.category.CBBudgetYear__c,
+				NFL1__c: this.category.NFLResult__c,
+				ParentCategory__c: this.category.Id,
+				Index__c: childIndex,
+				Type__c: 'Salary'
+			};
+			await saveCategoryServer({category})
+				.catch(e => _parseServerError('Child Category Saving Error: ', e));
+			this.refreshParent();
+		} catch (e) {
+			_parseServerError('Add Child Category Error: ', e);
+		}
+	};
 
 }

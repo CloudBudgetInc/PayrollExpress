@@ -131,6 +131,22 @@ public with sharing class CBCategoryProcessor {
 		List<cb5__CBAmount__c> amounts = new List<cb5__CBAmount__c>();
 		for (cb5__CBPeriod__c period : periods) amounts.add(new cb5__CBAmount__c(cb5__Value__c = 0, cb5__CBPeriod__c = period.Id));
 
+		if (category.ParentCategory__c != null) {
+			System.debug('SUBLINE');
+			cb5__CBNonFinancialLibrary__c resultNFL = resultNFLMap.get(category.Id);
+			System.debug('result' + resultNFL);
+			Decimal allocationRate = category.Allocation__c == null ? 0 : category.Allocation__c;
+			List<cb5__CBNonFinancialItem__c> parentResultItems = engagedSourceNFLMap.get(category.NFL1__c).cb5__NonFinancialItems__r;
+			System.debug('parentResultItems = ' + parentResultItems);
+			System.debug('allocationRate = ' + allocationRate);
+			for (Integer i = 0; i < resultNFL.cb5__NonFinancialItems__r.size(); i++) {
+				amounts[i].cb5__Value__c = (parentResultItems[i].cb5__Value__c * allocationRate / 100).setScale(2);
+			}
+			System.debug('amounts = ' + amounts);
+			blw.amounts = amounts;
+			return blw.amounts;
+		}
+
 		if (category.NFL1__c == null || category.Formula__c == null) { // category without formula
 			cb5__CBNonFinancialLibrary__c resultNFL = resultNFLMap.get(category.Id);
 			for (Integer i = 0; i < resultNFL.cb5__NonFinancialItems__r.size(); i++) {
@@ -139,6 +155,7 @@ public with sharing class CBCategoryProcessor {
 			blw.amounts = amounts;
 			return blw.amounts;
 		}
+
 
 		List<List<cb5__CBNonFinancialItem__c>> sourceNFLItems = new List<List<cb5__CBNonFinancialItem__c>>();
 		if (category.NFL1__c != null) sourceNFLItems.add(engagedSourceNFLMap.get(category.NFL1__c).cb5__NonFinancialItems__r);
@@ -172,15 +189,18 @@ public with sharing class CBCategoryProcessor {
 			resultNFL.cb5__NonFinancialItems__r[i].cb5__Value__c = calculatedAmounts[i].cb5__Value__c;
 			category.Value__c += calculatedAmounts[i].cb5__Value__c;
 		}
-		resultNFL.Name = 'Category Result ' + category.Name;
+		resultNFL.Name = ('Category Result ' + category.Name).left(80);
 		NFLToUpdate.add(resultNFL);
 		NFLItemsToUpdate.addAll(resultNFL.cb5__NonFinancialItems__r);
+		System.debug('Result For Category : ' + category.Name + ' -> ' + resultNFL.cb5__NonFinancialItems__r);
 		categoriesToUpdate.add(category);
 	}
 
 	private static void finalizeDLS() {
 		delete [SELECT Id FROM cb5__CBBudgetLine__c WHERE CBCategory__c IN:budgetLineIdsToDelete];
-		new BudgetLineWrapper().insertBudgetLineWrappers(budgetLineWrappersToInsert);
+		BudgetLineWrapper obj = new BudgetLineWrapper();
+		obj.insertBudgetLineWrappers(budgetLineWrappersToInsert);
+		obj.assignBLParentChildRelations(budgetLineWrappersToInsert, categories);
 		update categoriesToUpdate;
 		update NFLItemsToUpdate;
 		update NFLToUpdate;
@@ -203,6 +223,27 @@ public with sharing class CBCategoryProcessor {
 			for (BudgetLineWrapper blw : budgetLineWrappers)
 				for (cb5__CBAmount__c a : blw.amounts) a.cb5__CBBudgetLine__c = blw.budgetLine.Id;
 			insert amounts;
+		}
+		public void assignBLParentChildRelations(List<BudgetLineWrapper> budgetLineWrappers, List<CBCategory__c> categories) {
+			Boolean noRelations = true;
+			for (CBCategory__c cat : categories) if (cat.ParentCategory__c != null) noRelations = false;
+			if (noRelations) return;
+			Map<String, cb5__CBBudgetLine__c> BLMap = new Map<String, cb5__CBBudgetLine__c>();
+			for (BudgetLineWrapper blw : budgetLineWrappers) {
+				BLMap.put(blw.budgetLine.CBCategory__c, blw.budgetLine);
+				blw.budgetLine.cb5__isAllocation__c = false; // back to default
+			}
+			for (CBCategory__c cat : categories) {
+				if (cat.ParentCategory__c != null) {
+					cb5__CBBudgetLine__c childBL = BLMap.get(cat.Id);
+					cb5__CBBudgetLine__c parentBL = BLMap.get(cat.ParentCategory__c);
+					childBL.cb5__ParentBudgetLine__c = parentBL.Id;
+					parentBL.cb5__isAllocation__c = true;
+				}
+			}
+			List<cb5__CBBudgetLine__c> budgetLines = new List<cb5__CBBudgetLine__c>();
+			for (BudgetLineWrapper blw : budgetLineWrappers) budgetLines.add(blw.budgetLine);
+			update budgetLines;
 		}
 	}
 

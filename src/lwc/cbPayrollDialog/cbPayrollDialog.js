@@ -47,6 +47,7 @@ export default class CBPayrollDialog extends LightningElement {
 		this.showSpinner = true;
 		await this.getEmployee();
 		await this.getCategories();
+		this.colorAllocatedGroup();
 		this.showSpinner = false;
 		this.readyToRender = true;
 	};
@@ -115,6 +116,32 @@ export default class CBPayrollDialog extends LightningElement {
 		} catch (e) {
 			_parseServerError('Add New Category Error: ', e);
 		}
-	}
+	};
+
+	colorAllocatedGroup = () => {
+		const categoryMap = {};
+		this.categories.forEach(cat => {
+			const key = cat.ParentCategory__c ? cat.ParentCategory__c : cat.Id;
+			let catArray = categoryMap[key];
+			if (!catArray) {
+				catArray = [];
+				categoryMap[key] = catArray;
+			}
+			catArray.push(cat);
+		});
+		const colors = ['red', 'green', 'blue', 'yellow', 'orange'];
+		let currentColorIndex = -1;
+		const getNextColor = () => {
+			currentColorIndex++;
+			return colors[currentColorIndex];
+		};
+		Object.keys(categoryMap).forEach(key => {
+			const catArray = categoryMap[key];
+			//alert('catArray.length');
+			if (catArray.length < 2) return null;
+			const color = getNextColor();
+			catArray.forEach(cat => cat.styleClass = color);
+		})
+	};
 
 }

@@ -64,9 +64,7 @@ public with sharing class CBTaxThresholdProcessor {
 		try {
 			List<cb5__CBNonFinancialLibrary__c> thresholds = thresholdMap.get(ttId);
 			Decimal yearlyTotal = 0;
-			System.debug('AMOUNTS BEFORE:' + blw.amounts);
 			for (cb5__CBAmount__c a : blw.amounts) yearlyTotal += a.cb5__Value__c;
-			System.debug('Yearly Total: ' + yearlyTotal);
 			Decimal yearlyTax = 0;
 			for (cb5__CBNonFinancialLibrary__c thr : thresholds) {
 				if (yearlyTotal < thr.From__c) continue;
@@ -74,13 +72,10 @@ public with sharing class CBTaxThresholdProcessor {
 				baseValue -= thr.From__c;
 				yearlyTax += baseValue * thr.cb5__SingleValue__c;
 			}
-			System.debug('Yearly Tax: ' + yearlyTax);
 			for (cb5__CBAmount__c a : blw.amounts) {
 				Decimal fraction = a.cb5__Value__c / yearlyTotal;
-				System.debug('Fraction: ' + fraction);
 				a.cb5__Value__c = (yearlyTax * fraction).setScale(2);
 			}
-			System.debug('AMOUNTS AFTER:' + blw.amounts);
 		} catch (Exception e) {
 			System.debug('applyTaxThresholds EXCEPTION: ' + e);
 		}
