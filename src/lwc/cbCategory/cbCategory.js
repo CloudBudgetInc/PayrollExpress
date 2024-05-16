@@ -64,12 +64,13 @@ export default class CBCategory extends LightningElement {
 	getCategory = async () => {
 		try {
 			const params = {categoryId: this.recordId};
-			this.category = await getCategoriesServer({params});
-			this.category = this.category[0];
-			this.CATEGORY_NFL_ORDER.forEach(f => {
-				const nflId = this.category[f];
-				if (nflId) this.nflIds.push(nflId);
-			})
+			const categories = await getCategoriesServer({params});
+			if (categories && categories.length > 0) {
+				this.category = categories[0];
+				this.nflIds = this.CATEGORY_NFL_ORDER
+					.map(field => this.category[field])
+					.filter(nflId => nflId);
+			}
 		} catch (e) {
 			_parseServerError('Get Category Error: ', e);
 		}
