@@ -90,7 +90,7 @@ export default class CBPayrollExpress extends LightningElement {
 			this.categoryTypes = [];
 			const categoryTypesObject = {};
 			this.employees.forEach(emp => {
-				emp.CBCategories__r?.forEach(cat => categoryTypesObject[cat.Type__c] = true);
+				emp.cb5p__CBCategories__r?.forEach(cat => categoryTypesObject[cat.cb5p__Type__c] = true);
 			});
 			this.categoryTypes = Object.keys(categoryTypesObject).sort();
 		} catch (e) {
@@ -103,16 +103,16 @@ export default class CBPayrollExpress extends LightningElement {
 			if (this.categoryTypes.length === 0) return null;
 			this.employees.forEach(emp => {
 				emp.total = 0;
-				emp.divisionName = emp.CBDivision__c ? emp.CBDivision__r.Name : '-';
-				emp.positionName = emp.Position__c ? emp.Position__c : '-';
+				emp.divisionName = emp.cb5p__CBDivision__c ? emp.cb5p__CBDivision__r.Name : '-';
+				emp.positionName = emp.cb5p__Position__c ? emp.cb5p__Position__c : '-';
 				emp.categoryValues = [];
 				this.categoryTypes.forEach(catName => emp.categoryValues.push(0));
-				if (!emp.CBCategories__r || emp.CBCategories__r.length === 0) return null;
+				if (!emp.cb5p__CBCategories__r || emp.cb5p__CBCategories__r.length === 0) return null;
 				this.categoryTypes.forEach((catName, idx) => {
-					const category = emp.CBCategories__r.find(cat => cat.Type__c === catName);
+					const category = emp.cb5p__CBCategories__r.find(cat => cat.cb5p__Type__c === catName);
 					if (category) {
-						emp.categoryValues[idx] += category.Value__c;
-						emp.total += +category.Value__c;
+						emp.categoryValues[idx] += category.cb5p__Value__c;
+						emp.total += +category.cb5p__Value__c;
 					}
 				});
 			});

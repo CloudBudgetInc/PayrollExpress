@@ -16,10 +16,11 @@
 						Catalog</h1>
 				</div>
 				<div class="slds-modal__content slds-p-around_medium">
-					<p style="font-weight: bold; padding-bottom: 10px;">Recent Non Financial Libraries</p>
+
 
 					<lightning-layout>
 						<lightning-layout-item size="6">
+							<p style="font-weight: bold;  padding-top: 0;">Recent Non Financial Libraries</p>
 							<template for:each={recentNFLs} for:item="nfl">
 								<div key={nfl} class="slds-box" id={nfl.Id} onmouseover={renderNFLHint}
 									 onclick={applyRecentNFL}
@@ -29,13 +30,24 @@
 							</template>
 						</lightning-layout-item>
 						<lightning-layout-item size="6">
-							<p style="font-weight: bold; padding-bottom: 10px;">Search</p>
-							<lightning-record-edit-form object-api-name="CBCategory__c">
+							<p style="font-weight: bold; padding-top: 0;">Search</p>
+							<lightning-record-edit-form object-api-name="cb5p__CBCategory__c">
 								<lightning-input-field
-										name="CBNFL1__c"
-										field-name="NFL1__c"
+										variant="label-hidden"
+										name="cb5p__CBNFL1__c"
+										field-name="cb5p__NFL1__c"
 										value={selectedNFL}
 										onchange={handleSearchedNFL}
+								></lightning-input-field>
+							</lightning-record-edit-form>
+							<p style="font-weight: bold; padding-top: 10px;">Add Custom</p>
+							<lightning-record-edit-form object-api-name="cb5__CBNonFinancialLibrary__c">
+								<lightning-input-field
+										variant="label-hidden"
+										name="cb5__Layer__c"
+										field-name="cb5__Layer__c"
+										value={selectedLayerId}
+										onchange={handleLayerSelection}
 								></lightning-input-field>
 							</lightning-record-edit-form>
 						</lightning-layout-item>

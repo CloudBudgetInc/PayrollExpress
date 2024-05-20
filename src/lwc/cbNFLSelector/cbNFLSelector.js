@@ -27,6 +27,7 @@ import {api, LightningElement, track} from 'lwc';
 import {_applyDecStyle, _parseServerError} from "c/cbUtils";
 import getRecentNFLsServer from '@salesforce/apex/CBPayrollExpressPageController.getRecentNFLsServer';
 import getNFLServer from '@salesforce/apex/CBPayrollExpressPageController.getNFLServer';
+import createNewNFLServer from '@salesforce/apex/CBPayrollExpressPageController.createNewNFLServer';
 
 export default class CBNFLSelector extends LightningElement {
 
@@ -80,6 +81,11 @@ export default class CBNFLSelector extends LightningElement {
 
 	handleSearchedNFL = (event) => {
 		this.apply(event.target.value);
+	};
+
+	handleLayerSelection = async (event) => {
+		const selectedNFLId = await createNewNFLServer({layerId: event.target.value}).catch(e => _parseServerError('Creating Error : ', e));
+		this.apply(selectedNFLId);
 	};
 
 	applyRecentNFL = (event) => {

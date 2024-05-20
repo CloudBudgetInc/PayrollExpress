@@ -72,14 +72,12 @@ public with sharing class CBTaxThresholdProcessor {
 			for (cb5__CBNonFinancialLibrary__c thr : thresholds) {
 				if (yearlyTotal < thr.From__c) continue; // under limit
 				Decimal baseValue = 0;
-				System.debug('Thresholds : FROM: ' + thr.From__c + ' TILL: ' + thr.Till__c);
 				if ((thr.Till__c == 0 || thr.Till__c == null) || (yearlyTotal < thr.Till__c)) { // last limit
 					baseValue = yearlyTotal - thr.From__c;
 				} else {
 					baseValue = thr.Till__c - thr.From__c;
 				}
 				yearlyTax += baseValue * thr.cb5__SingleValue__c;
-				System.debug('YEARLY TAX: ' + yearlyTotal + ' BASE: ' + baseValue);
 				if (yearlyTotal < thr.Till__c) break;
 			}
 			for (cb5__CBAmount__c a : blw.amounts) {

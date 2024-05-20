@@ -174,5 +174,12 @@ public class CBPayrollExpressPageController {
 		return parentCategory.Index__c + Decimal.valueOf((parentCategory.CBCategories__r.size() + 1)) / 10;
 	}
 
+	@AuraEnabled
+	public static String createNewNFLServer(String layerId) {
+		cb5__CBNonFinancialLibrary__c newNFL = new cb5__CBNonFinancialLibrary__c(Name = 'Custom TEST', cb5__Layer__c = layerId);
+		insert newNFL;
+		return newNFL.Id;
+	}
+
 
 }

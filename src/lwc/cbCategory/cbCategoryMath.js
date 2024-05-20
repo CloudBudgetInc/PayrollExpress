@@ -3,12 +3,12 @@ let c; // context
 const setContext = (_this) => c = _this;
 
 const calculateResult = () => {
-	const formula = c.category.Formula__c;
-	if (c.category.TaxThreshold__c) return;
-	if (c.category.ParentCategory__c) {
+	const formula = c.category.cb5p__Formula__c;
+	if (c.category.cb5p__TaxThreshold__c) return;
+	if (c.category.cb5p__ParentCategory__c) {
 		c.resultNFL.cb5__NonFinancialItems__r.forEach((item, idx) => {
 			try {
-				item.cb5__Value__c = c?.nfls[0].cb5__NonFinancialItems__r[idx].cb5__Value__c * c.category.Allocation__c / 100;
+				item.cb5__Value__c = c?.nfls[0].cb5__NonFinancialItems__r[idx].cb5__Value__c * c.category.cb5p__Allocation__c / 100;
 			} catch (e) {
 				item.cb5__Value__c = 0;
 				console.error('Allocation Error: ' + e);
@@ -41,7 +41,7 @@ const calculateTotal = () => {
 			return total;
 		}, 0);
 	};
-	c.category.Value__c = getTotal(c.resultNFL.cb5__NonFinancialItems__r);
+	c.category.cb5p__Value__c = getTotal(c.resultNFL.cb5__NonFinancialItems__r);
 };
 
 

@@ -49,7 +49,7 @@ export default class CBCategory extends LightningElement {
 	@track nflIds = [];
 	@track resultNFL = {};
 	@track nfls = [];
-	CATEGORY_NFL_ORDER = ['NFLResult__c', 'NFL1__c', 'NFL2__c', 'NFL3__c', 'NFL4__c', 'NFL5__c'];
+	CATEGORY_NFL_ORDER = ['cb5p__NFLResult__c', 'cb5p__NFL1__c', 'cb5p__NFL2__c', 'cb5p__NFL3__c', 'cb5p__NFL4__c', 'cb5p__NFL5__c'];
 
 	async connectedCallback() {
 		this.showSpinner = true;
@@ -78,7 +78,7 @@ export default class CBCategory extends LightningElement {
 
 	getNFLs = async () => {
 		try {
-			const params = {nflIds: this.nflIds, budgetYearId: this.category.CBBudgetYear__c};
+			const params = {nflIds: this.nflIds, budgetYearId: this.category.cb5p__CBBudgetYear__c};
 			this.nfls = await getNFLServer(params);
 			if (this.nfls.length > 1) this.resultDisabled = true;
 			this.nfls = this.CATEGORY_NFL_ORDER.reduce((sortedNFLs, f, idx) => {
@@ -86,7 +86,7 @@ export default class CBCategory extends LightningElement {
 				if (nflId) {
 					const nfl = this.nfls.find(rec => rec.Id === nflId);
 					nfl.idx = `#${idx}`;
-					if (f === 'NFLResult__c') {
+					if (f === 'cb5p__NFLResult__c') {
 						this.resultNFL = nfl;
 					} else {
 						sortedNFLs.push(nfl);
@@ -159,8 +159,8 @@ export default class CBCategory extends LightningElement {
 		const NFLIdToDelete = event.target.value;
 		let slideUp = false;
 		for (let i = 1; i <= 5; i++) {
-			const key = `NFL${i}__c`;
-			const nextKey = `NFL${i + 1}__c`;
+			const key = `cb5p__NFL${i}__c`;
+			const nextKey = `cb5p__NFL${i + 1}__c`;
 			if (NFLIdToDelete === this.category[key]) slideUp = true;
 			if (slideUp) this.category[key] = this.category[nextKey] ? this.category[nextKey] : null;
 		}
@@ -170,8 +170,8 @@ export default class CBCategory extends LightningElement {
 
 	addNFL = () => {
 		for (let i = 1; i <= 5; i++) {
-			if (!this.category[`NFL${i}__c`]) {
-				this.nflWaitToSelect = `NFL${i}__c`;
+			if (!this.category[`cb5p__NFL${i}__c`]) {
+				this.nflWaitToSelect = `cb5p__NFL${i}__c`;
 				break;
 			}
 		}
@@ -181,7 +181,7 @@ export default class CBCategory extends LightningElement {
 
 	nflWaitToSelect;
 	renderNFLSelector = (event) => {
-		this.nflWaitToSelect = `NFL${event.target.value.replace('#', '')}__c`;
+		this.nflWaitToSelect = `cb5p__NFL${event.target.value.replace('#', '')}__c`;
 		this.showNFLSelector = true;
 	};
 
@@ -194,7 +194,7 @@ export default class CBCategory extends LightningElement {
 	};
 
 	applyFormulaTemplate = async (event) => {
-		this.category.Formula__c = event.detail.value;
+		this.category.cb5p__Formula__c = event.detail.value;
 		await this.saveCategory();
 		this.connectedCallback();
 	};
@@ -210,10 +210,10 @@ export default class CBCategory extends LightningElement {
 		try {
 			const category = {
 				Name: 'New',
-				CBEmployee__c: this.category.CBEmployee__c,
-				CBAccount__c: this.category.CBAccount__c,
-				CBBudgetYear__c: this.category.CBBudgetYear__c,
-				NFL1__c: this.category.NFLResult__c,
+				CBEmployee__c: this.category.cb5p__CBEmployee__c,
+				CBAccount__c: this.category.cb5p__CBAccount__c,
+				CBBudgetYear__c: this.category.cb5p__CBBudgetYear__c,
+				NFL1__c: this.category.cb5p__NFLResult__c,
 				ParentCategory__c: this.category.Id,
 				Index__c: childIndex,
 				Type__c: 'Salary'
