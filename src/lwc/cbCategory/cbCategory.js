@@ -193,6 +193,12 @@ export default class CBCategory extends LightningElement {
 		this.connectedCallback();
 	};
 
+	applyFormulaTemplate = async (event) => {
+		this.category.Formula__c = event.detail.value;
+		await this.saveCategory();
+		this.connectedCallback();
+	};
+
 	closeNFLSelector = () => {
 		this.showNFLSelector = false;
 	};

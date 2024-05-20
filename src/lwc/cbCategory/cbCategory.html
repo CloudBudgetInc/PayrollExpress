@@ -8,7 +8,8 @@
 
 		<lightning-layout>
 			<lightning-layout-item>
-				<lightning-input value={category.Name} label="Name" name="Name" onfocusout={handleAnalyticChange}></lightning-input>
+				<lightning-input value={category.Name} label="Name" name="Name"
+								 onfocusout={handleAnalyticChange}></lightning-input>
 			</lightning-layout-item>
 
 			<lightning-layout-item>
@@ -70,7 +71,26 @@
 				</lightning-layout-item>
 
 				<lightning-layout-item>
-					<lightning-input value={category.Formula__c} name="Formula__c" label="Formula" onfocusout={handleAnalyticChange}></lightning-input>
+					<lightning-layout>
+						<lightning-layout-item size="10">
+							<lightning-input value={category.Formula__c} name="Formula__c" label="Formula"
+											 onfocusout={handleAnalyticChange}></lightning-input>
+						</lightning-layout-item>
+						<lightning-layout-item size="2">
+							<div class="slds-p-top_large">
+								<lightning-button-menu alternative-text="Formula template menu"
+													   onselect={applyFormulaTemplate}>
+									<lightning-menu-item value="#1 * #2" label="#1 * #2"
+									></lightning-menu-item>
+									<lightning-menu-item value="#1 + #2" label="#1 + #2"></lightning-menu-item>
+									<lightning-menu-item value="( #1 * #2 ) * #3"
+														 label="( #1 * #2 ) * #3"></lightning-menu-item>
+								</lightning-button-menu>
+							</div>
+						</lightning-layout-item>
+					</lightning-layout>
+
+
 				</lightning-layout-item>
 			</template>
 		</lightning-layout>
@@ -121,11 +141,14 @@
 							<div>{nfl.idx}</div>
 						</lightning-layout-item>
 						<lightning-layout-item size="1">
-							<lightning-icon icon-name="utility:edit" value={nfl.idx} size="x-small" onclick={renderNFLSelector}></lightning-icon>
-							<lightning-icon icon-name="utility:delete" value={nfl.Id} size="x-small" onclick={deleteNFL}></lightning-icon>
+							<lightning-icon icon-name="utility:edit" value={nfl.idx} size="x-small"
+											onclick={renderNFLSelector}></lightning-icon>
+							<lightning-icon icon-name="utility:delete" value={nfl.Id} size="x-small"
+											onclick={deleteNFL}></lightning-icon>
 						</lightning-layout-item>
 						<lightning-layout-item size="10">
-							<lightning-input value={nfl.Name} label="Title" disabled variant="label-hidden"></lightning-input>
+							<lightning-input value={nfl.Name} label="Title" disabled
+											 variant="label-hidden"></lightning-input>
 						</lightning-layout-item>
 					</lightning-layout>
 				</lightning-layout-item>
@@ -158,10 +181,12 @@
 		</template>
 
 		<template lwc:else>
-			<lightning-button label="Allocate" icon-name="utility:hierarchy" onclick={addChildCategory}></lightning-button>
+			<lightning-button label="Allocate" icon-name="utility:hierarchy"
+							  onclick={addChildCategory}></lightning-button>
 		</template>
 
-		<lightning-button label="Delete" icon-name="utility:delete" variant="destructive" onclick={deleteCategory}></lightning-button>
+		<lightning-button label="Delete" icon-name="utility:delete" variant="destructive"
+						  onclick={deleteCategory}></lightning-button>
 	</template>
 
 	<template lwc:if={showNFLSelector}>
