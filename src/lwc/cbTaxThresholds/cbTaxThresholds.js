@@ -1,5 +1,5 @@
-import { LightningElement, track } from 'lwc';
-import { _applyDecStyle, _parseServerError } from "c/cbUtils";
+import {LightningElement, track} from 'lwc';
+import {_applyDecStyle, _parseServerError} from "c/cbUtils";
 import getTaxThresholdsServer from '@salesforce/apex/CBPayrollExpressPageController.getTaxThresholdsServer';
 import saveTaxThresholdsServer from '@salesforce/apex/CBPayrollExpressPageController.saveTaxThresholdsServer';
 import saveNFLibraryServer from '@salesforce/apex/CBPayrollExpressPageController.saveNFLibraryServer';
@@ -36,7 +36,7 @@ export default class CBTaxThresholds extends LightningElement {
 		const tt = this.taxThresholds.find(t => t.Id === event.target.label);
 		tt[event.target.name] = event.target.value;
 		try {
-			await saveTaxThresholdsServer({ nflLib: tt });
+			await saveTaxThresholdsServer({nflLib: tt});
 		} catch (error) {
 			_parseServerError('Save Tax Threshold Error: ', error);
 		}
@@ -46,16 +46,17 @@ export default class CBTaxThresholds extends LightningElement {
 	handleTTChange(event) {
 		const library = this.taxThresholds.find(tt => tt.Id === event.target.name);
 		library[event.target.label] = event.target.value;
-		saveNFLibraryServer({ library });
+		saveNFLibraryServer({library}).catch(e => _parseServerError('Saving Error : ', e));
 	}
 
 	handleParamsChange(event) {
-		const field = event.target.label.includes('Val') ? `cb5__${event.target.label}__c` : `${event.target.label}__c`;
+		const field = event.target.label.includes('Val') ? `cb5__Single${event.target.label}__c` : `${event.target.label}__c`;
 		const value = event.target.value;
 		const nflId = event.target.name;
-		const library = { Id: nflId };
+		const library = {Id: nflId};
 		library[field] = value;
-		saveNFLibraryServer({ library });
+		console.log('Before Save : ' + JSON.stringify(library));
+		saveNFLibraryServer({library}).catch(e => _parseServerError('Saving Error : ', e));
 	}
 
 	async addTaxThreshold() {
@@ -73,7 +74,7 @@ export default class CBTaxThresholds extends LightningElement {
 	async deleteTaxThreshold(event) {
 		this.showSpinner = true;
 		try {
-			await deleteTaxThresholdServer({ nflId: event.target.value });
+			await deleteTaxThresholdServer({nflId: event.target.value});
 			await this.connectedCallback();
 		} catch (error) {
 			_parseServerError('Delete Tax Threshold Error: ', error);

@@ -131,6 +131,8 @@ public with sharing class CBCategoryProcessor {
 		List<cb5__CBAmount__c> amounts = new List<cb5__CBAmount__c>();
 		for (cb5__CBPeriod__c period : periods) amounts.add(new cb5__CBAmount__c(cb5__Value__c = 0, cb5__CBPeriod__c = period.Id));
 
+		System.debug('CATEGORY : ' + category.Name);
+
 		if (category.ParentCategory__c != null) {
 			System.debug('SUBLINE');
 			cb5__CBNonFinancialLibrary__c resultNFL = resultNFLMap.get(category.Id);
@@ -156,6 +158,7 @@ public with sharing class CBCategoryProcessor {
 			return blw.amounts;
 		}
 
+		System.debug('------------ PASSED ------ ');
 
 		List<List<cb5__CBNonFinancialItem__c>> sourceNFLItems = new List<List<cb5__CBNonFinancialItem__c>>();
 		if (category.NFL1__c != null) sourceNFLItems.add(engagedSourceNFLMap.get(category.NFL1__c).cb5__NonFinancialItems__r);
@@ -166,6 +169,7 @@ public with sharing class CBCategoryProcessor {
 
 		try {
 			blw.amounts = cb5.CBFormulaService.calculateFormulaTotals(amounts, sourceNFLItems, category.Formula__c);
+			System.debug('category.TaxThreshold__c :  ' + category.TaxThreshold__c);
 			if (category.TaxThreshold__c != null) {
 				CBTaxThresholdProcessor.applyTaxThresholds(blw, category.TaxThreshold__c);
 			}

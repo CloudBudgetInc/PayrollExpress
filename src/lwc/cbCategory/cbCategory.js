@@ -109,6 +109,8 @@ export default class CBCategory extends LightningElement {
 
 	handleAnalyticChange = async (event) => {
 		this.category[event.target.name] = event.target.value;
+		console.log('event.target.name = ' + event.target.name);
+		console.log('event.target.value = ' + event.target.value);
 		await this.saveCategory();
 	};
 

@@ -150,7 +150,9 @@ public class CBPayrollExpressPageController {
 	public static void saveNFLibraryServer(cb5__CBNonFinancialLibrary__c library) {
 		List<cb5__CBNonFinancialItem__c> items = [SELECT Id FROM cb5__CBNonFinancialItem__c WHERE cb5__NonFinancialLibrary__c = :library.Id];
 		for (cb5__CBNonFinancialItem__c item : items) item.cb5__Value__c = library.cb5__SingleValue__c;
+		System.debug('Library: ' + library);
 		upsert library;
+		upsert items;
 	}
 
 	@AuraEnabled
