@@ -31,6 +31,7 @@ import deleteCategoryServer from '@salesforce/apex/CBPayrollExpressPageControlle
 import setAllocatedAndGetChildIndexServer
 	from '@salesforce/apex/CBPayrollExpressPageController.setAllocatedAndGetChildIndexServer';
 import saveCategoryServer from '@salesforce/apex/CBPayrollExpressPageController.saveCategoryServer';
+import saveNFLItemsServer from '@salesforce/apex/CBPayrollExpressPageController.saveNFLItemsServer';
 import categoryCanBeDeletedSafelyServer
 	from '@salesforce/apex/CBPayrollExpressPageController.categoryCanBeDeletedSafelyServer';
 import {calculateResult, calculateTotal, setContext} from "./cbCategoryMath";
@@ -80,6 +81,7 @@ export default class CBCategory extends LightningElement {
 		try {
 			const params = {nflIds: this.nflIds, budgetYearId: this.category.cb5p__CBBudgetYear__c};
 			this.nfls = await getNFLServer(params);
+			this.nfls.forEach(n => n.disabled = n.cb5__Type__c !== 'Custom');
 			if (this.nfls.length > 1) this.resultDisabled = true;
 			this.nfls = this.CATEGORY_NFL_ORDER.reduce((sortedNFLs, f, idx) => {
 				const nflId = this.category[f];
@@ -112,6 +114,10 @@ export default class CBCategory extends LightningElement {
 		console.log('event.target.name = ' + event.target.name);
 		console.log('event.target.value = ' + event.target.value);
 		await this.saveCategory();
+	};
+
+	handleNFLItemChange = (event) => {
+		saveNFLItemsServer().catch(e => _parseServerError('Saving Error: ', ));
 	};
 
 	handleResultItemsChange = async (event) => {
@@ -210,13 +216,13 @@ export default class CBCategory extends LightningElement {
 		try {
 			const category = {
 				Name: 'New',
-				CBEmployee__c: this.category.cb5p__CBEmployee__c,
-				CBAccount__c: this.category.cb5p__CBAccount__c,
-				CBBudgetYear__c: this.category.cb5p__CBBudgetYear__c,
-				NFL1__c: this.category.cb5p__NFLResult__c,
-				ParentCategory__c: this.category.Id,
-				Index__c: childIndex,
-				Type__c: 'Salary'
+				cb5p__CBEmployee__c: this.category.cb5p__CBEmployee__c,
+				cb5p__CBAccount__c: this.category.cb5p__CBAccount__c,
+				cb5p__CBBudgetYear__c: this.category.cb5p__CBBudgetYear__c,
+				cb5p__NFL1__c: this.category.cb5p__NFLResult__c,
+				cb5p__ParentCategory__c: this.category.Id,
+				cb5p__Index__c: childIndex,
+				cb5p__Type__c: 'Salary'
 			};
 			await saveCategoryServer({category})
 				.catch(e => _parseServerError('Child Category Saving Error: ', e));

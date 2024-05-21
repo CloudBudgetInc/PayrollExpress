@@ -12,7 +12,7 @@ trigger CBCategoryTrigger on CBCategory__c (after insert, before delete) {
 		String categoryLayerId = [SELECT Id FROM cb5__CBLayer__c WHERE Name = 'Category'][0].Id;
 		List<cb5__CBNonFinancialLibrary__c> results = new List<cb5__CBNonFinancialLibrary__c>();
 		for (CBCategory__c category : categories) {
-			results.add(new cb5__CBNonFinancialLibrary__c(cb5__Layer__c = categoryLayerId, Name = 'Result', cb5__Type__c = 'Custom'));
+			results.add(new cb5__CBNonFinancialLibrary__c(cb5__Layer__c = categoryLayerId, Name = 'Result', cb5__Type__c = 'Result'));
 		}
 		insert results;
 		for (Integer i = 0; i < categories.size(); i++) {

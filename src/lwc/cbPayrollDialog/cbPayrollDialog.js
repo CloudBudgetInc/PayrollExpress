@@ -106,8 +106,8 @@ export default class CBPayrollDialog extends LightningElement {
 			const Index__c = this.categories ? this.categories.length + 1 : 1;
 			const category = {
 				Name: 'New',
-				CBEmployee__c: this.employee.Id,
-				CBBudgetYear__c: this.budgetYearId,
+				cb5p__CBEmployee__c: this.employee.Id,
+				cb5p__CBBudgetYear__c: this.budgetYearId,
 				Index__c,
 				Type__c: 'Salary'
 			};
@@ -121,7 +121,7 @@ export default class CBPayrollDialog extends LightningElement {
 	colorAllocatedGroup = () => {
 		const categoryMap = {};
 		this.categories.forEach(cat => {
-			const key = cat.ParentCategory__c ? cat.ParentCategory__c : cat.Id;
+			const key = cat.cb5p__ParentCategory__c ? cat.cb5p__ParentCategory__c : cat.Id;
 			let catArray = categoryMap[key];
 			if (!catArray) {
 				catArray = [];
@@ -137,7 +137,6 @@ export default class CBPayrollDialog extends LightningElement {
 		};
 		Object.keys(categoryMap).forEach(key => {
 			const catArray = categoryMap[key];
-			//alert('catArray.length');
 			if (catArray.length < 2) return null;
 			const color = getNextColor();
 			catArray.forEach(cat => cat.styleClass = color);

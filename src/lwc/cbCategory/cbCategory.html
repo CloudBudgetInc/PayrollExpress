@@ -1,6 +1,6 @@
 <template>
 	<template lwc:if={readyToRender}>
-		<lightning-badge label={category.Index__c} class="slds-badge_inverse slds-float_right"></lightning-badge>
+		<lightning-badge label={category.cb5p__Index__c} class="slds-badge_inverse slds-float_right"></lightning-badge>
 
 		<template lwc:if={styleClass}>
 			<div class={styleClass}></div>
@@ -162,7 +162,9 @@
 										value={item.cb5__Value__c}
 										formatter="currency"
 										variant="label-hidden"
-										disabled
+										name={item.Id}
+										disabled={nfl.disabled}
+										onchange={handleNFLItemChange}
 										step="0.01"
 								></lightning-input>
 							</lightning-layout-item>
