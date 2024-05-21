@@ -9,29 +9,29 @@
 			</lightning-layout-item>
 			<lightning-layout-item>
 				<lightning-select
-						name="division"
+						name="divisionId"
 						label="Division"
 						value={params.divisionId}
 						options={divisionSO}
-						onchange={handleChange}
+						onchange={handleChangeMainFilter}
 				></lightning-select>
 			</lightning-layout-item>
 			<lightning-layout-item>
 				<lightning-select
-						name="budgetYear"
+						name="budgetYearId"
 						label="Budget Year"
 						value={params.budgetYearId}
 						options={budgetYearSO}
-						onchange={handleChange}
+						onchange={handleChangeMainFilter}
 				></lightning-select>
 			</lightning-layout-item>
 			<lightning-layout-item>
 				<lightning-select
-						name="employee"
+						name="employeeId"
 						label="Employee"
 						value={params.employeeId}
 						options={employeeSO}
-						onchange={handleChange}
+						onchange={handleChangeMainFilter}
 				></lightning-select>
 			</lightning-layout-item>
 		</lightning-layout>

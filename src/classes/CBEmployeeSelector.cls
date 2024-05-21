@@ -32,8 +32,8 @@ public with sharing class CBEmployeeSelector {
 				'(SELECT Id,Name,Type__c,Value__c FROM CBCategories__r WHERE CBBudgetYear__c = \'' + byId + '\' ORDER BY Index__c) ';
 		String f = ' FROM  cb5__CBVariable5__c ';
 		String w = ' WHERE Name != null '; // CBBudgetYear__c = \'' + byId + '\'
-		if (divisionId != null) w += ' AND CBDivision__c = \'' + divisionId + '\' ';
-		if (employeeId != null) w += ' AND Id = \'' + employeeId + '\' ';
+		if (divisionId != null && divisionId.length() > 10) w += ' AND CBDivision__c = \'' + divisionId + '\' ';
+		if (employeeId != null && employeeId.length() > 10) w += ' AND Id = \'' + employeeId + '\' ';
 		String o = ' ORDER BY Name ';
 		return Database.query(s + f + w + o);
 	}

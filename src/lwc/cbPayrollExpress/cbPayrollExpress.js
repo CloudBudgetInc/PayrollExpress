@@ -24,7 +24,7 @@ OF THE POSSIBILITY OF SUCH DAMAGE.
 
  */
 import {LightningElement, track} from 'lwc';
-import {_message, _parseServerError, _applyDecStyle} from "c/cbUtils";
+import {_applyDecStyle, _message, _parseServerError} from "c/cbUtils";
 import getEmployeesServer from '@salesforce/apex/CBPayrollExpressPageController.getEmployeesServer';
 import getAnalyticsServer from '@salesforce/apex/CBPayrollExpressPageController.getAnalyticsServer';
 
@@ -42,7 +42,6 @@ export default class CBPayrollExpress extends LightningElement {
 	@track categoryTypes = []; // list of category types
 
 	@track params = {};
-
 
 	async connectedCallback() {
 		this.showSpinner = true;
@@ -75,14 +74,11 @@ export default class CBPayrollExpress extends LightningElement {
 	};
 
 	getListOfEmployee = async () => {
-		if (!this.params.budgetYearId) {
-			this.params.budgetYearId = this.budgetYearSO[0].value;
-		}
+		if (!this.params.budgetYearId) this.params.budgetYearId = this.budgetYearSO[0].value;
+		console.log('this.params = ' + JSON.stringify(this.params));
 		await getEmployeesServer({params: this.params})
-			.then(employees => {
-				this.employees = employees;
-			})
-			.catch(e => _parseServerError('Get Employees Error: ', e))
+			.then(employees => this.employees = employees)
+			.catch(e => _parseServerError('Get Employees Error: ', e));
 	};
 
 	getCategoryTypes = () => {
@@ -129,7 +125,12 @@ export default class CBPayrollExpress extends LightningElement {
 	closeEmployeeDialog = async () => {
 		this.showEmployeeDialog = false;
 		await this.connectedCallback();
-	}
+	};
+
+	handleChangeMainFilter = (event) => {
+		this.params[event.target.name] = event.target.value;
+		this.connectedCallback();
+	};
 
 
 }
