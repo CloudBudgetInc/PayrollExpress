@@ -50,7 +50,7 @@ export default class CBTaxThresholds extends LightningElement {
 	}
 
 	handleParamsChange(event) {
-		const field = event.target.label.includes('Val') ? `cb5__Single${event.target.label}__c` : `${event.target.label}__c`;
+		const field = event.target.label.includes('Val') ? `cb5__Single${event.target.label}__c` : `cb5p__${event.target.label}__c`;
 		const value = event.target.value;
 		const nflId = event.target.name;
 		const library = {Id: nflId};

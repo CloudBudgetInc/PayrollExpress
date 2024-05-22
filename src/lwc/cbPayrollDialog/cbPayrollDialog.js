@@ -103,13 +103,13 @@ export default class CBPayrollDialog extends LightningElement {
 	addCategory = async () => {
 		this.showCategories = false;
 		try {
-			const Index__c = this.categories ? this.categories.length + 1 : 1;
+			const cb5p__Index__c = this.categories ? this.categories.length + 1 : 1;
 			const category = {
 				Name: 'New',
 				cb5p__CBEmployee__c: this.employee.Id,
 				cb5p__CBBudgetYear__c: this.budgetYearId,
-				Index__c,
-				Type__c: 'Salary'
+				cb5p__Index__c,
+				cb5p__Type__c: 'Salary'
 			};
 			await saveNewCategoryServer({category});
 			this.connectedCallback();

@@ -130,11 +130,11 @@ public class CBPayrollExpressPageController {
 	public static List<cb5__CBNonFinancialLibrary__c> getTaxThresholdsServer() {
 		return [
 				SELECT Id,Name,NFL1__c,NFL2__c,NFL3__c,NFL4__c,NFL5__c,
-						NFL1__r.From__c,NFL1__r.Till__c,NFL1__r.cb5__SingleValue__c,
-						NFL2__r.From__c,NFL2__r.Till__c,NFL2__r.cb5__SingleValue__c,
-						NFL3__r.From__c,NFL3__r.Till__c,NFL3__r.cb5__SingleValue__c,
-						NFL4__r.From__c,NFL4__r.Till__c,NFL4__r.cb5__SingleValue__c,
-						NFL5__r.From__c,NFL5__r.Till__c,NFL5__r.cb5__SingleValue__c
+						NFL1__r.From__c,NFL1__r.cb5p__UpTo__c,NFL1__r.cb5__SingleValue__c,
+						NFL2__r.From__c,NFL2__r.cb5p__UpTo__c,NFL2__r.cb5__SingleValue__c,
+						NFL3__r.From__c,NFL3__r.cb5p__UpTo__c,NFL3__r.cb5__SingleValue__c,
+						NFL4__r.From__c,NFL4__r.cb5p__UpTo__c,NFL4__r.cb5__SingleValue__c,
+						NFL5__r.From__c,NFL5__r.cb5p__UpTo__c,NFL5__r.cb5__SingleValue__c
 				FROM cb5__CBNonFinancialLibrary__c
 				WHERE cb5__Type__c = 'Tax'
 				LIMIT 100

@@ -19,9 +19,9 @@ const calculateResult = () => {
 
 	c.resultNFL.cb5__NonFinancialItems__r.forEach((item, idx) => {
 		try {
-			const args = c?.nfls.reduce((r, nfl, idx) => {
+			const args = c?.nfls.reduce((r, nfl, nflIdx) => {
 				const arg1 = nfl?.cb5__NonFinancialItems__r[idx]?.cb5__Value__c;
-				if (arg1 !== undefined) r[`#${idx + 1}`] = arg1;
+				if (arg1 !== undefined) r[`#${nflIdx + 1}`] = arg1;
 				return r;
 			}, {});
 			let updatedFormula = formula;

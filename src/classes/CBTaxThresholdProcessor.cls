@@ -40,7 +40,7 @@ public with sharing class CBTaxThresholdProcessor {
 				}
 				Map<String, cb5__CBNonFinancialLibrary__c> internalMap = new Map<String, cb5__CBNonFinancialLibrary__c>();
 				for (cb5__CBNonFinancialLibrary__c thr : [
-						SELECT From__c,Till__c,cb5__SingleValue__c, (SELECT cb5__CBPeriod__c,cb5__Value__c FROM cb5__NonFinancialItems__r)
+						SELECT cb5p__From__c,cb5p__UpTo__c,cb5__SingleValue__c, (SELECT cb5__CBPeriod__c,cb5__Value__c FROM cb5__NonFinancialItems__r)
 						FROM cb5__CBNonFinancialLibrary__c
 						WHERE Id IN:thresholdIds
 				]) internalMap.put(thr.Id, thr);
@@ -72,13 +72,13 @@ public with sharing class CBTaxThresholdProcessor {
 			for (cb5__CBNonFinancialLibrary__c thr : thresholds) {
 				if (yearlyTotal < thr.From__c) continue; // under limit
 				Decimal baseValue = 0;
-				if ((thr.Till__c == 0 || thr.Till__c == null) || (yearlyTotal < thr.Till__c)) { // last limit
+				if ((thr.cb5p__UpTo__c == 0 || thr.cb5p__UpTo__c == null) || (yearlyTotal < thr.cb5p__UpTo__c)) { // last limit
 					baseValue = yearlyTotal - thr.From__c;
 				} else {
-					baseValue = thr.Till__c - thr.From__c;
+					baseValue = thr.cb5p__UpTo__c - thr.From__c;
 				}
 				yearlyTax += baseValue * thr.cb5__SingleValue__c;
-				if (yearlyTotal < thr.Till__c) break;
+				if (yearlyTotal < thr.cb5p__UpTo__c) break;
 			}
 			for (cb5__CBAmount__c a : blw.amounts) {
 				Decimal fraction = a.cb5__Value__c / yearlyTotal;

@@ -117,7 +117,11 @@ export default class CBCategory extends LightningElement {
 	};
 
 	handleNFLItemChange = (event) => {
-		saveNFLItemsServer().catch(e => _parseServerError('Saving Error: ', ));
+		const updatedItem = {
+			Id: event.target.name,
+			cb5__Value__c: event.target.value
+		};
+		saveNFLItemsServer({items: [updatedItem]}).catch(e => _parseServerError('Saving Error: ', e));
 	};
 
 	handleResultItemsChange = async (event) => {
