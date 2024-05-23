@@ -24,11 +24,14 @@ OF THE POSSIBILITY OF SUCH DAMAGE.
 
  */
 import {api, LightningElement, track} from 'lwc';
-import {_parseServerError} from "c/cbUtils";
+import {_confirm, _message, _parseServerError, _prompt} from "c/cbUtils";
 import getEmployeesServer from '@salesforce/apex/CBPayrollExpressPageController.getEmployeesServer';
 import getCategoriesServer from '@salesforce/apex/CBPayrollExpressPageController.getCategoriesServer';
 import saveEmployeeServer from '@salesforce/apex/CBPayrollExpressPageController.saveEmployeeServer';
 import saveNewCategoryServer from '@salesforce/apex/CBPayrollExpressPageController.saveNewCategoryServer';
+import savePayrollTemplateServer from '@salesforce/apex/CBPayrollTemplatePageController.savePayrollTemplateServer';
+import getFunctionsServer from '@salesforce/apex/CBPayrollTemplatePageController.getFunctionsServer';
+import applyPayrollTemplateServer from '@salesforce/apex/CBPayrollTemplatePageController.applyPayrollTemplateServer';
 
 export default class CBPayrollDialog extends LightningElement {
 
@@ -40,6 +43,7 @@ export default class CBPayrollDialog extends LightningElement {
 	@track readyToRender = false;
 	@track employee;
 	@track categories;
+	@track functionSO = [];
 
 
 	async connectedCallback() {
@@ -50,6 +54,7 @@ export default class CBPayrollDialog extends LightningElement {
 		this.colorAllocatedGroup();
 		this.showSpinner = false;
 		this.readyToRender = true;
+		this.getFunctions();
 	};
 
 	getEmployee = async () => {
@@ -142,5 +147,45 @@ export default class CBPayrollDialog extends LightningElement {
 			catArray.forEach(cat => cat.styleClass = color);
 		})
 	};
+
+	savePayrollTemplate = async () => {
+		const title = await _prompt('Put some title', 'New', 'Title');
+		if (!title) return;
+		savePayrollTemplateServer({
+			title,
+			empId: this.employee.Id,
+			byId: this.budgetYearId
+		}).catch(e => _parseServerError('Saving Error :', e));
+	};
+
+	getFunctions = async () => {
+		const functions = await getFunctionsServer().catch(e => _parseServerError('Get Function Error: ', e));
+		if (!functions) return;
+		this.functionSO = functions.map(f => ({value: f.Id, label: f.Name}));
+	};
+
+	@track funcId;
+	handleConfigChange = (event) => {
+		this.funcId = event.target.value;
+	};
+
+	applyConfiguration = async () => {
+		const confirmed = await _confirm('Current categories will be replaced with categories from the template. Are you sure?');
+		if (!confirmed) {
+			this.funcId = undefined;
+			return null;
+		}
+		this.readyToRender = false;
+		this.showSpinner = true;
+		await applyPayrollTemplateServer({
+			funcId: this.funcId,
+			empId: this.employee.Id,
+			byId: this.budgetYearId
+		}).catch(e => _parseServerError('Application Error : ', e));
+		this.funcId = undefined;
+		_message('success', 'Applied');
+		this.connectedCallback();
+	};
+
 
 }

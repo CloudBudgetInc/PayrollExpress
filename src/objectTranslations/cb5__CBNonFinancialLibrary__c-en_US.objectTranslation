@@ -5,8 +5,38 @@
         <name>From__c</name>
     </fields>
     <fields>
-        <label><!-- Till --></label>
-        <name>Till__c</name>
+        <label><!-- NFL1 --></label>
+        <name>NFL1__c</name>
+        <relationshipLabel><!-- CB Non-Financial Libraries --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- NFL2 --></label>
+        <name>NFL2__c</name>
+        <relationshipLabel><!-- CB Non-Financial Libraries (NFL2) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- NFL3 --></label>
+        <name>NFL3__c</name>
+        <relationshipLabel><!-- CB Non-Financial Libraries (NFL3) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- NFL4 --></label>
+        <name>NFL4__c</name>
+        <relationshipLabel><!-- CB Non-Financial Libraries (NFL4) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- NFL5 --></label>
+        <name>NFL5__c</name>
+        <relationshipLabel><!-- CB Non-Financial Libraries (NFL5) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- NFL6 --></label>
+        <name>NFL6__c</name>
+        <relationshipLabel><!-- CB Non-Financial Libraries (NFL6) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Up To --></label>
+        <name>UpTo__c</name>
     </fields>
     <fields>
         <label><!-- CB Budget Line --></label>
@@ -46,8 +76,16 @@
             <translation><!-- Custom --></translation>
         </picklistValues>
         <picklistValues>
+            <masterLabel>Result</masterLabel>
+            <translation><!-- Result --></translation>
+        </picklistValues>
+        <picklistValues>
             <masterLabel>Static</masterLabel>
             <translation><!-- Static --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Tax</masterLabel>
+            <translation><!-- Tax --></translation>
         </picklistValues>
     </fields>
     <fields>

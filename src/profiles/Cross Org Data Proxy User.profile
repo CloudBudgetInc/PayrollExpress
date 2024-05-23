@@ -131,6 +131,10 @@
         <visible>false</visible>
     </applicationVisibilities>
     <classAccesses>
+        <apexClass>CBCategoryProcessor</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>CBCategorySelector</apexClass>
         <enabled>false</enabled>
     </classAccesses>
@@ -143,7 +147,15 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>CBPayrollExpressService</apexClass>
+        <apexClass>CBPayrollExpressTest</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>CBPayrollTemplatePageController</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>CBTaxThresholdProcessor</apexClass>
         <enabled>false</enabled>
     </classAccesses>
     <custom>false</custom>
@@ -699,12 +711,27 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>CBCategory__c.NFLResult__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>CBCategory__c.ParentCategory__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>CBCategory__c.TaxThreshold__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>CBCategory__c.Value__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>CBCategory__c.isAllocated__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -4074,6 +4101,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>cb5__CBBudgetLine__c.CBCategory__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>cb5__CBBudgetLine__c.cb5__APAheadTrigger__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -5039,6 +5071,41 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>cb5__CBNonFinancialLibrary__c.NFL1__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>cb5__CBNonFinancialLibrary__c.NFL2__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>cb5__CBNonFinancialLibrary__c.NFL3__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>cb5__CBNonFinancialLibrary__c.NFL4__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>cb5__CBNonFinancialLibrary__c.NFL5__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>cb5__CBNonFinancialLibrary__c.NFL6__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>cb5__CBNonFinancialLibrary__c.UpTo__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>cb5__CBNonFinancialLibrary__c.cb5__CBBudgetLine__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -5480,6 +5547,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>cb5__CBTransaction__c.cb5__CBVariable5__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>cb5__CBTransaction__c.cb5__ExtId__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -5938,6 +6010,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>false</editable>
+        <field>sdfs__FormulaShare_Processed_Share_Event__e.sdfs__Running_User__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>sdfs__FormulaShare_Processed_Share_Event__e.sdfs__Share_Id__c</field>
         <readable>true</readable>
@@ -6066,6 +6143,11 @@
         <editable>true</editable>
         <field>sdfs__FormulaShare_Record_Log__c.sdfs__Record__c</field>
         <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>sdfs__FormulaShare_Record_Log__c.sdfs__Running_User__c</field>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
@@ -7350,6 +7432,10 @@
     </recordTypeVisibilities>
     <tabVisibilities>
         <tab>CBCategory__c</tab>
+        <visibility>DefaultOn</visibility>
+    </tabVisibilities>
+    <tabVisibilities>
+        <tab>CBTaxThresholds</tab>
         <visibility>DefaultOn</visibility>
     </tabVisibilities>
     <tabVisibilities>

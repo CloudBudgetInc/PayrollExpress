@@ -25,16 +25,32 @@ OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 public class CBPayrollExpressPageController {
 
+	/**
+	 * @param params (budgetYearId, employeeId, )
+	 *
+	 * @return list of Var (Employees) created
+	 */
 	@AuraEnabled
 	public static List<cb5__CBVariable5__c> getEmployeesServer(Map<String, String> params) {
 		return CBEmployeeSelector.getEmployees(params);
 	}
 
+	/**
+	 * @param params  (budgetYearId, employeeId )
+	 *
+	 * @return list of categories ordered by index
+	 */
 	@AuraEnabled
 	public static List<CBCategory__c> getCategoriesServer(Map<String, String> params) {
 		return CBCategorySelector.getCategories(params);
 	}
 
+	/**
+	 * @param nflIds list of needed for category NFLs
+	 * @param budgetYearId amounts just for selected budget year
+	 *
+	 * @return needed for category NFLs
+	 */
 	@AuraEnabled
 	public static List<cb5__CBNonFinancialLibrary__c> getNFLServer(List<String> nflIds, String budgetYearId) {
 		Set<String> nflIdSet = new Set<String> (nflIds);
@@ -50,7 +66,9 @@ public class CBPayrollExpressPageController {
 		];
 	}
 
-
+	/**
+	 * @return analytics for the main page filter dropdown
+	 */
 	@AuraEnabled
 	public static Map<String, Map<String, String>> getAnalyticsServer() {
 		Map<String, Map<String, String>> r = new Map<String, Map<String, String>>();
@@ -70,6 +88,12 @@ public class CBPayrollExpressPageController {
 		return r;
 	}
 
+	/**
+	 * @param employee processed employee need to be saved
+	 * @param byId selected budget year
+	 *
+	 * @return updated employee
+	 */
 	@AuraEnabled
 	public static cb5__CBVariable5__c saveEmployeeServer(cb5__CBVariable5__c employee, String byId) {
 		update employee;
@@ -77,13 +101,21 @@ public class CBPayrollExpressPageController {
 		return employee;
 	}
 
+	/**
+	 * @param category category to save
+	 * @param resultItems each category has NFL with result amounts per one budget year
+	 *
+	 * @return Id of saved category
+	 */
 	@AuraEnabled
 	public static String saveCategoryServer(CBCategory__c category, List<cb5__CBNonFinancialItem__c> resultItems) {
 		if (resultItems != null && resultItems.size() > 0) update resultItems;
 		upsert category;
 		return category.Id;
 	}
-
+	/**
+	 * New category might be saved on server first, because trigger must create result NFL
+	 */
 	@AuraEnabled
 	public static void saveNewCategoryServer(CBCategory__c category) {
 		category.CBAccount__c = [SELECT Id FROM cb5__CBAccount__c LIMIT 1][0].Id;
@@ -107,11 +139,19 @@ public class CBPayrollExpressPageController {
 		return siblingCategories.size() == 0;
 	}
 
+	/**
+	 * @param categoryId
+	 */
 	@AuraEnabled
 	public static void deleteCategoryServer(String categoryId) {
 		Database.delete(categoryId);
 	}
 
+	/**
+	 * @param employeeId - processed employee Id
+	 *
+	 * @return list of NFLs related to this employee
+	 */
 	@AuraEnabled
 	public static List<cb5__CBNonFinancialLibrary__c> getRecentNFLsServer(String employeeId) {
 		Set<String> recentNFLs = new Set<String>();
@@ -126,6 +166,9 @@ public class CBPayrollExpressPageController {
 		return [SELECT Id,Name,cb5__LayerTitle__c FROM cb5__CBNonFinancialLibrary__c WHERE Id IN:recentNFLs];
 	}
 
+	/**
+	 * @return all Thresholds in the system. 
+	 */
 	@AuraEnabled
 	public static List<cb5__CBNonFinancialLibrary__c> getTaxThresholdsServer() {
 		return [
@@ -141,16 +184,25 @@ public class CBPayrollExpressPageController {
 		];
 	}
 
+	/**
+	 * @param nflLib quick save for Threshold numbers
+	 */
 	@AuraEnabled
 	public static void saveTaxThresholdsServer(cb5__CBNonFinancialLibrary__c nflLib) {
 		upsert nflLib;
 	}
 
+	/**
+	 * @param items quick save for Threshold numbers
+	 */
 	@AuraEnabled
 	public static void saveNFLItemsServer(List<cb5__CBNonFinancialItem__c> items) {
 		upsert items;
 	}
 
+	/**
+	 * @param library temporary solution to use single value in all nfl items
+	 */
 	@AuraEnabled
 	public static void saveNFLibraryServer(cb5__CBNonFinancialLibrary__c library) {
 		List<cb5__CBNonFinancialItem__c> items = [SELECT Id FROM cb5__CBNonFinancialItem__c WHERE cb5__NonFinancialLibrary__c = :library.Id];
@@ -159,17 +211,27 @@ public class CBPayrollExpressPageController {
 		upsert items;
 	}
 
+	/**
+	 * Creating a new Threshold in server first
+	 */
 	@AuraEnabled
 	public static void addTaxThresholdServer() {
 		List<cb5__CBLayer__c> layers = [SELECT Id FROM cb5__CBLayer__c WHERE Name LIKE '%tax%'];
 		insert new cb5__CBNonFinancialLibrary__c(Name = 'New', cb5__Type__c = 'Tax', cb5__Layer__c = layers[0].Id);
 	}
 
+	/**
+	 * @param nflId id of Threshold need to be deleted
+	 */
 	@AuraEnabled
 	public static void deleteTaxThresholdServer(String nflId) {
 		Database.delete(nflId);
 	}
 
+	/**
+	 * @param parentCategoryId parent allocation category Id
+	 * @return index on newly allocated category
+	 */
 	@AuraEnabled
 	public static Decimal setAllocatedAndGetChildIndexServer(String parentCategoryId) {
 		CBCategory__c parentCategory = [SELECT Id,Index__c, (SELECT Id FROM CBCategories__r) FROM CBCategory__c WHERE Id = :parentCategoryId];
@@ -178,9 +240,13 @@ public class CBPayrollExpressPageController {
 		return parentCategory.Index__c + Decimal.valueOf((parentCategory.CBCategories__r.size() + 1)) / 10;
 	}
 
+	/**
+	 * @param layerId layer Id of new NFL
+	 * @return
+	 */
 	@AuraEnabled
 	public static String createNewNFLServer(String layerId) {
-		cb5__CBNonFinancialLibrary__c newNFL = new cb5__CBNonFinancialLibrary__c(Name = 'Custom TEST', cb5__Type__c = 'Custom', cb5__Layer__c = layerId);
+		cb5__CBNonFinancialLibrary__c newNFL = new cb5__CBNonFinancialLibrary__c(Name = 'Custom', cb5__Type__c = 'Custom', cb5__Layer__c = layerId);
 		insert newNFL;
 		return newNFL.Id;
 	}

@@ -25,6 +25,9 @@ OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 public with sharing class CBTaxThresholdProcessor {
 
+	/**
+	 * Map of tax thresholds. Key is parent threshold NFL Id, value - list of its children
+	 */
 	private static Map<String, List<cb5__CBNonFinancialLibrary__c>> thresholdMap {
 		get {
 			if (thresholdMap == null) {

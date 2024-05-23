@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
     <fields>
+        <label><!-- CB Category --></label>
+        <name>CBCategory__c</name>
+        <relationshipLabel><!-- CB Budget Lines --></relationshipLabel>
+    </fields>
+    <fields>
         <label><!-- AP Ahead Trigger --></label>
         <name>cb5__APAheadTrigger__c</name>
     </fields>
@@ -149,7 +154,7 @@
         <relationshipLabel><!-- CB Budget Lines --></relationshipLabel>
     </fields>
     <fields>
-        <label><!-- CB Non-Financial Library 5 --></label>
+        <label>CB Employee</label>
         <name>cb5__NFL5__c</name>
         <relationshipLabel><!-- CB Budget Lines --></relationshipLabel>
     </fields>

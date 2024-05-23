@@ -88,6 +88,10 @@
             <translation><!-- NFL --></translation>
         </picklistValues>
         <picklistValues>
+            <masterLabel>Payroll Template</masterLabel>
+            <translation><!-- Payroll Template --></translation>
+        </picklistValues>
+        <picklistValues>
             <masterLabel>Variable</masterLabel>
             <translation><!-- Variable --></translation>
         </picklistValues>

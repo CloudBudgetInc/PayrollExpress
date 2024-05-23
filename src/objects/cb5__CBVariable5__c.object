@@ -157,6 +157,7 @@
     <fields>
         <fullName>CBDivision__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
+        <deprecated>false</deprecated>
         <externalId>false</externalId>
         <label>CB Division</label>
         <referenceTo>cb5__CBDivision__c</referenceTo>
@@ -168,6 +169,7 @@
     </fields>
     <fields>
         <fullName>Position__c</fullName>
+        <deprecated>false</deprecated>
         <externalId>false</externalId>
         <label>Position</label>
         <required>false</required>

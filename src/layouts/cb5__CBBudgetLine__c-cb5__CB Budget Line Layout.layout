@@ -103,6 +103,10 @@
                 <behavior>Edit</behavior>
                 <field>cb5__SystemAccessKey__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>CBCategory__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

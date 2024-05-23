@@ -143,6 +143,7 @@
     <allowInChatterGroups>false</allowInChatterGroups>
     <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
     <deploymentStatus>Deployed</deploymentStatus>
+    <deprecated>false</deprecated>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
     <enableFeeds>false</enableFeeds>
@@ -155,6 +156,7 @@
     <externalSharingModel>Private</externalSharingModel>
     <fields>
         <fullName>Allocation__c</fullName>
+        <deprecated>false</deprecated>
         <externalId>false</externalId>
         <label>Allocation</label>
         <precision>7</precision>
@@ -164,8 +166,22 @@
         <type>Percent</type>
     </fields>
     <fields>
+        <fullName>CBAccount__c</fullName>
+        <deleteConstraint>Restrict</deleteConstraint>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>CB Account</label>
+        <referenceTo>cb5__CBAccount__c</referenceTo>
+        <relationshipLabel>CB Categories</relationshipLabel>
+        <relationshipName>CB_Categories</relationshipName>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
         <fullName>CBBudgetYear__c</fullName>
         <deleteConstraint>Restrict</deleteConstraint>
+        <deprecated>false</deprecated>
         <externalId>false</externalId>
         <label>CB Budget Year</label>
         <referenceTo>cb5__CBBudgetYear__c</referenceTo>
@@ -178,6 +194,7 @@
     <fields>
         <fullName>CBDivision__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
+        <deprecated>false</deprecated>
         <externalId>false</externalId>
         <label>CB Division</label>
         <referenceTo>cb5__CBDivision__c</referenceTo>
@@ -190,6 +207,7 @@
     <fields>
         <fullName>CBEmployee__c</fullName>
         <deleteConstraint>Restrict</deleteConstraint>
+        <deprecated>false</deprecated>
         <externalId>false</externalId>
         <label>CB Employee</label>
         <referenceTo>cb5__CBVariable5__c</referenceTo>
@@ -201,6 +219,7 @@
     </fields>
     <fields>
         <fullName>Formula__c</fullName>
+        <deprecated>false</deprecated>
         <externalId>false</externalId>
         <label>Formula</label>
         <length>32768</length>
@@ -210,11 +229,12 @@
     </fields>
     <fields>
         <fullName>Index__c</fullName>
+        <deprecated>false</deprecated>
         <externalId>false</externalId>
         <label>Index</label>
-        <precision>3</precision>
+        <precision>5</precision>
         <required>true</required>
-        <scale>0</scale>
+        <scale>2</scale>
         <trackTrending>false</trackTrending>
         <type>Number</type>
         <unique>false</unique>
@@ -222,6 +242,7 @@
     <fields>
         <fullName>NFL1__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
+        <deprecated>false</deprecated>
         <externalId>false</externalId>
         <label>NFL1</label>
         <referenceTo>cb5__CBNonFinancialLibrary__c</referenceTo>
@@ -234,6 +255,7 @@
     <fields>
         <fullName>NFL2__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
+        <deprecated>false</deprecated>
         <externalId>false</externalId>
         <label>NFL2</label>
         <referenceTo>cb5__CBNonFinancialLibrary__c</referenceTo>
@@ -246,6 +268,7 @@
     <fields>
         <fullName>NFL3__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
+        <deprecated>false</deprecated>
         <externalId>false</externalId>
         <label>NFL3</label>
         <referenceTo>cb5__CBNonFinancialLibrary__c</referenceTo>
@@ -258,6 +281,7 @@
     <fields>
         <fullName>NFL4__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
+        <deprecated>false</deprecated>
         <externalId>false</externalId>
         <label>NFL4</label>
         <referenceTo>cb5__CBNonFinancialLibrary__c</referenceTo>
@@ -270,6 +294,7 @@
     <fields>
         <fullName>NFL5__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
+        <deprecated>false</deprecated>
         <externalId>false</externalId>
         <label>NFL5</label>
         <referenceTo>cb5__CBNonFinancialLibrary__c</referenceTo>
@@ -282,23 +307,47 @@
     <fields>
         <fullName>NFLResult__c</fullName>
         <deleteConstraint>Restrict</deleteConstraint>
+        <deprecated>false</deprecated>
         <externalId>false</externalId>
         <label>NFL Result</label>
         <referenceTo>cb5__CBNonFinancialLibrary__c</referenceTo>
         <relationshipLabel>CB Categories (NFL Result)</relationshipLabel>
         <relationshipName>Categories</relationshipName>
-        <required>true</required>
+        <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
     <fields>
         <fullName>ParentCategory__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
+        <deprecated>false</deprecated>
         <externalId>false</externalId>
         <label>Parent Category</label>
         <referenceTo>CBCategory__c</referenceTo>
         <relationshipLabel>CB Categories</relationshipLabel>
-        <relationshipName>CB_Categories</relationshipName>
+        <relationshipName>CBCategories</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>TaxThreshold__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Tax Threshold</label>
+        <lookupFilter>
+            <active>true</active>
+            <filterItems>
+                <field>cb5__CBNonFinancialLibrary__c.cb5__Type__c</field>
+                <operation>equals</operation>
+                <value>Tax</value>
+            </filterItems>
+            <isOptional>false</isOptional>
+        </lookupFilter>
+        <referenceTo>cb5__CBNonFinancialLibrary__c</referenceTo>
+        <relationshipLabel>CB Categories (CB Tax Threshold)</relationshipLabel>
+        <relationshipName>CB_Categories5</relationshipName>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
@@ -306,6 +355,7 @@
     <fields>
         <fullName>Type__c</fullName>
         <defaultValue>&apos;Salary&apos;</defaultValue>
+        <deprecated>false</deprecated>
         <externalId>false</externalId>
         <label>Type</label>
         <required>true</required>
@@ -336,6 +386,7 @@
     <fields>
         <fullName>Value__c</fullName>
         <defaultValue>0</defaultValue>
+        <deprecated>false</deprecated>
         <externalId>false</externalId>
         <label>Value</label>
         <precision>18</precision>
@@ -343,6 +394,17 @@
         <scale>2</scale>
         <trackTrending>false</trackTrending>
         <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>isAllocated__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <description>true if it is parent category</description>
+        <externalId>false</externalId>
+        <inlineHelpText>true if it is parent category</inlineHelpText>
+        <label>isAllocated</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
     </fields>
     <label>CB Category</label>
     <listViews>

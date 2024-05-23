@@ -381,6 +381,11 @@
                     <default>false</default>
                     <label>BLM</label>
                 </value>
+                <value>
+                    <fullName>Payroll Template</fullName>
+                    <default>false</default>
+                    <label>Payroll Template</label>
+                </value>
             </valueSetDefinition>
         </valueSet>
     </fields>

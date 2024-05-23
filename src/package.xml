@@ -1,14 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
     <types>
+        <members>CBCategoryProcessor</members>
         <members>CBCategorySelector</members>
         <members>CBEmployeeSelector</members>
         <members>CBPayrollExpressPageController</members>
-        <members>CBPayrollExpressService</members>
+        <members>CBPayrollExpressTest</members>
+        <members>CBPayrollTemplatePageController</members>
+        <members>CBTaxThresholdProcessor</members>
         <name>ApexClass</name>
     </types>
     <types>
-        <members>CBEmployeeTrigger</members>
+        <members>CBCategoryTrigger</members>
         <name>ApexTrigger</name>
     </types>
     <types>
@@ -89,6 +92,7 @@
         <members>Account.SLA__c</members>
         <members>Account.UpsellOpportunity__c</members>
         <members>CBCategory__c.Allocation__c</members>
+        <members>CBCategory__c.CBAccount__c</members>
         <members>CBCategory__c.CBBudgetYear__c</members>
         <members>CBCategory__c.CBDivision__c</members>
         <members>CBCategory__c.CBEmployee__c</members>
@@ -101,8 +105,10 @@
         <members>CBCategory__c.NFL5__c</members>
         <members>CBCategory__c.NFLResult__c</members>
         <members>CBCategory__c.ParentCategory__c</members>
+        <members>CBCategory__c.TaxThreshold__c</members>
         <members>CBCategory__c.Type__c</members>
         <members>CBCategory__c.Value__c</members>
+        <members>CBCategory__c.isAllocated__c</members>
         <members>Case.EngineeringReqNumber__c</members>
         <members>Case.PotentialLiability__c</members>
         <members>Case.Product__c</members>
@@ -149,6 +155,7 @@
         <members>cb5__CBAmount__c.cb5__PeriodName__c</members>
         <members>cb5__CBAmount__c.cb5__ScenarioName__c</members>
         <members>cb5__CBAmount__c.cb5__Value__c</members>
+        <members>cb5__CBBudgetLine__c.CBCategory__c</members>
         <members>cb5__CBBudgetLine__c.cb5__APAheadTrigger__c</members>
         <members>cb5__CBBudgetLine__c.cb5__APBackTrigger__c</members>
         <members>cb5__CBBudgetLine__c.cb5__APHaveAccessToAhead__c</members>
@@ -361,7 +368,13 @@
         <members>cb5__CBNonFinancialItem__c.cb5__PeriodName__c</members>
         <members>cb5__CBNonFinancialItem__c.cb5__Value__c</members>
         <members>cb5__CBNonFinancialLibrary__c.From__c</members>
-        <members>cb5__CBNonFinancialLibrary__c.Till__c</members>
+        <members>cb5__CBNonFinancialLibrary__c.NFL1__c</members>
+        <members>cb5__CBNonFinancialLibrary__c.NFL2__c</members>
+        <members>cb5__CBNonFinancialLibrary__c.NFL3__c</members>
+        <members>cb5__CBNonFinancialLibrary__c.NFL4__c</members>
+        <members>cb5__CBNonFinancialLibrary__c.NFL5__c</members>
+        <members>cb5__CBNonFinancialLibrary__c.NFL6__c</members>
+        <members>cb5__CBNonFinancialLibrary__c.UpTo__c</members>
         <members>cb5__CBNonFinancialLibrary__c.cb5__CBBudgetLine__c</members>
         <members>cb5__CBNonFinancialLibrary__c.cb5__Description__c</members>
         <members>cb5__CBNonFinancialLibrary__c.cb5__Index__c</members>
@@ -485,6 +498,7 @@
         <members>cb5__CBTransaction__c.cb5__CBVariable3__c</members>
         <members>cb5__CBTransaction__c.cb5__CBVariable4__c</members>
         <members>cb5__CBTransaction__c.cb5__CBVariable5__c</members>
+        <members>cb5__CBTransaction__c.cb5__ExtId__c</members>
         <members>cb5__CBTransaction__c.cb5__Value__c</members>
         <members>cb5__CBVariable1__c.cb5__Code__c</members>
         <members>cb5__CBVariable1__c.cb5__ExtId__c</members>
@@ -583,6 +597,7 @@
         <members>sdfs__FormulaShare_Processed_Share_Event__e.sdfs__Processed_Date_Time__c</members>
         <members>sdfs__FormulaShare_Processed_Share_Event__e.sdfs__Record_Id__c</members>
         <members>sdfs__FormulaShare_Processed_Share_Event__e.sdfs__Related_Batch_Log_Id__c</members>
+        <members>sdfs__FormulaShare_Processed_Share_Event__e.sdfs__Running_User__c</members>
         <members>sdfs__FormulaShare_Processed_Share_Event__e.sdfs__Share_Id__c</members>
         <members>sdfs__FormulaShare_Processed_Share_Event__e.sdfs__Share_Key__c</members>
         <members>sdfs__FormulaShare_Processed_Share_Event__e.sdfs__Share_With__c</members>
@@ -609,6 +624,7 @@
         <members>sdfs__FormulaShare_Record_Log__c.sdfs__Processed_Date_Time__c</members>
         <members>sdfs__FormulaShare_Record_Log__c.sdfs__Record_Id__c</members>
         <members>sdfs__FormulaShare_Record_Log__c.sdfs__Record__c</members>
+        <members>sdfs__FormulaShare_Record_Log__c.sdfs__Running_User__c</members>
         <members>sdfs__FormulaShare_Record_Log__c.sdfs__Sharing_Applied_for_First_Time__c</members>
         <members>sdfs__FormulaShare_Rule_DML__e.sdfs__Error__c</members>
         <members>sdfs__FormulaShare_Rule_DML__e.sdfs__Successful__c</members>
@@ -1098,6 +1114,7 @@
     </types>
     <types>
         <members>CBCategory__c</members>
+        <members>CBTaxThresholds</members>
         <members>CB_Payroll_Express</members>
         <members>cb5__BL_Modal</members>
         <members>cb5__Budget_Line_Dialog</members>
@@ -1156,6 +1173,9 @@
         <members>cb5__Reporting</members>
         <members>cb5__Style_Setup</members>
         <members>cb5__Task_Dispatcher</members>
+        <members>cb5p__CBCategory__c</members>
+        <members>cb5p__CBTaxThresholds</members>
+        <members>cb5p__CB_Payroll_Express</members>
         <members>formuladebugger__FormulaDebugger</members>
         <members>sdfs__FormulaShare_Dashboard</members>
         <members>sdfs__FormulaShare_Log__c</members>
@@ -1313,6 +1333,7 @@
         <name>EscalationRules</name>
     </types>
     <types>
+        <members>CB_Non_Financial_Library_Record_Page1</members>
         <members>ContactCenter_UtilityBar</members>
         <members>CrisisCenter_UtilityBar</members>
         <members>LightningSalesConsole_UtilityBar</members>
@@ -1563,9 +1584,11 @@
     </types>
     <types>
         <members>cbCategory</members>
+        <members>cbNFLSelector</members>
         <members>cbPayrollDialog</members>
         <members>cbPayrollExpress</members>
         <members>cbSpinner</members>
+        <members>cbTaxThresholds</members>
         <members>cbUtils</members>
         <name>LightningComponentBundle</name>
     </types>
@@ -1812,6 +1835,7 @@
         <name>NotificationTypeConfig</name>
     </types>
     <types>
+        <members>CBPayrollExpressAdmin</members>
         <members>Experience_Profile_Manager</members>
         <members>sfdcInternalInt__sfdc_scrt2</members>
         <name>PermissionSet</name>
@@ -2139,7 +2163,6 @@
     <types>
         <members>Account</members>
         <members>Asset</members>
-        <members>CBCategory__c</members>
         <members>Campaign</members>
         <members>Case</members>
         <members>ChangeRequest</members>
@@ -2213,6 +2236,7 @@
         <members>cb5__CBVariable4__c</members>
         <members>cb5__CBVariable5__c</members>
         <members>cb5__CBWelcome__c</members>
+        <members>cb5p__CBCategory__c</members>
         <members>sdfs__FormulaShare_Log__c</members>
         <members>sdfs__FormulaShare_Metrics__c</members>
         <members>sdfs__FormulaShare_Processed_Record_Share__c</members>

@@ -402,6 +402,18 @@ IF(ISBLANK(sdfs__FormulaShare_Batch_Log__c), &quot;Trigger&quot;, &quot;Batch&qu
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>sdfs__Running_User__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Running User</label>
+        <referenceTo>User</referenceTo>
+        <relationshipName>FormulaShare_Record_Logs</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
         <fullName>sdfs__Sharing_Applied_for_First_Time__c</fullName>
         <defaultValue>false</defaultValue>
         <deprecated>false</deprecated>

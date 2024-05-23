@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>CB Employee</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>CB Employees</value>
+    </caseValues>
     <fields>
         <label><!-- CB Division --></label>
         <name>CBDivision__c</name>
@@ -36,4 +44,6 @@
             <section>Custom Links</section>
         </sections>
     </layouts>
+    <nameFieldLabel>Employee Name</nameFieldLabel>
+    <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

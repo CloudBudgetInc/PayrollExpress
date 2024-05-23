@@ -81,6 +81,11 @@
         <name>sdfs__Record__c</name>
     </fields>
     <fields>
+        <label><!-- Running User --></label>
+        <name>sdfs__Running_User__c</name>
+        <relationshipLabel><!-- FormulaShare Record Logs --></relationshipLabel>
+    </fields>
+    <fields>
         <help><!-- True if the sharing created is the first FormulaShare sharing detected on this record. When this is the case, total records shared tracked in FormulaShare usage will be increased by 1 --></help>
         <label><!-- Sharing Applied for First Time --></label>
         <name>sdfs__Sharing_Applied_for_First_Time__c</name>

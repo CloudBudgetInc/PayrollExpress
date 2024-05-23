@@ -11,10 +11,12 @@
 				<span class="slds-assistive-text">Cancel and close</span>
 			</button>
 			<template lwc:if={readyToRender}>
+
 				<div class="slds-modal__header">
 					<h1 id="modal-heading-01" class="slds-modal__title slds-hyphenate">{employee.Name}</h1>
 				</div>
-				<div class="slds-modal__content slds-p-around_medium" >
+
+				<div class="slds-modal__content slds-p-around_medium">
 					<lightning-layout>
 						<lightning-layout-item>
 							<lightning-input value={employee.Name} label='Name' name="Name"
@@ -46,7 +48,8 @@
 						Categories
 						<template for:each={categories} for:item="cat">
 							<div key={cat} class="slds-box">
-								<c-cb-category record-id={cat.Id} style-class={cat.styleClass} refresh-parent={refreshDialog}></c-cb-category>
+								<c-cb-category record-id={cat.Id} style-class={cat.styleClass}
+											   refresh-parent={refreshDialog}></c-cb-category>
 							</div>
 						</template>
 					</template>
@@ -58,15 +61,49 @@
 				<!-- SPINNER -->
 			</template>
 			<div class="slds-modal__footer">
-				<lightning-button label="Cancel" onclick={closeDialog}>
+				<div class="slds-float_left">
+					<lightning-layout>
+						<lightning-layout>
+							<div class="slds-p-top_none slds-m-top_none slds-float_right">
+								<lightning-combobox
+										label="Configurations"
+										value={selectedConfigId}
+										placeholder="Select Configuration"
+										options={functionSO}
+										onchange={handleConfigChange}></lightning-combobox>
+							</div>
+						</lightning-layout>
+						<template lwc:if={funcId}>
+							<lightning-layout>
+								<div class="slds-p-top_large">
+									<lightning-button variant="brand" label="Apply" onclick={applyConfiguration}>
+									</lightning-button>
+								</div>
+							</lightning-layout>
+						</template>
+						<lightning-layout>
+							<div class="slds-p-top_large">
+								<lightning-button label="Save as configuration" onclick={savePayrollTemplate}>
+								</lightning-button>
+							</div>
+						</lightning-layout>
+					</lightning-layout>
+				</div>
+				<lightning-layout>
+					<lightning-layout-item size="2">
 
-				</lightning-button>
-				<lightning-button label="Add Category" icon-name="utility:add" onclick={addCategory}>
+					</lightning-layout-item>
+					<lightning-layout-item size="9">
+						<lightning-button label="Cancel" onclick={closeDialog}>
+						</lightning-button>
+						<lightning-button label="Add Category" icon-name="utility:add" onclick={addCategory}>
+						</lightning-button>
+						<lightning-button label="Save" onclick={saveEmployee} variant="success">
+						</lightning-button>
+					</lightning-layout-item>
+				</lightning-layout>
 
-				</lightning-button>
-				<lightning-button label="Save" onclick={saveEmployee} variant="success">
 
-				</lightning-button>
 			</div>
 		</div>
 	</section>

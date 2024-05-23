@@ -24,6 +24,11 @@ OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 public with sharing class CBEmployeeSelector {
 
+	/**
+	 * @param params - page params
+	 *
+	 * @return list of variable5 (employees)
+	 */
 	public static List<cb5__CBVariable5__c> getEmployees(Map<String, String> params) {
 		String byId = params.get('budgetYearId');
 		String divisionId = params.get('divisionId');

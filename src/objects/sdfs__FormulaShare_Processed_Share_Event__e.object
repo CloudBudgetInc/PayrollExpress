@@ -143,6 +143,19 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>sdfs__Running_User__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <isFilteringDisabled>false</isFilteringDisabled>
+        <isNameField>false</isNameField>
+        <isSortingDisabled>false</isSortingDisabled>
+        <label>Running User</label>
+        <length>18</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>sdfs__Share_Id__c</fullName>
         <deprecated>false</deprecated>
         <externalId>false</externalId>

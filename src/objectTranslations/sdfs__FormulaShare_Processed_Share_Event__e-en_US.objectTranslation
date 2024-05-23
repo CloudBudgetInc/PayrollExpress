@@ -45,6 +45,10 @@
         <name>sdfs__Related_Batch_Log_Id__c</name>
     </fields>
     <fields>
+        <label><!-- Running User --></label>
+        <name>sdfs__Running_User__c</name>
+    </fields>
+    <fields>
         <label><!-- Share Id --></label>
         <name>sdfs__Share_Id__c</name>
     </fields>

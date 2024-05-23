@@ -157,6 +157,7 @@
     <fields>
         <fullName>From__c</fullName>
         <defaultValue>0</defaultValue>
+        <deprecated>false</deprecated>
         <externalId>false</externalId>
         <label>From</label>
         <precision>18</precision>
@@ -168,12 +169,106 @@
         <unique>false</unique>
     </fields>
     <fields>
-        <fullName>Till__c</fullName>
-        <defaultValue>0</defaultValue>
+        <fullName>NFL1__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <deprecated>false</deprecated>
         <externalId>false</externalId>
-        <label>Till</label>
+        <label>NFL1</label>
+        <referenceTo>cb5__CBNonFinancialLibrary__c</referenceTo>
+        <relationshipLabel>CB Non-Financial Libraries</relationshipLabel>
+        <relationshipName>CB_Non_Financial_Libraries</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>NFL2__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>NFL2</label>
+        <referenceTo>cb5__CBNonFinancialLibrary__c</referenceTo>
+        <relationshipLabel>CB Non-Financial Libraries (NFL2)</relationshipLabel>
+        <relationshipName>CB_Non_Financial_Libraries1</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>NFL3__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>NFL3</label>
+        <referenceTo>cb5__CBNonFinancialLibrary__c</referenceTo>
+        <relationshipLabel>CB Non-Financial Libraries (NFL3)</relationshipLabel>
+        <relationshipName>CB_Non_Financial_Libraries2</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>NFL4__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>NFL4</label>
+        <referenceTo>cb5__CBNonFinancialLibrary__c</referenceTo>
+        <relationshipLabel>CB Non-Financial Libraries (NFL4)</relationshipLabel>
+        <relationshipName>CB_Non_Financial_Libraries3</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>NFL5__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>NFL5</label>
+        <referenceTo>cb5__CBNonFinancialLibrary__c</referenceTo>
+        <relationshipLabel>CB Non-Financial Libraries (NFL5)</relationshipLabel>
+        <relationshipName>CB_Non_Financial_Libraries4</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>NFL6__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>NFL6</label>
+        <lookupFilter>
+            <active>true</active>
+            <filterItems>
+                <field>$Source.cb5__Type__c</field>
+                <operation>equals</operation>
+                <value>Tax</value>
+            </filterItems>
+            <isOptional>false</isOptional>
+        </lookupFilter>
+        <referenceTo>cb5__CBNonFinancialLibrary__c</referenceTo>
+        <relationshipLabel>CB Non-Financial Libraries (NFL6)</relationshipLabel>
+        <relationshipName>CB_Non_Financial_Libraries5</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>UpTo__c</fullName>
+        <defaultValue>0</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Up To</label>
         <precision>18</precision>
-        <required>true</required>
+        <required>false</required>
         <scale>2</scale>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
@@ -291,6 +386,16 @@
                     <default>false</default>
                     <label>Custom</label>
                 </value>
+                <value>
+                    <fullName>Tax</fullName>
+                    <default>false</default>
+                    <label>Tax</label>
+                </value>
+                <value>
+                    <fullName>Result</fullName>
+                    <default>false</default>
+                    <label>Result</label>
+                </value>
             </valueSetDefinition>
         </valueSet>
     </fields>
@@ -311,9 +416,12 @@
     <listViews>
         <fullName>cb5__All</fullName>
         <columns>NAME</columns>
-        <columns>cb5__Index__c</columns>
         <columns>cb5__Layer__c</columns>
         <columns>cb5__Type__c</columns>
+        <columns>From__c</columns>
+        <columns>UpTo__c</columns>
+        <columns>cb5__SingleValue__c</columns>
+        <columns>CREATED_DATE</columns>
         <filterScope>Everything</filterScope>
         <label>All</label>
     </listViews>

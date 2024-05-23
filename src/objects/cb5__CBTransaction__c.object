@@ -283,6 +283,17 @@
         <type>Lookup</type>
     </fields>
     <fields>
+        <fullName>cb5__ExtId__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>External Id</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>cb5__Value__c</fullName>
         <deprecated>false</deprecated>
         <externalId>false</externalId>

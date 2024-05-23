@@ -50,6 +50,10 @@
         <relationshipLabel><!-- CB Transactions --></relationshipLabel>
     </fields>
     <fields>
+        <label><!-- External Id --></label>
+        <name>cb5__ExtId__c</name>
+    </fields>
+    <fields>
         <label><!-- Value --></label>
         <name>cb5__Value__c</name>
     </fields>

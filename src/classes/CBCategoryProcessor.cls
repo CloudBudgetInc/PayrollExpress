@@ -21,9 +21,9 @@ DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
 LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
 OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
 OF THE POSSIBILITY OF SUCH DAMAGE.
+
+Special class to recalculate all type of category totals
  */
-
-
 public with sharing class CBCategoryProcessor {
 
 	private static String budgetYearId;
@@ -103,17 +103,28 @@ public with sharing class CBCategoryProcessor {
 		set;
 	}
 
+	/**
+	 * The main class to regenerate budget lines and category totals
+	 * One run per one employee and one budget year
+	 * @param empId - processed employee Id
+	 * @param byId - processed budget year Id
+	 */
 	public static void updateEmployeeCategories(String empId, String byId) {
+		if (empId == null || byId == null) return;
 		budgetYearId = byId;
 		employeeId = empId;
 		for (CBCategory__c category : categories) {
-			System.debug('CATEGORY PROCESS: ' + category.Name);
 			List<cb5__CBAmount__c> calculatedAmounts = updateBudgetLineAndReturnCalculatedAmounts(category);
 			updateCategoryResult(category, calculatedAmounts);
 		}
-		finalizeDLS();
+		finalizeDML();
 	}
 
+	/**
+	 * This method updates budget lines witch will be source for the category amounts
+	 * @param category processed category
+	 * @return list of budget line amounts
+	 */
 	private static List<cb5__CBAmount__c> updateBudgetLineAndReturnCalculatedAmounts(CBCategory__c category) {
 		BudgetLineWrapper blw = new BudgetLineWrapper();
 		budgetLineIdsToDelete.add(category.Id); // old budget line must be deleted
@@ -131,20 +142,13 @@ public with sharing class CBCategoryProcessor {
 		List<cb5__CBAmount__c> amounts = new List<cb5__CBAmount__c>();
 		for (cb5__CBPeriod__c period : periods) amounts.add(new cb5__CBAmount__c(cb5__Value__c = 0, cb5__CBPeriod__c = period.Id));
 
-		System.debug('CATEGORY : ' + category.Name);
-
 		if (category.ParentCategory__c != null) {
-			System.debug('SUBLINE');
 			cb5__CBNonFinancialLibrary__c resultNFL = resultNFLMap.get(category.Id);
-			System.debug('result' + resultNFL);
 			Decimal allocationRate = category.Allocation__c == null ? 0 : category.Allocation__c;
 			List<cb5__CBNonFinancialItem__c> parentResultItems = engagedSourceNFLMap.get(category.NFL1__c).cb5__NonFinancialItems__r;
-			System.debug('parentResultItems = ' + parentResultItems);
-			System.debug('allocationRate = ' + allocationRate);
 			for (Integer i = 0; i < resultNFL.cb5__NonFinancialItems__r.size(); i++) {
 				amounts[i].cb5__Value__c = (parentResultItems[i].cb5__Value__c * allocationRate / 100).setScale(2);
 			}
-			System.debug('amounts = ' + amounts);
 			blw.amounts = amounts;
 			return blw.amounts;
 		}
@@ -158,8 +162,6 @@ public with sharing class CBCategoryProcessor {
 			return blw.amounts;
 		}
 
-		System.debug('------------ PASSED ------ ');
-
 		List<List<cb5__CBNonFinancialItem__c>> sourceNFLItems = new List<List<cb5__CBNonFinancialItem__c>>();
 		if (category.NFL1__c != null) sourceNFLItems.add(engagedSourceNFLMap.get(category.NFL1__c).cb5__NonFinancialItems__r);
 		if (category.NFL2__c != null) sourceNFLItems.add(engagedSourceNFLMap.get(category.NFL2__c).cb5__NonFinancialItems__r);
@@ -169,7 +171,6 @@ public with sharing class CBCategoryProcessor {
 
 		try {
 			blw.amounts = cb5.CBFormulaService.calculateFormulaTotals(amounts, sourceNFLItems, category.Formula__c);
-			System.debug('category.TaxThreshold__c :  ' + category.TaxThreshold__c);
 			if (category.TaxThreshold__c != null) {
 				CBTaxThresholdProcessor.applyTaxThresholds(blw, category.TaxThreshold__c);
 			}
@@ -196,11 +197,13 @@ public with sharing class CBCategoryProcessor {
 		resultNFL.Name = ('Category Result ' + category.Name).left(80);
 		NFLToUpdate.add(resultNFL);
 		NFLItemsToUpdate.addAll(resultNFL.cb5__NonFinancialItems__r);
-		System.debug('Result For Category : ' + category.Name + ' -> ' + resultNFL.cb5__NonFinancialItems__r);
 		categoriesToUpdate.add(category);
 	}
 
-	private static void finalizeDLS() {
+	/**
+	 * Last method to work with the database
+	 */
+	private static void finalizeDML() {
 		delete [SELECT Id FROM cb5__CBBudgetLine__c WHERE CBCategory__c IN:budgetLineIdsToDelete];
 		BudgetLineWrapper obj = new BudgetLineWrapper();
 		obj.insertBudgetLineWrappers(budgetLineWrappersToInsert);
@@ -250,6 +253,5 @@ public with sharing class CBCategoryProcessor {
 			update budgetLines;
 		}
 	}
-
-
+	
 }

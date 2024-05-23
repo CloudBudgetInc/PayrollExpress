@@ -13,6 +13,11 @@
         <name>Allocation__c</name>
     </fields>
     <fields>
+        <label><!-- CB Account --></label>
+        <name>CBAccount__c</name>
+        <relationshipLabel><!-- CB Categories --></relationshipLabel>
+    </fields>
+    <fields>
         <label><!-- CB Budget Year --></label>
         <name>CBBudgetYear__c</name>
         <relationshipLabel><!-- CB Categories --></relationshipLabel>
@@ -71,6 +76,11 @@
         <relationshipLabel><!-- CB Categories --></relationshipLabel>
     </fields>
     <fields>
+        <label><!-- Tax Threshold --></label>
+        <name>TaxThreshold__c</name>
+        <relationshipLabel><!-- CB Categories (CB Tax Threshold) --></relationshipLabel>
+    </fields>
+    <fields>
         <label><!-- Type --></label>
         <name>Type__c</name>
         <picklistValues>
@@ -89,6 +99,11 @@
     <fields>
         <label><!-- Value --></label>
         <name>Value__c</name>
+    </fields>
+    <fields>
+        <help><!-- true if it is parent category --></help>
+        <label><!-- isAllocated --></label>
+        <name>isAllocated__c</name>
     </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>
