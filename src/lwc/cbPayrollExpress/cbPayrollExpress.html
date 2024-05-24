@@ -89,6 +89,7 @@
 
 	<template if:true={showEmployeeDialog}>
 		<c-cb-payroll-dialog record-id={selectedEmployeeId} budget-year-id={params.budgetYearId}
+							 budget-years={budgetYearSO}
 							 close-dialog-function={closeEmployeeDialog}></c-cb-payroll-dialog>
 	</template>
 </template>

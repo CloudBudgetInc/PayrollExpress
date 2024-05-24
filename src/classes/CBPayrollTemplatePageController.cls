@@ -148,6 +148,10 @@ public with sharing class CBPayrollTemplatePageController {
 		}
 	}
 
+	/**
+	 * Method traces from old result NFL to a new ones if needed
+	 * @param newCategories
+	 */
 	private static void replaceOldResultNFLWithNewOnes(List<CBCategory__c> newCategories) {
 		Map<String, String> oldResultNFLToNewResultNFLMap = new Map<String, String>(); // key - old result, value = new result Id
 		Set<String> newCategoryIds = new Set<String>(); // Ids of a newly inserted categories
@@ -165,12 +169,9 @@ public with sharing class CBPayrollTemplatePageController {
 			}) {
 				cat.NFLResult__c = categoryMap.get(cat.Id).NFLResult__c;
 				String newResultNFLId = oldResultNFLToNewResultNFLMap.get((String) cat.get(field));
-				if (newResultNFLId != null) {
-					cat.put(field, newResultNFLId);
-				}
+				if (newResultNFLId != null) cat.put(field, newResultNFLId);
 			}
 		}
-
 		update newCategories;
 	}
 }

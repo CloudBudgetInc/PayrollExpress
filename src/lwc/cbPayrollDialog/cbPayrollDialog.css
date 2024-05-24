@@ -31,3 +31,10 @@ td div {
 .exTable, th, td {
     border: 1px solid;
 }
+
+.additional-div {
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-top: 10px;
+    background-color: #f9f9f9;
+}

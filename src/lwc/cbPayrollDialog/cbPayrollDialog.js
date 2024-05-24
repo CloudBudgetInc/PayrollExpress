@@ -32,19 +32,22 @@ import saveNewCategoryServer from '@salesforce/apex/CBPayrollExpressPageControll
 import savePayrollTemplateServer from '@salesforce/apex/CBPayrollTemplatePageController.savePayrollTemplateServer';
 import getFunctionsServer from '@salesforce/apex/CBPayrollTemplatePageController.getFunctionsServer';
 import applyPayrollTemplateServer from '@salesforce/apex/CBPayrollTemplatePageController.applyPayrollTemplateServer';
+import cloneCategoriesToTargetBudgetYearServer
+	from '@salesforce/apex/CBCloneCategoriesPageController.cloneCategoriesToTargetBudgetYearServer';
 
 export default class CBPayrollDialog extends LightningElement {
 
 	@api recordId;
 	@api budgetYearId;
 	@api closeDialogFunction;
+	@api budgetYears; // selectOptions from parent component
+
 	@track showSpinner = false;
 	@track showCategories = false;
 	@track readyToRender = false;
 	@track employee;
 	@track categories;
 	@track functionSO = [];
-
 
 	async connectedCallback() {
 		this.readyToRender = false;
@@ -148,6 +151,7 @@ export default class CBPayrollDialog extends LightningElement {
 		})
 	};
 
+	////// CONFIGURATION FUNCTIONALITY ////
 	savePayrollTemplate = async () => {
 		const title = await _prompt('Put some title', 'New', 'Title');
 		if (!title) return;
@@ -172,6 +176,7 @@ export default class CBPayrollDialog extends LightningElement {
 	applyConfiguration = async () => {
 		const confirmed = await _confirm('Current categories will be replaced with categories from the template. Are you sure?');
 		if (!confirmed) {
+			this.additionalFuncIsVisible = false;
 			this.funcId = undefined;
 			return null;
 		}
@@ -186,6 +191,52 @@ export default class CBPayrollDialog extends LightningElement {
 		_message('success', 'Applied');
 		this.connectedCallback();
 	};
+	////// CONFIGURATION FUNCTIONALITY ////
 
+	//// CLONE FUNCTIONALITY ////
+	@track targetBYId;
+	handleBudgetYearChange = (event) => {
+		this.targetBYId = event.target.value;
+	};
+	cloneCategoriesToTargetBY = async () => {
+		const confirmed = await _confirm('Are you sure to clone?');
+		if (!confirmed) {
+			this.additionalFuncIsVisible = false;
+			this.targetBYId = undefined;
+			return null;
+		}
+		const params = {
+			empId: this.employee.Id,
+			sourceBYId: this.budgetYearId,
+			targetBYId: this.targetBYId
+		};
+		await cloneCategoriesToTargetBudgetYearServer(params).catch(e => _parseServerError('Clone Error : ', e));
+		_message('success', 'Cloned');
+	};
+	//// CLONE FUNCTIONALITY ////
+
+
+	additionalFuncIsVisible = false;
+	hideTimer;
+
+	showAdditionalFunc() {
+		this.additionalFuncIsVisible = true;
+		this.startHideTimer();
+	}
+
+	handleMouseOver() {
+		clearTimeout(this.hideTimer);
+	}
+
+	handleMouseOut() {
+		this.startHideTimer();
+	}
+
+	startHideTimer() {
+		clearTimeout(this.hideTimer);
+		this.hideTimer = setTimeout(() => {
+			this.additionalFuncIsVisible = false;
+		}, 5000);
+	}
 
 }
