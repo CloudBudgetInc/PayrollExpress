@@ -22,9 +22,8 @@ LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
 OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
 OF THE POSSIBILITY OF SUCH DAMAGE.
 
+Class to clone categories from source budget year to a target budget year
  */
-
-
 public with sharing class CBCloneCategoriesPageController {
 
 	private static String employeeId;
@@ -40,10 +39,16 @@ public with sharing class CBCloneCategoriesPageController {
 		cloneCategories();
 	}
 
+	/**
+	 * Method deletes target categories
+	 */
 	private static void deleteOldCategories() {
 		delete [SELECT Id FROM CBCategory__c WHERE CBEmployee__c = :employeeId AND CBBudgetYear__c = :targetBudgetYearId LIMIT 50000];
 	}
 
+	/**
+	 * Method clones current categories to the next budget year
+	 */
 	private static void cloneCategories() {
 		Map<String, String> params = new Map<String, String>{
 				'employeeId' => employeeId,

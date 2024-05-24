@@ -33,7 +33,6 @@ public with sharing class CBPayrollExpressTest {
 
 		cb5__CBBudgetYear__c budgetYear = new cb5__CBBudgetYear__c(Name = '2025', cb5__Start__c = Date.newInstance(2025, 1, 1));
 		insert budgetYear;
-
 		List<cb5__CBPeriod__c> periods = new List<cb5__CBPeriod__c>();
 		for (Integer i = 0; i < 4; i++) periods.add(new cb5__CBPeriod__c(Name = 'Q' + 1, cb5__Start__c = Date.newInstance(2024, i + 1, 1), cb5__End__c = Date.newInstance(2024, i + 1, 25), cb5__CBBudgetYear__c = budgetYear.Id));
 		insert periods;
@@ -106,9 +105,19 @@ public with sharing class CBPayrollExpressTest {
 	}
 
 	@IsTest
-	static void testTaxThresholdProcessor() {
+	static void testConfigurationAndClone() {
+		String budgetYearId = [SELECT Id FROM cb5__CBBudgetYear__c LIMIT 1].Id;
+		String empId = [SELECT Id FROM cb5__CBVariable5__c LIMIT 1].Id;
+		CBPayrollTemplatePageController.savePayrollTemplateServer('Test', empId, budgetYearId);
+		String configId = [SELECT Id FROM cb5__CBFunction__c LIMIT 1].Id;
+		CBPayrollTemplatePageController.applyPayrollTemplateServer(configId, empId, budgetYearId);
 
-
+		cb5__CBBudgetYear__c budgetYear = new cb5__CBBudgetYear__c(Name = '2026', cb5__Start__c = Date.newInstance(2026, 1, 1));
+		insert budgetYear;
+		List<cb5__CBPeriod__c> periods = new List<cb5__CBPeriod__c>();
+		for (Integer i = 0; i < 4; i++) periods.add(new cb5__CBPeriod__c(Name = 'Q' + 1, cb5__Start__c = Date.newInstance(2026, i + 1, 1), cb5__End__c = Date.newInstance(2026, i + 1, 25), cb5__CBBudgetYear__c = budgetYear.Id));
+		insert periods;
+		CBCloneCategoriesPageController.cloneCategoriesToTargetBudgetYearServer(empId, budgetYearId, budgetYear.Id);
 	}
 
 
