@@ -209,6 +209,7 @@ public with sharing class CBCategoryProcessor {
 		obj.insertBudgetLineWrappers(budgetLineWrappersToInsert);
 		obj.assignBLParentChildRelations(budgetLineWrappersToInsert, categories);
 		update categoriesToUpdate;
+		for (cb5__CBNonFinancialItem__c item : NFLItemsToUpdate) System.debug(item);
 		update NFLItemsToUpdate;
 		update NFLToUpdate;
 	}
@@ -253,5 +254,5 @@ public with sharing class CBCategoryProcessor {
 			update budgetLines;
 		}
 	}
-	
+
 }

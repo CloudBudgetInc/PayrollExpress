@@ -26,6 +26,20 @@ OF THE POSSIBILITY OF SUCH DAMAGE.
 public with sharing class CBPayrollTemplatePageController {
 
 	private static final String FUNC_TYPE = 'Payroll Template';
+	private static Map<String, String> oldResultNFLToNewResultNFLMap = new Map<String, String>();
+	private static String functionId;
+	private static String employeeId;
+	private static String budgetYearId;
+	private static List<CBCategory__c> templateCategories {
+		get {
+			if (templateCategories == null) {
+				String jString = [SELECT cb5__Details__c FROM cb5__CBFunction__c WHERE Id = :functionId].cb5__Details__c;
+				templateCategories = (List<CBCategory__c>) JSON.deserialize(jString, List<CBCategory__c>.class);
+			}
+			return templateCategories;
+		}
+		set;
+	}
 
 	@AuraEnabled
 	public static List<cb5__CBFunction__c> getFunctionsServer() {
@@ -43,26 +57,42 @@ public with sharing class CBPayrollTemplatePageController {
 		insert new cb5__CBFunction__c (Name = title, cb5__Type__c = FUNC_TYPE, cb5__Details__c = JSON.serialize(categories));
 	}
 
+	/**
+	 * The main method to generate a new categories from saved template
+	 * @param funcId configuration Is
+	 * @param empId employee Id (Var5)
+	 * @param byId budget year Id
+	 */
 	@AuraEnabled
 	public static void applyPayrollTemplateServer(String funcId, String empId, String byId) {
-		deleteOldCategories(empId, byId);
-		List<CBCategory__c> newCategories = getNewCategoriesFromJSON(funcId, empId, byId);
+		functionId = funcId;
+		employeeId = empId;
+		budgetYearId = byId;
+		deleteOldCategories();
+		List<CBCategory__c> newCategories = getNewCategoriesFromJSON();
 		insert newCategories;
+		replaceOldResultNFLWithNewOnes(newCategories);
 	}
 
-	private static void deleteOldCategories(String empId, String byId) {
-		delete [SELECT Id FROM CBCategory__c WHERE CBEmployee__c = :empId AND CBBudgetYear__c = :byId];
+	/**
+	 * Method deletes previous categories before creating a new one
+	 */
+	private static void deleteOldCategories() {
+		delete [SELECT Id FROM CBCategory__c WHERE CBEmployee__c = :employeeId AND CBBudgetYear__c = :budgetYearId LIMIT 50000];
 	}
 
-	private static List<CBCategory__c> getNewCategoriesFromJSON(String funcId, String empId, String byId) {
-		String jString = [SELECT cb5__Details__c FROM cb5__CBFunction__c WHERE Id = :funcId].cb5__Details__c;
+	/**
+	 * @return new categories based on configuration JSON
+	 */
+	private static List<CBCategory__c> getNewCategoriesFromJSON() {
 		List<CBCategory__c> newCategories = new List<CBCategory__c>();
-		List<CBCategory__c> templateCategories = (List<CBCategory__c>) JSON.deserialize(jString, List<CBCategory__c>.class);
-		Map<String, String> oldCustomNFLToNewNFL = getOldCustomNFLToNewNFLMap(templateCategories);
+		Map<String, String> oldCustomNFLToNewNFL = getOldCustomNFLToNewNFLMap();
 		for (CBCategory__c tmplCategory : templateCategories) {
 			CBCategory__c newCategory = tmplCategory.clone(false, true, false, false);
-			newCategory.CBEmployee__c = empId;
-			newCategory.CBBudgetYear__c = byId;
+			newCategory.CBEmployee__c = employeeId;
+			newCategory.CBBudgetYear__c = budgetYearId;
+			newCategory.NFLResult__c = null;
+			newCategory.Value__c = 0;
 			if (!oldCustomNFLToNewNFL.isEmpty()) {
 				assignNewCustomNFLs(newCategory, oldCustomNFLToNewNFL);
 			}
@@ -75,7 +105,7 @@ public with sharing class CBPayrollTemplatePageController {
 	 * @param templateCategories
 	 * @return map where key is old custom NFL and value is a new custom NFL
 	 */
-	private static Map<String, String> getOldCustomNFLToNewNFLMap(List<CBCategory__c> templateCategories) {
+	private static Map<String, String> getOldCustomNFLToNewNFLMap() {
 		Set<String> usedNFLS = new Set<String>();
 		for (CBCategory__c tmplCategory : templateCategories) {
 			usedNFLS.add(tmplCategory.NFL1__c);
@@ -99,6 +129,11 @@ public with sharing class CBPayrollTemplatePageController {
 		return oldCustomNFLToNewNFL;
 	}
 
+	/**
+	 * If a category has a custom NFL method will replace old custom NFL with a new custom NFL
+	 * @param newCategory
+	 * @param oldCustomNFLToNewNFL
+	 */
 	private static void assignNewCustomNFLs(CBCategory__c newCategory, Map<String, String> oldCustomNFLToNewNFL) {
 		Map<String, String> fieldMappings = new Map<String, String>{
 				'NFL1__c' => newCategory.NFL1__c,
@@ -111,5 +146,31 @@ public with sharing class CBPayrollTemplatePageController {
 			String newNFL = oldCustomNFLToNewNFL.get(fieldMappings.get(fieldName));
 			if (newNFL != null) newCategory.put(fieldName, newNFL);
 		}
+	}
+
+	private static void replaceOldResultNFLWithNewOnes(List<CBCategory__c> newCategories) {
+		Map<String, String> oldResultNFLToNewResultNFLMap = new Map<String, String>(); // key - old result, value = new result Id
+		Set<String> newCategoryIds = new Set<String>(); // Ids of a newly inserted categories
+		for (CBCategory__c cat : newCategories) newCategoryIds.add(cat.Id); // populating new category Ids
+		Map<Id, CBCategory__c> categoryMap = new Map<Id, CBCategory__c>([SELECT Id,NFLResult__c FROM CBCategory__c WHERE Id IN :newCategoryIds]);
+		for (Integer i = 0; i < newCategories.size(); i++) { // iterate over new categories saving order
+			CBCategory__c cat = newCategories[i]; // new category
+			String newResultNFLId = categoryMap.get(cat.Id).NFLResult__c; // new category result NFL Id
+			String oldResultNFLId = templateCategories[i].NFLResult__c; // old category result NFL Id
+			oldResultNFLToNewResultNFLMap.put(oldResultNFLId, newResultNFLId); // key - old result NFL Id, value = new result NFL Id
+		}
+		for (CBCategory__c cat : newCategories) { // iteration over new categories to replace some NFL_X with old result NFL to a new result NFL
+			for (String field : new List<String>{
+					'NFL1__c', 'NFL2__c', 'NFL3__c', 'NFL4__c', 'NFL5__c'
+			}) {
+				cat.NFLResult__c = categoryMap.get(cat.Id).NFLResult__c;
+				String newResultNFLId = oldResultNFLToNewResultNFLMap.get((String) cat.get(field));
+				if (newResultNFLId != null) {
+					cat.put(field, newResultNFLId);
+				}
+			}
+		}
+
+		update newCategories;
 	}
 }
