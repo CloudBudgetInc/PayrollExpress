@@ -95,7 +95,7 @@ public with sharing class CBPayrollExpressTest {
 		}, budgetYear.Id);
 		Map<String, Map<String, String>> analytics = CBPayrollExpressPageController.getAnalyticsServer();
 		CBPayrollExpressPageController.saveEmployeeServer(employee, budgetYear.Id);
-		CBPayrollExpressPageController.saveCategoryServer(category, null);
+		CBPayrollExpressPageController.saveCategoryServer(category);
 		CBPayrollExpressPageController.categoryCanBeDeletedSafelyServer(category.Id);
 		CBPayrollExpressPageController.getRecentNFLsServer(employee.Id);
 		CBPayrollExpressPageController.getTaxThresholdsServer();
