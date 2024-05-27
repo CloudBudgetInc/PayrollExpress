@@ -160,12 +160,12 @@
 								<lightning-input
 										type="number"
 										value={item.cb5__Value__c}
-										formatter="currency"
+										formatter={item.format.formatter}
 										variant="label-hidden"
 										name={item.Id}
 										disabled={nfl.disabled}
 										onfocusout={handleNFLItemChange}
-										step="0.01"
+										step={item.format.step}
 								></lightning-input>
 							</lightning-layout-item>
 						</template>

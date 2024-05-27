@@ -77,6 +77,21 @@ export default class CBCategory extends LightningElement {
 		}
 	};
 
+	inputFormats = {
+		items: {
+			formatter: 'number',
+			step: "0.01"
+		},
+		currency: {
+			formatter: 'currency',
+			step: "0.01"
+		},
+		percent: {
+			formatter: 'percent',
+			step: "0.0001"
+		}
+	};
+
 	getNFLs = async () => {
 		try {
 			const params = {nflIds: this.nflIds, budgetYearId: this.category.cb5p__CBBudgetYear__c};
@@ -87,6 +102,11 @@ export default class CBCategory extends LightningElement {
 				const nflId = this.category[f];
 				if (nflId) {
 					const nfl = this.nfls.find(rec => rec.Id === nflId);
+					const format = this.inputFormats[nfl.cb5__Layer__r.cb5__Unit__c];
+					console.log('nfl.cb5__Layer__r.cb5__Unit__c : ' + nfl.cb5__Layer__r.cb5__Unit__c);
+					console.log('FORMAT : ' + JSON.stringify(format));
+					nfl.cb5__NonFinancialItems__r.forEach(item => item.format = format);
+					console.log('NFL: ' + JSON.stringify(nfl));
 					nfl.idx = `#${idx}`;
 					if (f === 'cb5p__NFLResult__c') {
 						this.resultNFL = nfl;
@@ -121,27 +141,28 @@ export default class CBCategory extends LightningElement {
 			Id: event.target.name,
 			cb5__Value__c: event.target.value
 		};
-		saveNFLItemsServer({items: [updatedItem]}).catch(e => _parseServerError('Saving Error: ', e));
+		saveNFLItemsServer({items: [updatedItem]}).catch(e => _parseServerError('Saving NFL Item Error: ', e));
 	};
 
 	handleResultItemsChange = async (event) => {
-		const item = this.resultNFL.cb5__NonFinancialItems__r.find(item => item.Id === event.target.name);
+		let item = this.resultNFL.cb5__NonFinancialItems__r.find(item => item.Id === event.target.name);
+		item = JSON.parse(JSON.stringify(item));
 		item.cb5__Value__c = event.target.value;
-		await this.saveCategory();
+		delete item.format;
+		saveNFLItemsServer({items: [item]}).catch(e => _parseServerError('Saving Result Item Error: ', e));
 	};
 
 	saveCategory = async () => {
 		const isNotValid = validateCategory(this.category);
-		console.log(isNotValid ? '!!! IS NOT VALID' : 'VALID');
 		if (isNotValid) return null;
-		await saveCategoryServer({category: this.category, resultItems: this.resultNFL.cb5__NonFinancialItems__r})
+		await saveCategoryServer({category: this.category})
 			.then(categoryId => {
 				const needToReload = !this.recordId;
 				this.recordId = categoryId;
 				if (needToReload) this.connectedCallback().then(r => null);
 				_message('success', 'Saved');
 			})
-			.catch(e => _parseServerError('Saving Error: ', e));
+			.catch(e => _parseServerError('Saving Category Error: ', e));
 	};
 
 	closeDialog = () => {

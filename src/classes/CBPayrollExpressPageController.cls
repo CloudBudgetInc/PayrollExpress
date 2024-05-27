@@ -55,7 +55,8 @@ public class CBPayrollExpressPageController {
 	public static List<cb5__CBNonFinancialLibrary__c> getNFLServer(List<String> nflIds, String budgetYearId) {
 		Set<String> nflIdSet = new Set<String> (nflIds);
 		return [
-				SELECT Id,Name,cb5__Layer__c,cb5__LayerTitle__c,cb5__Type__c, (
+				SELECT Id,Name,cb5__Layer__c,cb5__LayerTitle__c,cb5__Type__c,
+						cb5__Layer__r.cb5__Unit__c, (
 						SELECT Id,cb5__Value__c,cb5__CBPeriod__c,cb5__CBPeriod__r.Name
 						FROM cb5__NonFinancialItems__r
 						WHERE cb5__CBPeriod__r.cb5__CBBudgetYear__c = :budgetYearId
@@ -108,8 +109,8 @@ public class CBPayrollExpressPageController {
 	 * @return Id of saved category
 	 */
 	@AuraEnabled
-	public static String saveCategoryServer(CBCategory__c category, List<cb5__CBNonFinancialItem__c> resultItems) {
-		if (resultItems != null && resultItems.size() > 0) update resultItems;
+	public static String saveCategoryServer(CBCategory__c category) {
+
 		upsert category;
 		return category.Id;
 	}
