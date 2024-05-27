@@ -43,6 +43,12 @@ export default class CBPayrollExpress extends LightningElement {
 
 	@track params = {};
 
+	/** CHART */
+	@track categoryIds = [];
+	@track renderChart = false;
+
+	/** CHART */
+
 	async connectedCallback() {
 		this.showSpinner = true;
 		this.readyToRender = false;
@@ -53,7 +59,7 @@ export default class CBPayrollExpress extends LightningElement {
 		this.populateEmployeeRecords();
 		this.showSpinner = false;
 		this.readyToRender = true;
-
+		this.renderChart = true;
 	};
 
 	getAnalytics = async () => {
@@ -74,8 +80,9 @@ export default class CBPayrollExpress extends LightningElement {
 	};
 
 	getListOfEmployee = async () => {
+		this.categoryIds = [];
+		this.renderChart = false;
 		if (!this.params.budgetYearId) this.params.budgetYearId = this.budgetYearSO[0].value;
-		console.log('this.params = ' + JSON.stringify(this.params));
 		await getEmployeesServer({params: this.params})
 			.then(employees => this.employees = employees)
 			.catch(e => _parseServerError('Get Employees Error: ', e));
@@ -86,7 +93,10 @@ export default class CBPayrollExpress extends LightningElement {
 			this.categoryTypes = [];
 			const categoryTypesObject = {};
 			this.employees.forEach(emp => {
-				emp.cb5p__CBCategories__r?.forEach(cat => categoryTypesObject[cat.cb5p__Type__c] = true);
+				emp.cb5p__CBCategories__r?.forEach(cat => {
+					categoryTypesObject[cat.cb5p__Type__c] = true;
+					this.categoryIds.push(cat.Id);
+				});
 			});
 			this.categoryTypes = Object.keys(categoryTypesObject).sort();
 		} catch (e) {

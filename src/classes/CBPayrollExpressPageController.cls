@@ -252,5 +252,64 @@ public class CBPayrollExpressPageController {
 		return newNFL.Id;
 	}
 
+	@AuraEnabled
+	public static ChartWrapper getChartDataServer(List<String> categoryIds, String budgetYearId) {
+		ChartWrapper r = new ChartWrapper();
+		Map<String, Decimal> employeeValue = new Map<String, Decimal>();
+		Map<String, Decimal> typeValue = new Map<String, Decimal>();
+		Map<String, Map<String, Decimal>> typePeriodValue = new Map<String, Map<String, Decimal>>();
+		Set<String> resultNFLIds = new Set<String>();
+		Map<String, String> resNFLIdToTypeMap = new Map<String, String>();
+
+		for (CBCategory__c cat : [SELECT Id,Type__c,CBEmployee__r.Name,CBEmployee__c,NFLResult__c,Value__c FROM CBCategory__c WHERE Id IN:categoryIds]) {
+			Decimal oldValue = typeValue.get(cat.Type__c);
+			typeValue.put(cat.Type__c, oldValue != null ? oldValue + cat.Value__c : cat.Value__c);
+			oldValue = employeeValue.get(cat.CBEmployee__r.Name);
+			employeeValue.put(cat.CBEmployee__r.Name, oldValue != null ? oldValue + cat.Value__c : cat.Value__c);
+			resultNFLIds.add(cat.NFLResult__c);
+			resNFLIdToTypeMap.put(cat.NFLResult__c, cat.Type__c);
+		}
+
+		for (cb5__CBNonFinancialLibrary__c lib : [
+				SELECT Id, (SELECT cb5__CBPeriod__r.Name, cb5__Value__c FROM cb5__NonFinancialItems__r WHERE cb5__CBPeriod__r.cb5__CBBudgetYear__c = :budgetYearId ORDER BY cb5__CBPeriod__r.cb5__Start__c)
+				FROM cb5__CBNonFinancialLibrary__c
+				WHERE Id IN:resultNFLIds
+		]) {
+			String type = resNFLIdToTypeMap.get(lib.Id);
+			Map<String, Decimal> periodValueMap = typePeriodValue.get(type);
+			if (periodValueMap == null) {
+				periodValueMap = new Map<String, Decimal>();
+				typePeriodValue.put(type, periodValueMap);
+			}
+			Map<String, Decimal> totalPeriodValueMap = typePeriodValue.get('TOTAL');
+			if (totalPeriodValueMap == null) {
+				totalPeriodValueMap = new Map<String, Decimal>();
+				typePeriodValue.put('TOTAL', totalPeriodValueMap);
+			}
+			for (cb5__CBNonFinancialItem__c item : lib.cb5__NonFinancialItems__r) {
+				Decimal oldValue = periodValueMap.get(item.cb5__CBPeriod__r.Name);
+				periodValueMap.put(item.cb5__CBPeriod__r.Name, oldValue != null ? oldValue + item.cb5__Value__c : item.cb5__Value__c);
+				Decimal totalOldValue = totalPeriodValueMap.get(item.cb5__CBPeriod__r.Name);
+				totalPeriodValueMap.put(item.cb5__CBPeriod__r.Name, totalOldValue != null ? totalOldValue + item.cb5__Value__c : item.cb5__Value__c);
+			}
+		}
+
+		r.employeeValue = employeeValue;
+		r.typeValue = typeValue;
+		r.typePeriodValue = typePeriodValue;
+		return r;
+	}
+
+	public class ChartWrapper {
+		@AuraEnabled
+		public Map<String, Map<String, Decimal>> typePeriodValue { get; set; }
+
+		@AuraEnabled
+		public Map<String, Decimal> employeeValue { get; set; }
+
+		@AuraEnabled
+		public Map<String, Decimal> typeValue { get; set; }
+	}
+
 
 }

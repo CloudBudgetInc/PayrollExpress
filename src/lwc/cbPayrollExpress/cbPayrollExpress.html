@@ -36,7 +36,7 @@
 			</lightning-layout-item>
 		</lightning-layout>
 
-		<div class="slds-m-around_small slds-p-horizontal_small" style="height: 500px;">
+		<div class="slds-m-around_small slds-p-horizontal_small">
 			<!-- SPINNER -->
 			<c-cb-spinner show={showSpinner}></c-cb-spinner>
 			<!-- SPINNER -->
@@ -76,7 +76,7 @@
 								</td>
 							</template>
 							<td class="dec">
-								<lightning-formatted-number value={emp.total} format-style="currency" class="dec"
+								<lightning-formatted-number value={emp.total} format-style="currency" class="dec total"
 															currency-code="USD"></lightning-formatted-number>
 							</td>
 						</tr>
@@ -85,7 +85,13 @@
 				</table>
 			</template>
 		</div>
+		<template lwc:if={renderChart}>
+			<c-cb-payroll-chart params={categoryIds} budget-year-id={params.budgetYearId}></c-cb-payroll-chart>
+		</template>
+
+
 	</lightning-card>
+
 
 	<template if:true={showEmployeeDialog}>
 		<c-cb-payroll-dialog record-id={selectedEmployeeId} budget-year-id={params.budgetYearId}

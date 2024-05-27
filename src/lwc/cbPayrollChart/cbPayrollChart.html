@@ -1,0 +1,47 @@
+<template>
+
+	<lightning-layout>
+		<lightning-layout-item size="1">
+		</lightning-layout-item>
+		<lightning-layout-item size="4">
+			<div class="slds-p-around_small slds-grid slds-grid--vertical-align-center slds-grid--align-center canvas-container">
+				<template if:true={showChart}>
+					<canvas class="typeMonthChart" lwc:dom="manual"></canvas>
+				</template>
+				<div if:false={isChartJsInitialized} class="slds-col--padded slds-size--1-of-1">
+					<lightning-spinner alternative-text="Loading" size="medium"
+									   variant="base"></lightning-spinner>
+				</div>
+				<div if:true={showPlaceHolder}>
+					{chartPlaceHolder}
+				</div>
+			</div>
+		</lightning-layout-item>
+		<lightning-layout-item size="4">
+			<div class="slds-p-around_small slds-grid slds-grid--vertical-align-center slds-grid--align-center">
+				<template if:true={showChart}>
+					<canvas class="typeChart" lwc:dom="manual"></canvas>
+				</template>
+				<div if:false={isChartJsInitialized} class="slds-col--padded slds-size--1-of-1">
+					<lightning-spinner alternative-text="Loading" size="medium" variant="base"></lightning-spinner>
+				</div>
+				<div if:true={showPlaceHolder}>
+					{chartPlaceHolder}
+				</div>
+			</div>
+		</lightning-layout-item>
+		<lightning-layout-item size="2">
+			<div class="slds-p-around_small slds-grid slds-grid--vertical-align-center slds-grid--align-center">
+				<template if:true={showChart}>
+					<canvas class="empChart" lwc:dom="manual"></canvas>
+				</template>
+				<div if:false={isChartJsInitialized} class="slds-col--padded slds-size--1-of-1">
+					<lightning-spinner alternative-text="Loading" size="medium" variant="base"></lightning-spinner>
+				</div>
+				<div if:true={showPlaceHolder}>
+					{chartPlaceHolder}
+				</div>
+			</div>
+		</lightning-layout-item>
+	</lightning-layout>
+</template>
