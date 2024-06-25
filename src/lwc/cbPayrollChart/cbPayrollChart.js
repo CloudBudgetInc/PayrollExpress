@@ -27,7 +27,7 @@ import {api, LightningElement, track} from 'lwc';
 import chartjs from '@salesforce/resourceUrl/cb5__ChartJs';
 import {loadScript} from 'lightning/platformResourceLoader';
 import getChartDataServer from '@salesforce/apex/CBPayrollExpressPageController.getChartDataServer';
-import {_parseServerError} from "c/cbUtils";
+import {_message, _parseServerError} from "c/cbUtils";
 import {getNextColor} from "./cbPayrollChartColors";
 
 export default class CBPayrollChart extends LightningElement {
@@ -45,33 +45,37 @@ export default class CBPayrollChart extends LightningElement {
 	@track showChart = true;
 
 	async renderedCallback() {
-		if (this.isChartJsInitialized) {
-			return;
+		try {
+			if (this.isChartJsInitialized) {
+				return;
+			}
+			await this.getChartData();
+			this.setTypeMonthChartData();
+			this.setTypeChartData();
+			this.setEmployeePieData();
+
+			Promise.all([loadScript(this, chartjs)])
+				.then(() => {
+					this.isChartJsInitialized = true;
+
+					const typeMonthContext = this.template.querySelector('canvas.typeMonthChart').getContext('2d');
+					new window.Chart(typeMonthContext, JSON.parse(JSON.stringify(this.typeMonthChartConfig)));
+
+					const typeBarContext = this.template.querySelector('canvas.typeChart').getContext('2d');
+					new window.Chart(typeBarContext, JSON.parse(JSON.stringify(this.typeBarChartConfig)));
+
+					const employeeContext = this.template.querySelector('canvas.empChart').getContext('2d');
+					new window.Chart(employeeContext, JSON.parse(JSON.stringify(this.employeeChartConfig)));
+
+
+				})
+				.catch(e => {
+					this.showPlaceHolder = true;
+					this.showChart = false;
+				});
+		} catch (e) {
+			_message('error', 'renderedCallback Error: ' + JSON.stringify(e));
 		}
-		await this.getChartData();
-		this.setTypeMonthChartData();
-		this.setTypeChartData();
-		this.setEmployeePieData();
-
-		Promise.all([loadScript(this, chartjs)])
-			.then(() => {
-				this.isChartJsInitialized = true;
-
-				const typeMonthContext = this.template.querySelector('canvas.typeMonthChart').getContext('2d');
-				new window.Chart(typeMonthContext, JSON.parse(JSON.stringify(this.typeMonthChartConfig)));
-
-				const typeBarContext = this.template.querySelector('canvas.typeChart').getContext('2d');
-				new window.Chart(typeBarContext, JSON.parse(JSON.stringify(this.typeBarChartConfig)));
-
-				const employeeContext = this.template.querySelector('canvas.empChart').getContext('2d');
-				new window.Chart(employeeContext, JSON.parse(JSON.stringify(this.employeeChartConfig)));
-
-
-			})
-			.catch(e => {
-				this.showPlaceHolder = true;
-				this.showChart = false;
-			});
 	}
 
 	getChartData = async () => {
@@ -83,90 +87,98 @@ export default class CBPayrollChart extends LightningElement {
 	};
 
 	setTypeMonthChartData = () => {
-		const tpv = this.chartData.typePeriodValue;
-		let types = Object.keys(tpv);
-		const customSort = (array) => {
-			return array.sort((a, b) => {
-				if (a === "TOTAL") return -1; // TOTAL should come first
-				if (b === "TOTAL") return 1;
-				if (a === "Salary") return -1; // Salary should come after TOTAL
-				if (b === "Salary") return 1;
-				return a.localeCompare(b); // All other strings sorted alphabetically
-			});
-		};
-		types = customSort(types);
-		const labels = Object.keys(tpv[types[0]]);
-		const datasets = [];
-		types.forEach(type => {
-			const dt = {
-				label: type,
-				data: Object.values(tpv[type]),
-				borderColor: getNextColor(),
-				fill: false
+		try {
+			const tpv = this.chartData.typePeriodValue;
+			let types = Object.keys(tpv);
+			const customSort = (array) => {
+				return array.sort((a, b) => {
+					if (a === "TOTAL") return -1; // TOTAL should come first
+					if (b === "TOTAL") return 1;
+					if (a === "Salary") return -1; // Salary should come after TOTAL
+					if (b === "Salary") return 1;
+					return a.localeCompare(b); // All other strings sorted alphabetically
+				});
 			};
-			datasets.push(dt);
-		});
+			types = customSort(types);
+			const labels = Object.keys(tpv[types[0]]);
+			const datasets = [];
+			types.forEach(type => {
+				const dt = {
+					label: type,
+					data: Object.values(tpv[type]),
+					borderColor: getNextColor(),
+					fill: false
+				};
+				datasets.push(dt);
+			});
 
-		this.typeMonthChartConfig = {
-			type: 'line',
-			data: {
-				labels,
-				datasets
-			},
-			options: {
-				scales: {
-					y: {
-						beginAtZero: true
+			this.typeMonthChartConfig = {
+				type: 'line',
+				data: {
+					labels,
+					datasets
+				},
+				options: {
+					scales: {
+						y: {
+							beginAtZero: true
+						}
 					}
 				}
-			}
-		};
+			};
+		} catch (e) {
+			//_message('error', 'setTypeMonthChartData Error: ' + e);
+		}
 	};
 
 	setTypeChartData = () => {
-		const tv = this.chartData.typeValue;
-		const backgroundColor = Object.keys(tv).map(c => getNextColor());
-		const chartData = {
-			labels: Object.keys(tv),
-			datasets: [{
-				label: 'By Type',
-				data: Object.values(tv),
-				backgroundColor,
-				hoverOffset: 4
-			}]
-		};
-		this.typeBarChartConfig = {
-			type: 'bar',
-			data: chartData,
-			options: {
-				scales: {
-					y: {
-						beginAtZero: true,
-						ticks: {
-							callback: function(value, index, values) {
-								return '$' + value.toLocaleString(); // Format y-axis labels as dollars
+		try {
+			const tv = this.chartData.typeValue;
+			const backgroundColor = Object.keys(tv).map(c => getNextColor());
+			const chartData = {
+				labels: Object.keys(tv),
+				datasets: [{
+					label: 'By Type',
+					data: Object.values(tv),
+					backgroundColor,
+					hoverOffset: 4
+				}]
+			};
+			this.typeBarChartConfig = {
+				type: 'bar',
+				data: chartData,
+				options: {
+					scales: {
+						y: {
+							beginAtZero: true,
+							ticks: {
+								callback: function (value, index, values) {
+									return '$' + value.toLocaleString(); // Format y-axis labels as dollars
+								}
 							}
 						}
-					}
-				},
-				plugins: {
-					tooltip: {
-						callbacks: {
-							label: function(context) {
-								let label = context.dataset.label || '';
-								if (label) {
-									label += ': ';
+					},
+					plugins: {
+						tooltip: {
+							callbacks: {
+								label: function (context) {
+									let label = context.dataset.label || '';
+									if (label) {
+										label += ': ';
+									}
+									if (context.parsed.y !== null) {
+										label += '$' + context.parsed.y.toLocaleString(); // Format tooltips as dollars
+									}
+									return label;
 								}
-								if (context.parsed.y !== null) {
-									label += '$' + context.parsed.y.toLocaleString(); // Format tooltips as dollars
-								}
-								return label;
 							}
 						}
 					}
 				}
-			}
-		};
+			};
+		} catch (e) {
+			_message('error', 'setTypeChartData Error: ' + JSON.stringify(e))
+		}
 	};
 
 	setEmployeePieData = () => {

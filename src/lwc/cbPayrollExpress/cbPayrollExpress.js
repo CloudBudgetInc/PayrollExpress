@@ -54,9 +54,13 @@ export default class CBPayrollExpress extends LightningElement {
 		this.readyToRender = false;
 		_applyDecStyle();
 		await this.getAnalytics();
+		console.log('Analytics');
 		await this.getListOfEmployee();
+		console.log('Employees');
 		this.getCategoryTypes();
+		console.log('CategoryTypes');
 		this.populateEmployeeRecords();
+		console.log('EmployeeRecords');
 		this.showSpinner = false;
 		this.readyToRender = true;
 		this.renderChart = true;
@@ -74,9 +78,13 @@ export default class CBPayrollExpress extends LightningElement {
 	};
 
 	convertObjectToListOfSO = (obj, allOptionNeeded) => {
-		const options = Object.keys(obj).map(key => ({value: key, label: obj[key]}));
-		if (allOptionNeeded) options.unshift({value: '', label: 'All'});
-		return options;
+		try {
+			const options = Object.keys(obj).map(key => ({value: key, label: obj[key]}));
+			if (allOptionNeeded) options.unshift({value: '', label: 'All'});
+			return options;
+		} catch (e) {
+			_message('error', 'convertObjectToListOfSO Error: ' + JSON.stringify(e));
+		}
 	};
 
 	getListOfEmployee = async () => {
@@ -107,9 +115,11 @@ export default class CBPayrollExpress extends LightningElement {
 	populateEmployeeRecords = () => {
 		try {
 			if (this.categoryTypes.length === 0) return null;
-			this.employees.forEach(emp => {
+			this.employees.forEach((emp, idx) => {
+				emp.idx = idx + 1;
 				emp.total = 0;
 				emp.divisionName = emp.cb5p__CBDivision__c ? emp.cb5p__CBDivision__r.Name : '-';
+				emp.sic = emp.cb5p__SIC__c;
 				emp.positionName = emp.cb5p__Position__c ? emp.cb5p__Position__c : '-';
 				emp.categoryValues = [];
 				this.categoryTypes.forEach(catName => emp.categoryValues.push(0));

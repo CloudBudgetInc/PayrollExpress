@@ -101,6 +101,11 @@ public with sharing class CBPayrollExpressTest {
 		CBPayrollExpressPageController.getTaxThresholdsServer();
 		CBPayrollExpressPageController.saveNFLibraryServer(lib);
 		CBPayrollExpressPageController.addTaxThresholdServer();
+
+		CBPayrollExpressPageController.getChartDataServer(new List<String>{
+				category.Id
+		}, budgetYear.Id);
+
 		CBPayrollExpressPageController.deleteCategoryServer(category.Id);
 	}
 

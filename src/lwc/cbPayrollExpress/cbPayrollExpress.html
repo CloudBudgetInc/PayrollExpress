@@ -45,7 +45,9 @@
 				<table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_striped custom-table">
 					<thead>
 					<tr>
+						<th style="width: 15px">#</th>
 						<th>Name</th>
+						<th>SIC</th>
 						<th>Division</th>
 						<th>Position</th>
 						<template for:each={categoryTypes} for:item="type">
@@ -62,11 +64,13 @@
 					<tbody>
 					<template for:each={employees} for:item="emp">
 						<tr key={emp.Id}>
+							<td>{emp.idx}</td>
 							<td>
 								<div onclick={openEmployeeDialog} id={emp.Id}>
 									{emp.Name}
 								</div>
 							</td>
+							<td>{emp.sic}</td>
 							<td>{emp.divisionName}</td>
 							<td>{emp.positionName}</td>
 							<template for:each={emp.categoryValues} for:item="val">
