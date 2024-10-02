@@ -4,7 +4,13 @@
 
 trigger CBEmployeeTrigger on cb5__CBVariable5__c (after insert, after update) {
 
-	String layerId = [SELECT Id FROM cb5__CBLayer__c WHERE Name = 'Salary'][0].Id;
+	List<cb5__CBLayer__c> layers = [SELECT Id FROM cb5__CBLayer__c WHERE Name = 'Salary'];
+	if(layers.size() == 0) {
+		insert new cb5__CBLayer__c(Name = 'Salary');
+		layers = [SELECT Id FROM cb5__CBLayer__c WHERE Name = 'Salary'];
+	}
+
+	String layerId = layers[0].Id;
 
 	if (Trigger.isAfter && (Trigger.isInsert || Trigger.isUpdate)) {
 		Map<String, cb5__CBNonFinancialLibrary__c> libMap = new Map<String, cb5__CBNonFinancialLibrary__c>();

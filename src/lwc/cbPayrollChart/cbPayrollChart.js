@@ -56,17 +56,20 @@ export default class CBPayrollChart extends LightningElement {
 
 			Promise.all([loadScript(this, chartjs)])
 				.then(() => {
-					this.isChartJsInitialized = true;
+					try {
+						this.isChartJsInitialized = true;
 
-					const typeMonthContext = this.template.querySelector('canvas.typeMonthChart').getContext('2d');
-					new window.Chart(typeMonthContext, JSON.parse(JSON.stringify(this.typeMonthChartConfig)));
+						const typeMonthContext = this.template.querySelector('canvas.typeMonthChart').getContext('2d');
+						new window.Chart(typeMonthContext, JSON.parse(JSON.stringify(this.typeMonthChartConfig)));
 
-					const typeBarContext = this.template.querySelector('canvas.typeChart').getContext('2d');
-					new window.Chart(typeBarContext, JSON.parse(JSON.stringify(this.typeBarChartConfig)));
+						const typeBarContext = this.template.querySelector('canvas.typeChart').getContext('2d');
+						new window.Chart(typeBarContext, JSON.parse(JSON.stringify(this.typeBarChartConfig)));
 
-					const employeeContext = this.template.querySelector('canvas.empChart').getContext('2d');
-					new window.Chart(employeeContext, JSON.parse(JSON.stringify(this.employeeChartConfig)));
-
+						const employeeContext = this.template.querySelector('canvas.empChart').getContext('2d');
+						new window.Chart(employeeContext, JSON.parse(JSON.stringify(this.employeeChartConfig)));
+					} catch (e) {
+						console.error('Promise callback error: ' + JSON.stringify(e));
+					}
 
 				})
 				.catch(e => {
@@ -89,6 +92,7 @@ export default class CBPayrollChart extends LightningElement {
 	setTypeMonthChartData = () => {
 		try {
 			const tpv = this.chartData.typePeriodValue;
+			if(!tpv) return null;
 			let types = Object.keys(tpv);
 			const customSort = (array) => {
 				return array.sort((a, b) => {
@@ -103,13 +107,17 @@ export default class CBPayrollChart extends LightningElement {
 			const labels = Object.keys(tpv[types[0]]);
 			const datasets = [];
 			types.forEach(type => {
-				const dt = {
-					label: type,
-					data: Object.values(tpv[type]),
-					borderColor: getNextColor(),
-					fill: false
-				};
-				datasets.push(dt);
+				try {
+					const dt = {
+						label: type,
+						data: Object.values(tpv[type]),
+						borderColor: getNextColor(),
+						fill: false
+					};
+					datasets.push(dt);
+				} catch (e) {
+					console.error('setTypeMonthChartData types error: ' + JSON.stringify(e));
+				}
 			});
 
 			this.typeMonthChartConfig = {
@@ -127,7 +135,7 @@ export default class CBPayrollChart extends LightningElement {
 				}
 			};
 		} catch (e) {
-			//_message('error', 'setTypeMonthChartData Error: ' + e);
+			_message('error', 'setTypeMonthChartData Error: ' + e);
 		}
 	};
 

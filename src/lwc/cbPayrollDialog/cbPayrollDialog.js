@@ -50,14 +50,18 @@ export default class CBPayrollDialog extends LightningElement {
 	@track functionSO = [];
 
 	async connectedCallback() {
-		this.readyToRender = false;
-		this.showSpinner = true;
-		await this.getEmployee();
-		await this.getCategories();
-		this.colorAllocatedGroup();
-		this.showSpinner = false;
-		this.readyToRender = true;
-		this.getFunctions();
+		try {
+			this.readyToRender = false;
+			this.showSpinner = true;
+			await this.getEmployee();
+			await this.getCategories();
+			this.colorAllocatedGroup();
+			this.showSpinner = false;
+			this.readyToRender = true;
+			this.getFunctions();
+		} catch (e) {
+			_message('error', 'Connected Callback Error: ' + JSON.stringify(e));
+		}
 	};
 
 	getEmployee = async () => {
@@ -119,7 +123,7 @@ export default class CBPayrollDialog extends LightningElement {
 				cb5p__Index__c,
 				cb5p__Type__c: 'Salary'
 			};
-			await saveNewCategoryServer({category});
+			await saveNewCategoryServer({category}).catch(e => _parseServerError('Add Category Error:', e));
 			this.connectedCallback();
 		} catch (e) {
 			_parseServerError('Add New Category Error: ', e);
