@@ -53,34 +53,40 @@ export default class CBPayrollChart extends LightningElement {
 			this.setTypeMonthChartData();
 			this.setTypeChartData();
 			this.setEmployeePieData();
-
-			Promise.all([loadScript(this, chartjs)])
-				.then(() => {
-					try {
-						this.isChartJsInitialized = true;
-
-						const typeMonthContext = this.template.querySelector('canvas.typeMonthChart').getContext('2d');
-						new window.Chart(typeMonthContext, JSON.parse(JSON.stringify(this.typeMonthChartConfig)));
-
-						const typeBarContext = this.template.querySelector('canvas.typeChart').getContext('2d');
-						new window.Chart(typeBarContext, JSON.parse(JSON.stringify(this.typeBarChartConfig)));
-
-						const employeeContext = this.template.querySelector('canvas.empChart').getContext('2d');
-						new window.Chart(employeeContext, JSON.parse(JSON.stringify(this.employeeChartConfig)));
-					} catch (e) {
-						console.error('Promise callback error: ' + JSON.stringify(e));
-					}
-
-				})
-				.catch(e => {
-					this.showPlaceHolder = true;
-					this.showChart = false;
-				});
+			this.renderCharts();
 		} catch (e) {
 			_message('error', 'renderedCallback Error: ' + JSON.stringify(e));
 		}
 	}
 
+	renderCharts = () => {
+		Promise.all([loadScript(this, chartjs)])
+			.then(() => {
+				try {
+					this.isChartJsInitialized = true;
+
+					const typeMonthContext = this.template.querySelector('canvas.typeMonthChart').getContext('2d');
+					new window.Chart(typeMonthContext, JSON.parse(JSON.stringify(this.typeMonthChartConfig)));
+
+					const typeBarContext = this.template.querySelector('canvas.typeChart').getContext('2d');
+					new window.Chart(typeBarContext, JSON.parse(JSON.stringify(this.typeBarChartConfig)));
+
+					const employeeContext = this.template.querySelector('canvas.empChart').getContext('2d');
+					new window.Chart(employeeContext, JSON.parse(JSON.stringify(this.employeeChartConfig)));
+				} catch (e) {
+					console.error('Promise callback error: ' + JSON.stringify(e));
+				}
+
+			})
+			.catch(e => {
+				this.showPlaceHolder = true;
+				this.showChart = false;
+			});
+	};
+
+	/**
+	 * Method gets a list of ChartWrapper for the chart
+	 */
 	getChartData = async () => {
 		const params = {
 			categoryIds: this.params,

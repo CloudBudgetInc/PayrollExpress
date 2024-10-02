@@ -119,10 +119,13 @@ export default class CBPayrollDialog extends LightningElement {
 			const category = {
 				Name: 'New',
 				cb5p__CBEmployee__c: this.employee.Id,
+				cb5p__CBDivision__c: this.employee.cb5p__CBDivision__c,
 				cb5p__CBBudgetYear__c: this.budgetYearId,
+				cb5p__Formula__c: '#1',
 				cb5p__Index__c,
 				cb5p__Type__c: 'Salary'
 			};
+			console.log('CATEGORY: ' + JSON.stringify(category));
 			await saveNewCategoryServer({category}).catch(e => _parseServerError('Add Category Error:', e));
 			this.connectedCallback();
 		} catch (e) {

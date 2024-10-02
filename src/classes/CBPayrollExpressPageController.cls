@@ -71,22 +71,10 @@ public class CBPayrollExpressPageController {
 	 * @return analytics for the main page filter dropdown
 	 */
 	@AuraEnabled
-	public static Map<String, Map<String, String>> getAnalyticsServer() {
-		Map<String, Map<String, String>> r = new Map<String, Map<String, String>>();
-
-		Map<String, String> division = new Map<String, String>();
-		for (cb5__CBDivision__c div : [SELECT Id, Name FROM cb5__CBDivision__c ORDER BY Name]) division.put(div.Id, div.Name);
-		r.put('division', division);
-
-		Map<String, String> budgetYear = new Map<String, String>();
-		for (cb5__CBBudgetYear__c bYear : [SELECT Id, Name FROM cb5__CBBudgetYear__c ORDER BY Name]) budgetYear.put(bYear.Id, bYear.Name);
-		r.put('budgetYear', budgetYear);
-
-		Map<String, String> employee = new Map<String, String>();
-		for (cb5__CBVariable5__c emp : [SELECT Id, Name FROM cb5__CBVariable5__c ORDER BY Name]) employee.put(emp.Id, emp.Name);
-		r.put('employee', employee);
-
-		return r;
+	public static String getDefaultBudgetYearIdServer() {
+		cb5__CBPeriod__c currentPeriod = [SELECT cb5__CBBudgetYear__c FROM cb5__CBPeriod__c WHERE cb5__Start__c = :Date.today().toStartOfMonth() LIMIT 1];
+		if (currentPeriod != null) return currentPeriod.cb5__CBBudgetYear__c;
+		return [SELECT Id FROM cb5__CBBudgetYear__c LIMIT 1][0].Id;
 	}
 
 	/**
@@ -119,8 +107,17 @@ public class CBPayrollExpressPageController {
 	 */
 	@AuraEnabled
 	public static void saveNewCategoryServer(CBCategory__c category) {
-		category.CBAccount__c = [SELECT Id FROM cb5__CBAccount__c LIMIT 1][0].Id;
+		category.CBAccount__c = getRespectiveCategoryAccountServer(category);
 		insert category;
+	}
+
+	@AuraEnabled
+	public static Id getRespectiveCategoryAccountServer(CBCategory__c category) {
+		List<CBCategory__c> categories = [SELECT cb5p__CBAccount__c FROM CBCategory__c WHERE Type__c = :category.Type__c AND cb5p__CBDivision__c = :category.CBDivision__c LIMIT 1];
+		if (categories.size() > 0) return categories[0].cb5p__CBAccount__c;
+		categories = [SELECT cb5p__CBAccount__c FROM CBCategory__c WHERE Type__c = :category.Type__c LIMIT 1];
+		if (categories.size() > 0) return categories[0].cb5p__CBAccount__c;
+		return [SELECT Id FROM cb5__CBAccount__c LIMIT 1][0].Id;
 	}
 
 	/**
@@ -298,6 +295,20 @@ public class CBPayrollExpressPageController {
 		r.typeValue = typeValue;
 		r.typePeriodValue = typePeriodValue;
 		return r;
+	}
+
+	@AuraEnabled
+	public static Boolean checkSetupServer() {
+		Schema.DescribeFieldResult fieldResult = cb5__CBNonFinancialLibrary__c.cb5__Type__c.getDescribe();
+		List<Schema.PicklistEntry> picklistValues = fieldResult.getPicklistValues();
+		Boolean isResultPresent = false;
+		for (Schema.PicklistEntry entry : picklistValues) {
+			if (entry.getLabel() == 'Result') {
+				isResultPresent = true;
+				break;
+			}
+		}
+		return isResultPresent;
 	}
 
 	public class ChartWrapper {

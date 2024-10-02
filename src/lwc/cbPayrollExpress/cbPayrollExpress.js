@@ -26,7 +26,8 @@ OF THE POSSIBILITY OF SUCH DAMAGE.
 import {LightningElement, track} from 'lwc';
 import {_applyDecStyle, _message, _parseServerError} from "c/cbUtils";
 import getEmployeesServer from '@salesforce/apex/CBPayrollExpressPageController.getEmployeesServer';
-import getAnalyticsServer from '@salesforce/apex/CBPayrollExpressPageController.getAnalyticsServer';
+import getDefaultBudgetYearIdServer from '@salesforce/apex/CBPayrollExpressPageController.getDefaultBudgetYearIdServer';
+import checkSetupServer from '@salesforce/apex/CBPayrollExpressPageController.checkSetupServer';
 
 export default class CBPayrollExpress extends LightningElement {
 
@@ -35,10 +36,6 @@ export default class CBPayrollExpress extends LightningElement {
 	@track showEmployeeDialog = false;
 	@track employees = [];
 	@track selectedEmployeeId;
-
-	@track divisionSO = [];
-	@track budgetYearSO = [];
-	@track employeeSO = [];
 	@track categoryTypes = []; // list of category types
 
 	@track params = {};
@@ -46,15 +43,14 @@ export default class CBPayrollExpress extends LightningElement {
 	/** CHART */
 	@track categoryIds = [];
 	@track renderChart = false;
-
 	/** CHART */
 
 	async connectedCallback() {
 		this.showSpinner = true;
 		this.readyToRender = false;
 		_applyDecStyle();
-		await this.getAnalytics();
-		console.log('Analytics');
+		await this.applyPreviousFilterOptions();
+		console.log('Filters');
 		await this.getListOfEmployee();
 		console.log('Employees');
 		this.getCategoryTypes();
@@ -64,36 +60,24 @@ export default class CBPayrollExpress extends LightningElement {
 		this.showSpinner = false;
 		this.readyToRender = true;
 		this.renderChart = true;
+		this.checkSetup();
+	};
+	
+	applyPreviousFilterOptions = async () => {
+		['divisionId', 'budgetYearId', 'employeeId'].forEach(key => {
+			const value = localStorage.getItem(key);
+			if (value && value.length > 5) this.params[key] = value;
+		});
+		if (!this.params.budgetYearId) this.params.budgetYearId = await getDefaultBudgetYearIdServer();
 	};
 
-	getAnalytics = async () => {
-		try {
-			const analytics = await getAnalyticsServer();
-			this.divisionSO = this.convertObjectToListOfSO(analytics['division'], true);
-			this.budgetYearSO = this.convertObjectToListOfSO(analytics['budgetYear'], false);
-			this.employeeSO = this.convertObjectToListOfSO(analytics['employee'], true);
-		} catch (e) {
-			_parseServerError('Get Employees Error: ', e);
-		}
-	};
-
-	convertObjectToListOfSO = (obj, allOptionNeeded) => {
-		try {
-			const options = Object.keys(obj).map(key => ({value: key, label: obj[key]}));
-			if (allOptionNeeded) options.unshift({value: '', label: 'All'});
-			return options;
-		} catch (e) {
-			_message('error', 'convertObjectToListOfSO Error: ' + JSON.stringify(e));
-		}
-	};
-
+	/**
+	 * Method gets a list of employees
+	 */
 	getListOfEmployee = async () => {
 		this.categoryIds = [];
 		this.renderChart = false;
-		if (!this.params.budgetYearId) this.params.budgetYearId = this.budgetYearSO[0].value;
-		await getEmployeesServer({params: this.params})
-			.then(employees => this.employees = employees)
-			.catch(e => _parseServerError('Get Employees Error: ', e));
+		this.employees = await getEmployeesServer({params: this.params}).catch(e => _parseServerError('Get Employees Error: ', e));
 	};
 
 	getCategoryTypes = () => {
@@ -114,7 +98,6 @@ export default class CBPayrollExpress extends LightningElement {
 
 	populateEmployeeRecords = () => {
 		try {
-			if (this.categoryTypes.length === 0) return null;
 			this.employees.forEach((emp, idx) => {
 				emp.idx = idx + 1;
 				emp.total = 0;
@@ -148,8 +131,25 @@ export default class CBPayrollExpress extends LightningElement {
 	};
 
 	handleChangeMainFilter = (event) => {
+		if(event.target.name === 'budgetYearId' && !event.target.value) {
+			return null;
+		}
 		this.params[event.target.name] = event.target.value;
-		this.connectedCallback();
+		localStorage.setItem(event.target.name, event.target.value);
+
+		console.log('event.target.name = ' + event.target.name + '   event.target.value=' + event.target.value);
+		this.connectedCallback().then(r => null);
+	};
+
+	checkSetup = async () => {
+		let setupIsOk = localStorage.getItem('setupIsOk');
+		if (setupIsOk) return null;
+		setupIsOk = await checkSetupServer();
+		if (setupIsOk) {
+			localStorage.setItem('setupIsOk', 'OK');
+			return null;
+		}
+		_message('info', 'Please finish setup. Add the "Result" Type option to cb5__CBNonFinancialLibrary__c');
 	};
 
 

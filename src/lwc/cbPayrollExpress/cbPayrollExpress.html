@@ -8,31 +8,33 @@
 				</div>
 			</lightning-layout-item>
 			<lightning-layout-item>
-				<lightning-select
-						name="divisionId"
-						label="Division"
-						value={params.divisionId}
-						options={divisionSO}
-						onchange={handleChangeMainFilter}
-				></lightning-select>
+				<lightning-record-edit-form object-api-name="cb5__CBBudgetLine__c">
+					<lightning-input-field
+							field-name="cb5__CBDivision__c"
+							value={params.divisionId}
+							name="divisionId"
+							onchange={handleChangeMainFilter}
+					></lightning-input-field>
+				</lightning-record-edit-form>
 			</lightning-layout-item>
 			<lightning-layout-item>
-				<lightning-select
-						name="budgetYearId"
-						label="Budget Year"
-						value={params.budgetYearId}
-						options={budgetYearSO}
-						onchange={handleChangeMainFilter}
-				></lightning-select>
+				<lightning-record-edit-form object-api-name="cb5__CBBudgetLine__c">
+					<lightning-input-field field-name="cb5__CBBudgetYear__c"
+										   value={params.budgetYearId}
+										   name="budgetYearId"
+										   onchange={handleChangeMainFilter}
+					></lightning-input-field>
+				</lightning-record-edit-form>
 			</lightning-layout-item>
 			<lightning-layout-item>
-				<lightning-select
-						name="employeeId"
-						label="Employee"
-						value={params.employeeId}
-						options={employeeSO}
-						onchange={handleChangeMainFilter}
-				></lightning-select>
+				<lightning-record-edit-form object-api-name="cb5__CBBudgetLine__c">
+					<lightning-input-field
+							field-name="cb5__CBVariable5__c"
+							value={params.employeeId}
+							name="employeeId"
+							onchange={handleChangeMainFilter}
+					></lightning-input-field>
+				</lightning-record-edit-form>
 			</lightning-layout-item>
 		</lightning-layout>
 
@@ -42,55 +44,75 @@
 			<!-- SPINNER -->
 
 			<template lwc:if={readyToRender}>
-				<table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_striped custom-table">
-					<thead>
-					<tr>
-						<th style="width: 15px">#</th>
-						<th>Name</th>
-						<th>SIC</th>
-						<th>Division</th>
-						<th>Position</th>
-						<template for:each={categoryTypes} for:item="type">
-							<th key={type}>
-								<div class="dec">{type}</div>
-							</th>
-						</template>
-						<th>
-							<div class="dec">Yearly Total</div>
-						</th>
-					</tr>
-					</thead>
 
-					<tbody>
-					<template for:each={employees} for:item="emp">
-						<tr key={emp.Id}>
-							<td>{emp.idx}</td>
-							<td>
-								<div onclick={openEmployeeDialog} id={emp.Id}>
-									{emp.Name}
-								</div>
-							</td>
-							<td>{emp.sic}</td>
-							<td>{emp.divisionName}</td>
-							<td>{emp.positionName}</td>
-							<template for:each={emp.categoryValues} for:item="val">
-								<td key={val} class="dec">
-									<lightning-formatted-number value={val} format-style="currency"
-																currency-code="USD"></lightning-formatted-number>
-								</td>
+				<div class="slds-table--header-fixed_container" style="height:450px;">
+
+					<div class="slds-scrollable_y" style="height:100%;">
+
+						<table class="slds-table--header-fixed slds-table slds-table_bordered slds-table_cell-buffer slds-table_striped custom-table">
+							<thead>
+							<tr>
+								<th scope="col"  style="width: 15px">
+									<div class="slds-cell-fixed">#</div>
+								</th>
+								<th scope="col">
+									<div class="slds-cell-fixed">Name</div>
+								</th>
+								<th scope="col">
+									<div class="slds-cell-fixed">SIC</div>
+								</th>
+								<th scope="col">
+									<div class="slds-cell-fixed">Division</div>
+								</th>
+								<th scope="col">
+									<div class="slds-cell-fixed">Position</div>
+								</th>
+								<template for:each={categoryTypes} for:item="type">
+									<th key={type} scope="col">
+										<div class="slds-cell-fixed dec">{type}</div>
+									</th>
+								</template>
+								<th scope="col">
+									<div class="slds-cell-fixed dec">Yearly Total</div>
+								</th>
+							</tr>
+							</thead>
+
+							<tbody>
+							<template for:each={employees} for:item="emp">
+								<tr key={emp.Id}>
+									<td>{emp.idx}</td>
+									<td>
+										<div onclick={openEmployeeDialog} id={emp.Id}>
+											{emp.Name}
+										</div>
+									</td>
+									<td>{emp.sic}</td>
+									<td>{emp.divisionName}</td>
+									<td>{emp.positionName}</td>
+									<template for:each={emp.categoryValues} for:item="val">
+										<td key={val} class="dec">
+											<lightning-formatted-number value={val} format-style="currency"
+																		currency-code="USD"></lightning-formatted-number>
+										</td>
+									</template>
+									<td class="dec">
+										<lightning-formatted-number value={emp.total} format-style="currency"
+																	class="dec total"
+																	currency-code="USD"></lightning-formatted-number>
+									</td>
+								</tr>
 							</template>
-							<td class="dec">
-								<lightning-formatted-number value={emp.total} format-style="currency" class="dec total"
-															currency-code="USD"></lightning-formatted-number>
-							</td>
-						</tr>
-					</template>
-					</tbody>
-				</table>
+							</tbody>
+						</table>
+					</div>
+				</div>
+
 			</template>
+
 		</div>
 		<template lwc:if={renderChart}>
-		<!--	<c-cb-payroll-chart params={categoryIds} budget-year-id={params.budgetYearId}></c-cb-payroll-chart> -->
+			<!--	<c-cb-payroll-chart params={categoryIds} budget-year-id={params.budgetYearId}></c-cb-payroll-chart> -->
 		</template>
 
 

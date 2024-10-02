@@ -32,6 +32,7 @@ import setAllocatedAndGetChildIndexServer
 	from '@salesforce/apex/CBPayrollExpressPageController.setAllocatedAndGetChildIndexServer';
 import saveCategoryServer from '@salesforce/apex/CBPayrollExpressPageController.saveCategoryServer';
 import saveNFLItemsServer from '@salesforce/apex/CBPayrollExpressPageController.saveNFLItemsServer';
+import getRespectiveCategoryAccountServer from '@salesforce/apex/CBPayrollExpressPageController.getRespectiveCategoryAccountServer';
 import categoryCanBeDeletedSafelyServer
 	from '@salesforce/apex/CBPayrollExpressPageController.categoryCanBeDeletedSafelyServer';
 import {calculateResult, calculateTotal, setContext} from "./cbCategoryMath";
@@ -130,9 +131,18 @@ export default class CBCategory extends LightningElement {
 	};
 
 	handleAnalyticChange = async (event) => {
-		this.category[event.target.name] = event.target.value;
 		console.log('event.target.name = ' + event.target.name);
 		console.log('event.target.value = ' + event.target.value);
+		this.category[event.target.name] = event.target.value;
+		console.log('this.category = ' + JSON.stringify(this.category));
+		if(event.target.name === 'cb5p__Type__c') {
+			console.log('IS TYPE New type is ' + this.category.cb5p__Type__c);
+			console.log('this.category.cb5p__CBAccount__c before = ' + this.category.cb5p__CBAccount__c);
+			this.category.cb5p__CBAccount__c = await getRespectiveCategoryAccountServer({category: this.category});
+			this.category = JSON.parse(JSON.stringify(this.category));
+			console.log('this.category.cb5p__CBAccount__c after = ' + this.category.cb5p__CBAccount__c);
+		}
+
 		await this.saveCategory();
 	};
 
