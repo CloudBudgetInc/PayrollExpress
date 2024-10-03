@@ -98,7 +98,6 @@ public class CBPayrollExpressPageController {
 	 */
 	@AuraEnabled
 	public static String saveCategoryServer(CBCategory__c category) {
-
 		upsert category;
 		return category.Id;
 	}
@@ -151,9 +150,13 @@ public class CBPayrollExpressPageController {
 	 * @return list of NFLs related to this employee
 	 */
 	@AuraEnabled
-	public static List<cb5__CBNonFinancialLibrary__c> getRecentNFLsServer(String employeeId) {
+	public static List<cb5__CBNonFinancialLibrary__c> getRecentNFLsServer(String employeeId, String budgetYearId) {
 		Set<String> recentNFLs = new Set<String>();
-		for (CBCategory__c cat : [SELECT NFLResult__c,NFL1__c,NFL2__c,NFL3__c,NFL4__c,NFL5__c FROM CBCategory__c WHERE CBEmployee__c = :employeeId]) {
+		for (CBCategory__c cat : [
+				SELECT NFLResult__c,NFL1__c,NFL2__c,NFL3__c,NFL4__c,NFL5__c
+				FROM CBCategory__c
+				WHERE CBEmployee__c = :employeeId AND CBBudgetYear__c = :budgetYearId
+		]) {
 			recentNFLs.add(cat.NFLResult__c);
 			recentNFLs.add(cat.NFL1__c);
 			recentNFLs.add(cat.NFL2__c);
@@ -308,7 +311,16 @@ public class CBPayrollExpressPageController {
 				break;
 			}
 		}
-		return isResultPresent;
+		fieldResult = cb5__CBFunction__c.cb5__Type__c.getDescribe();
+		picklistValues = fieldResult.getPicklistValues();
+		Boolean isPRTemplatePresent = false;
+		for (Schema.PicklistEntry entry : picklistValues) {
+			if (entry.getLabel() == CBPayrollTemplatePageController.FUNC_TYPE) {
+				isPRTemplatePresent = true;
+				break;
+			}
+		}
+		return isResultPresent && isPRTemplatePresent;
 	}
 
 	public class ChartWrapper {

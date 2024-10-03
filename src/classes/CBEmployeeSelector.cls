@@ -33,7 +33,8 @@ public with sharing class CBEmployeeSelector {
 		String byId = params.get('budgetYearId');
 		String divisionId = params.get('divisionId');
 		String employeeId = params.get('employeeId');
-		String s = 'SELECT Id,Name,CBDivision__c,CBDivision__r.Name,Position__c,SIC__c, ' +
+		String s = 'SELECT Id,Name,CBDivision__c,CBDivision__r.Name,Position__c,SIC__c,' +
+				'CBVariable1__c,CBVariable2__c,CBVariable3__c,CBVariable4__c, ' +
 				'(SELECT Id,Name,Type__c,Value__c FROM CBCategories__r WHERE CBBudgetYear__c = \'' + byId + '\' ORDER BY Index__c) ';
 		String f = ' FROM  cb5__CBVariable5__c ';
 		String w = ' WHERE Name != null '; // CBBudgetYear__c = \'' + byId + '\'

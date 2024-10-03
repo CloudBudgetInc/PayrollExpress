@@ -110,7 +110,9 @@ export default class CBPayrollChart extends LightningElement {
 				});
 			};
 			types = customSort(types);
-			const labels = Object.keys(tpv[types[0]]);
+			const l = tpv[types[0]];
+			if(!l) return null;
+			const labels = Object.keys(l);
 			const datasets = [];
 			types.forEach(type => {
 				try {

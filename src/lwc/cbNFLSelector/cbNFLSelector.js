@@ -53,7 +53,7 @@ export default class CBNFLSelector extends LightningElement {
 
 	getRecentNFLs = async () => {
 		try {
-			this.recentNFLs = await getRecentNFLsServer({employeeId: this.employeeId});
+			this.recentNFLs = await getRecentNFLsServer({employeeId: this.employeeId, budgetYearId: this.budgetYearId});
 		} catch (e) {
 			_parseServerError('Get Employee Error: ', e);
 		}

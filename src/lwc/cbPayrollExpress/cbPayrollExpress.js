@@ -149,7 +149,8 @@ export default class CBPayrollExpress extends LightningElement {
 			localStorage.setItem('setupIsOk', 'OK');
 			return null;
 		}
-		_message('info', 'Please finish setup. Add the "Result" Type option to cb5__CBNonFinancialLibrary__c');
+		_message('info', 'Please finish setup. Add the "Result" Type option to cb5__CBNonFinancialLibrary__c' +
+			' and the "Payroll Template" option to cb5__CBFunction__c ');
 	};
 
 

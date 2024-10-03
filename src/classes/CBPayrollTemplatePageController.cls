@@ -25,7 +25,7 @@ OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 public with sharing class CBPayrollTemplatePageController {
 
-	private static final String FUNC_TYPE = 'Payroll Template';
+	public static final String FUNC_TYPE = 'Payroll Template';
 	private static Map<String, String> oldResultNFLToNewResultNFLMap = new Map<String, String>();
 	private static String functionId;
 	private static String employeeId;
@@ -48,7 +48,7 @@ public with sharing class CBPayrollTemplatePageController {
 
 	@AuraEnabled
 	public static void savePayrollTemplateServer(String title, String empId, String byId) {
-		if (empId == null && byId == null) return ;
+		if (empId == null || byId == null) return ;
 		if (title == null || title.length() < 2) title = 'General';
 		List<CBCategory__c> categories = CBCategorySelector.getCategories(new Map<String, String>{
 				'employeeId' => empId,

@@ -27,10 +27,10 @@ trigger CBCategoryTrigger on CBCategory__c (after insert, before delete) {
 		Set<String> NFLIdNeedToBeDeleted = new Set<String>();
 		for (CBCategory__c cat : Trigger.old) {
 			deletedCategoryIds.add(cat.Id);
+			NFLIdNeedToBeDeleted.add(cat.cb5p__NFLResult__c);
 		}
 		delete [SELECT Id FROM cb5__CBBudgetLine__c WHERE CBCategory__c IN:deletedCategoryIds];
-		// TODO Check if Custom NFL does not use in any year we need to delete it
-		delete [SELECT Id FROM cb5__CBNonFinancialLibrary__c WHERE Id IN:NFLIdNeedToBeDeleted AND cb5__Type__c = 'Result'];
+		delete [SELECT Id FROM cb5__CBNonFinancialLibrary__c WHERE cb5__LayerTitle__c = 'Category' AND Id IN: NFLIdNeedToBeDeleted];
 	}
 
 }
