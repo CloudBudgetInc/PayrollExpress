@@ -28,7 +28,7 @@ public with sharing class CBCategoryProcessor {
 
 	private static String budgetYearId;
 	private static String employeeId;
-	private static Set<String> budgetLineIdsToDelete = new Set<String>();
+	private static Set<String> categoryIdOfBudgetLinesNeedToBeDeleted = new Set<String>();
 	private static List<BudgetLineWrapper> budgetLineWrappersToInsert = new List<BudgetLineWrapper>();
 	private static List<cb5__CBNonFinancialLibrary__c> NFLToUpdate = new List<cb5__CBNonFinancialLibrary__c>();
 	private static List<cb5__CBNonFinancialItem__c> NFLItemsToUpdate = new List<cb5__CBNonFinancialItem__c>();
@@ -51,6 +51,9 @@ public with sharing class CBCategoryProcessor {
 		set;
 	}
 
+	/**
+	 * Current employee and current budget year categories
+	 */
 	private static List<CBCategory__c> categories {
 		get {
 			if (categories == null) {
@@ -65,7 +68,10 @@ public with sharing class CBCategoryProcessor {
 		set;
 	}
 
-	private static Map<String, cb5__CBNonFinancialLibrary__c> resultNFLMap { // key is category Id, value is result NFL
+	/**
+	 *  key is category Id, value is result NFL
+	 */
+	private static Map<String, cb5__CBNonFinancialLibrary__c> resultNFLMap {
 		get {
 			if (resultNFLMap == null) {
 				resultNFLMap = new Map<String, cb5__CBNonFinancialLibrary__c>();
@@ -104,119 +110,126 @@ public with sharing class CBCategoryProcessor {
 	}
 
 	/**
-	 * The main class to regenerate budget lines and category totals
-	 * One run per one employee and one budget year
-	 * @param empId - processed employee Id
-	 * @param byId - processed budget year Id
-	 */
-	public static void updateEmployeeCategories(String empId, String byId) {
-		if (empId == null || byId == null) return;
-		budgetYearId = byId;
-		employeeId = empId;
-		for (CBCategory__c category : categories) {
-			List<cb5__CBAmount__c> calculatedAmounts = updateBudgetLineAndReturnCalculatedAmounts(category);
-			updateCategoryResult(category, calculatedAmounts);
-		}
-		finalizeDML();
-	}
-
-	/**
-	 * This method updates budget lines witch will be source for the category amounts
-	 * @param category processed category
-	 * @return list of budget line amounts
-	 */
-	private static List<cb5__CBAmount__c> updateBudgetLineAndReturnCalculatedAmounts(CBCategory__c category) {
-		BudgetLineWrapper blw = new BudgetLineWrapper();
-		budgetLineIdsToDelete.add(category.Id); // old budget line must be deleted
-		budgetLineWrappersToInsert.add(blw); // new budget line must be added
-		cb5__CBBudgetLine__c bl = new cb5__CBBudgetLine__c(cb5__CBBudgetYear__c = budgetYearId);
-		bl.cb5__CBDivision__c = category.CBDivision__c != null ? category.CBDivision__c : employee.CBDivision__c;
-		bl.Name = (employee.Name + ' (' + category.Name + ')').left(80);
-		bl.cb5__CBVariable5__c = employeeId;
-		bl.cb5__Lock__c = 'Editing';
-		bl.CBCategory__c = category.Id;
-		bl.cb5__CBAccount__c = category.CBAccount__c;
-		bl.cb5__DrillDownIds__c = category.Id;
-		blw.budgetLine = bl;
-
-		List<cb5__CBAmount__c> amounts = new List<cb5__CBAmount__c>();
-		for (cb5__CBPeriod__c period : periods) amounts.add(new cb5__CBAmount__c(cb5__Value__c = 0, cb5__CBPeriod__c = period.Id));
-
-		if (category.ParentCategory__c != null) {
-			cb5__CBNonFinancialLibrary__c resultNFL = resultNFLMap.get(category.Id);
-			Decimal allocationRate = category.Allocation__c == null ? 0 : category.Allocation__c;
-			List<cb5__CBNonFinancialItem__c> parentResultItems = engagedSourceNFLMap.get(category.NFL1__c).cb5__NonFinancialItems__r;
-			for (Integer i = 0; i < resultNFL.cb5__NonFinancialItems__r.size(); i++) {
-				amounts[i].cb5__Value__c = (parentResultItems[i].cb5__Value__c * allocationRate / 100).setScale(2);
-			}
-			blw.amounts = amounts;
-			return blw.amounts;
-		}
-
-		if (category.NFL1__c == null || category.Formula__c == null) { // category without formula
-			cb5__CBNonFinancialLibrary__c resultNFL = resultNFLMap.get(category.Id);
-			for (Integer i = 0; i < resultNFL.cb5__NonFinancialItems__r.size(); i++) {
-				amounts[i].cb5__Value__c = resultNFL.cb5__NonFinancialItems__r[i].cb5__Value__c;
-			}
-			blw.amounts = amounts;
-			return blw.amounts;
-		}
-
-		List<List<cb5__CBNonFinancialItem__c>> sourceNFLItems = new List<List<cb5__CBNonFinancialItem__c>>();
-		if (category.NFL1__c != null) sourceNFLItems.add(engagedSourceNFLMap.get(category.NFL1__c).cb5__NonFinancialItems__r);
-		if (category.NFL2__c != null) sourceNFLItems.add(engagedSourceNFLMap.get(category.NFL2__c).cb5__NonFinancialItems__r);
-		if (category.NFL3__c != null) sourceNFLItems.add(engagedSourceNFLMap.get(category.NFL3__c).cb5__NonFinancialItems__r);
-		if (category.NFL4__c != null) sourceNFLItems.add(engagedSourceNFLMap.get(category.NFL4__c).cb5__NonFinancialItems__r);
-		if (category.NFL5__c != null) sourceNFLItems.add(engagedSourceNFLMap.get(category.NFL5__c).cb5__NonFinancialItems__r);
-
-		try {
-			blw.amounts = cb5.CBFormulaService.calculateFormulaTotals(amounts, sourceNFLItems, category.Formula__c);
-			if (category.TaxThreshold__c != null) {
-				CBTaxThresholdProcessor.applyTaxThresholds(blw, category.TaxThreshold__c);
-			}
-		} catch (Exception e) {
-			System.debug('Calculation Error: ' + e);
-		}
-		return blw.amounts;
-	}
-
-	/**
-	 * Each category has Result NFL with calculated amounts
-	 * This method updates numbers in result NFL and a total value for a category
+	 * The Main method for saving Categories and Budget lines
 	 *
-	 * @param category processed category
-	 * @param calculatedAmounts calculated amounts
+	 * @param empId
+	 * @param byId
 	 */
-	private static void updateCategoryResult(CBCategory__c category, List<cb5__CBAmount__c> calculatedAmounts) {
-		cb5__CBNonFinancialLibrary__c resultNFL = resultNFLMap.get(category.Id);
-		category.Value__c = 0;
-		for (Integer i = 0; i < calculatedAmounts.size(); i++) {
-			resultNFL.cb5__NonFinancialItems__r[i].cb5__Value__c = calculatedAmounts[i].cb5__Value__c;
-			category.Value__c += calculatedAmounts[i].cb5__Value__c;
+	public static void updateOneEmployeeCategoriesAndBudgetLines(String empId, String byId) {
+		System.debug('SAVE CATEGORIES AND BUDGET LINES');
+		employeeId = empId;
+		budgetYearId = byId;
+
+		cb5__CBOrgVariable__c orgVariable = [SELECT cb5p__PayrollGroupingKey__c FROM cb5__CBOrgVariable__c LIMIT 1][0];
+		deleteObsoleteBudgetLines(orgVariable.cb5p__PayrollGroupingKey__c);
+		if (orgVariable.cb5p__PayrollGroupingKey__c == null) {
+			System.debug('SINGLE MODE');
+			updateOneEmployeeCategories();
+			generateOneToOneBudgetLines();
+		} else {
+
 		}
-		resultNFL.Name = ('Category Result ' + category.Name).left(80);
-		NFLToUpdate.add(resultNFL);
-		NFLItemsToUpdate.addAll(resultNFL.cb5__NonFinancialItems__r);
-		categoriesToUpdate.add(category);
+
+		finalizeDatabaseDML();
+
 	}
 
-	/**
-	 * Last method to work with the database
-	 */
-	private static void finalizeDML() {
-		delete [SELECT Id FROM cb5__CBBudgetLine__c WHERE CBCategory__c IN:budgetLineIdsToDelete];
-		BudgetLineWrapper obj = new BudgetLineWrapper();
-		obj.insertBudgetLineWrappers(budgetLineWrappersToInsert);
-		obj.assignBLParentChildRelations(budgetLineWrappersToInsert, categories);
-		update categoriesToUpdate;
-		for (cb5__CBNonFinancialItem__c item : NFLItemsToUpdate) System.debug(item);
-		update NFLItemsToUpdate;
-		update NFLToUpdate;
+	private static void updateOneEmployeeCategories() {
+		Integer idx = 0;
+		for (CBCategory__c category : categories) { // each category generates a budget line
+			System.debug('---------------- ' + String.valueOf(++idx) + ' Category:  ' + category.Name + ' ------------------------------');
+			cb5__CBNonFinancialLibrary__c resultNFL = resultNFLMap.get(category.Id);
+			List<cb5__CBNonFinancialItem__c> resultItems = resultNFL.cb5__NonFinancialItems__r;
+			NFLItemsToUpdate.addAll(resultItems);
+			if (category.ParentCategory__c == null) { // simple category with formula
+				List<cb5__CBAmount__c> tmpAmounts = new List<cb5__CBAmount__c>();
+				for (cb5__CBPeriod__c p : periods) tmpAmounts.add(new cb5__CBAmount__c(cb5__CBPeriod__c = p.Id, cb5__Value__c = 0));
+				if (category.Formula__c != null) {
+					List<List<cb5__CBNonFinancialItem__c>> sourceNFLItems = new List<List<cb5__CBNonFinancialItem__c>>();
+					if (category.NFL1__c != null) sourceNFLItems.add(engagedSourceNFLMap.get(category.NFL1__c).cb5__NonFinancialItems__r);
+					if (category.NFL2__c != null) sourceNFLItems.add(engagedSourceNFLMap.get(category.NFL2__c).cb5__NonFinancialItems__r);
+					if (category.NFL3__c != null) sourceNFLItems.add(engagedSourceNFLMap.get(category.NFL3__c).cb5__NonFinancialItems__r);
+					if (category.NFL4__c != null) sourceNFLItems.add(engagedSourceNFLMap.get(category.NFL4__c).cb5__NonFinancialItems__r);
+					if (category.NFL5__c != null) sourceNFLItems.add(engagedSourceNFLMap.get(category.NFL5__c).cb5__NonFinancialItems__r);
+					tmpAmounts = cb5.CBFormulaService.calculateFormulaTotals(tmpAmounts, sourceNFLItems, category.Formula__c);
+				}
+				for (Integer i = 0; i < resultItems.size(); i++) {
+					resultItems[i].cb5__Value__c = tmpAmounts[i].cb5__Value__c;
+				}
+				if (category.TaxThreshold__c != null) {
+					CBTaxThresholdProcessor.applyTaxThresholds(resultItems, category.TaxThreshold__c);
+					System.debug('RES AFTER TAX : ' + resultItems);
+				}
+			} else { /// ALLOCATION
+				List<cb5__CBNonFinancialItem__c> parentResultItems = engagedSourceNFLMap.get(category.NFL1__c).cb5__NonFinancialItems__r;
+				Decimal allocationRate = category.Allocation__c == null ? 0 : category.Allocation__c;
+				for (Integer i = 0; i < resultItems.size(); i++) {
+					resultItems[i].cb5__Value__c = (parentResultItems[i].cb5__Value__c * allocationRate / 100).setScale(2);
+				}
+			}
+			engagedSourceNFLMap.put(resultNFL.Id, resultNFL);
+			System.debug('resultItems = ' + resultItems);
+			categoriesToUpdate.add(category);
+		}
 	}
 
-	/**
-	 * Wrapper for budget lines and amounts
-	 */
+	private static void generateOneToOneBudgetLines() {
+		for (CBCategory__c category : categories) {
+			BudgetLineWrapper blw = new BudgetLineWrapper();
+			budgetLineWrappersToInsert.add(blw); // new budget line must be added
+			cb5__CBBudgetLine__c bl = new cb5__CBBudgetLine__c(cb5__CBBudgetYear__c = budgetYearId);
+			bl.cb5__CBDivision__c = category.CBDivision__c != null ? category.CBDivision__c : employee.CBDivision__c;
+			bl.Name = (employee.Name + ' (' + category.Name + ')').left(80);
+			bl.cb5__CBVariable1__c = category.CBVariable1__c;
+			bl.cb5__CBVariable2__c = category.CBVariable2__c;
+			bl.cb5__CBVariable3__c = category.CBVariable3__c;
+			bl.cb5__CBVariable4__c = category.CBVariable4__c;
+			bl.cb5__CBVariable5__c = employeeId;
+			bl.cb5__Lock__c = 'Editing';
+			bl.CBCategory__c = category.Id;
+			bl.cb5__CBAccount__c = category.CBAccount__c;
+			bl.cb5__DrillDownIds__c = category.Id;
+			blw.budgetLine = bl;
+			cb5__CBNonFinancialLibrary__c resultNFL = resultNFLMap.get(category.Id);
+			for (Integer i = 0; i < resultNFL.cb5__NonFinancialItems__r.size(); i++) {
+				cb5__CBNonFinancialItem__c rItem = resultNFL.cb5__NonFinancialItems__r[i];
+				blw.amounts.add(new cb5__CBAmount__c(cb5__Value__c = rItem.cb5__Value__c, cb5__CBPeriod__c = rItem.cb5__CBPeriod__c));
+			}
+		}
+	}
+
+	private static void deleteObsoleteBudgetLines(String grouping) {
+		if (String.isEmpty(grouping)) {
+			Set<Id> categoryIdOfBudgetLinesNeedToBeDeleted = new Set<Id>();
+			for (CBCategory__c category : categories) categoryIdOfBudgetLinesNeedToBeDeleted.add(category.Id); // old budget line must be deleted
+			delete [SELECT Id FROM cb5__CBBudgetLine__c WHERE CBCategory__c IN:categoryIdOfBudgetLinesNeedToBeDeleted];
+		} else {
+
+		}
+	}
+
+	private static void generateGroupBudgetLines() {
+
+	}
+
+	private static void finalizeDatabaseDML() {
+		try {
+			BudgetLineWrapper obj = new BudgetLineWrapper();
+			System.debug('budgetLineWrappersToInsert = ' + budgetLineWrappersToInsert);
+			obj.insertBudgetLineWrappers(budgetLineWrappersToInsert);
+			obj.assignBLParentChildRelations(budgetLineWrappersToInsert, categories);
+			update categoriesToUpdate;
+			for (cb5__CBNonFinancialItem__c item : NFLItemsToUpdate) System.debug(item);
+			update NFLItemsToUpdate;
+		} catch (Exception e) {
+			System.debug('FINALIZE EXCEPTION: ' + e);
+			throw e;
+		}
+	}
+
+/**
+ * Wrapper for budget lines and amounts
+ */
 	public class BudgetLineWrapper {
 		public cb5__CBBudgetLine__c budgetLine;
 		public List<cb5__CBAmount__c> amounts = new List<cb5__CBAmount__c>();

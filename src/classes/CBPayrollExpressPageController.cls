@@ -86,7 +86,7 @@ public class CBPayrollExpressPageController {
 	@AuraEnabled
 	public static cb5__CBVariable5__c saveEmployeeServer(cb5__CBVariable5__c employee, String byId) {
 		update employee;
-		CBCategoryProcessor.updateEmployeeCategories(employee.Id, byId);
+		CBCategoryProcessor.updateOneEmployeeCategoriesAndBudgetLines(employee.Id, byId);
 		return employee;
 	}
 
@@ -322,6 +322,17 @@ public class CBPayrollExpressPageController {
 		}
 		return isResultPresent && isPRTemplatePresent;
 	}
+
+	@AuraEnabled
+	public static Map<String, Boolean> checkVariableRecordsServer() {
+		return new Map<String, Boolean>{
+				'cb5__CBVariable1__c' => ![SELECT Id FROM cb5__CBVariable1__c LIMIT 1].isEmpty(),
+				'cb5__CBVariable2__c' => ![SELECT Id FROM cb5__CBVariable2__c LIMIT 1].isEmpty(),
+				'cb5__CBVariable3__c' => ![SELECT Id FROM cb5__CBVariable3__c LIMIT 1].isEmpty(),
+				'cb5__CBVariable4__c' => ![SELECT Id FROM cb5__CBVariable4__c LIMIT 1].isEmpty()
+		};
+	}
+
 
 	public class ChartWrapper {
 		@AuraEnabled

@@ -28,6 +28,7 @@ import {_applyDecStyle, _message, _parseServerError} from "c/cbUtils";
 import getEmployeesServer from '@salesforce/apex/CBPayrollExpressPageController.getEmployeesServer';
 import getDefaultBudgetYearIdServer from '@salesforce/apex/CBPayrollExpressPageController.getDefaultBudgetYearIdServer';
 import checkSetupServer from '@salesforce/apex/CBPayrollExpressPageController.checkSetupServer';
+import checkVariableRecordsServer from '@salesforce/apex/CBPayrollExpressPageController.checkVariableRecordsServer';
 
 export default class CBPayrollExpress extends LightningElement {
 
@@ -49,6 +50,7 @@ export default class CBPayrollExpress extends LightningElement {
 		this.showSpinner = true;
 		this.readyToRender = false;
 		_applyDecStyle();
+		this.checkVariableRendering();
 		await this.applyPreviousFilterOptions();
 		console.log('Filters');
 		await this.getListOfEmployee();
@@ -56,6 +58,7 @@ export default class CBPayrollExpress extends LightningElement {
 		this.getCategoryTypes();
 		console.log('CategoryTypes');
 		this.populateEmployeeRecords();
+
 		console.log('EmployeeRecords');
 		this.showSpinner = false;
 		this.readyToRender = true;
@@ -118,6 +121,11 @@ export default class CBPayrollExpress extends LightningElement {
 		} catch (e) {
 			_message('error', 'Category Types ' + e);
 		}
+	};
+
+	checkVariableRendering = async () => {
+		const renderVariable = await checkVariableRecordsServer().catch(e => _parseServerError('Check Variables Error: ', e));
+		localStorage.setItem('renderVariable', JSON.stringify(renderVariable));
 	};
 
 	openEmployeeDialog = (event) => {

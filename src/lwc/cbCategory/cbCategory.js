@@ -51,10 +51,12 @@ export default class CBCategory extends LightningElement {
 	@track nflIds = [];
 	@track resultNFL = {};
 	@track nfls = [];
+	@track renderVariable;
 	CATEGORY_NFL_ORDER = ['cb5p__NFLResult__c', 'cb5p__NFL1__c', 'cb5p__NFL2__c', 'cb5p__NFL3__c', 'cb5p__NFL4__c', 'cb5p__NFL5__c'];
 
 	async connectedCallback() {
 		this.showSpinner = true;
+		this.checkVariableRendering();
 		await this.getCategory();
 		await this.getNFLs();
 		this.showSpinner = false;
@@ -121,6 +123,8 @@ export default class CBCategory extends LightningElement {
 			_parseServerError('Get NFL Error: ', e);
 		}
 	};
+
+	checkVariableRendering = () => this.renderVariable = JSON.parse(localStorage.getItem('renderVariable'));
 
 	recalculateResult = () => {
 		setContext(this);

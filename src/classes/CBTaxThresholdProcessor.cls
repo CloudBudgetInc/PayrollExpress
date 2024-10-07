@@ -66,11 +66,11 @@ public with sharing class CBTaxThresholdProcessor {
 	 * @param blw budget line wrapper
 	 * @param ttId Threshold parent nfl id
 	 */
-	public static void applyTaxThresholds(CBCategoryProcessor.BudgetLineWrapper blw, String ttId) {
+	public static void applyTaxThresholds(List<cb5__CBNonFinancialItem__c> items, String ttId) {
 		try {
 			List<cb5__CBNonFinancialLibrary__c> thresholds = thresholdMap.get(ttId);
 			Decimal yearlyTotal = 0;
-			for (cb5__CBAmount__c a : blw.amounts) yearlyTotal += a.cb5__Value__c; // budget line yearly value
+			for (cb5__CBNonFinancialItem__c item : items) yearlyTotal += item.cb5__Value__c; // budget line yearly value
 			Decimal yearlyTax = 0; // total tax for whole budget year
 			for (cb5__CBNonFinancialLibrary__c thr : thresholds) {
 				if (yearlyTotal < thr.From__c) continue; // under limit
@@ -83,9 +83,9 @@ public with sharing class CBTaxThresholdProcessor {
 				yearlyTax += baseValue * thr.cb5__SingleValue__c;
 				if (yearlyTotal < thr.cb5p__UpTo__c) break;
 			}
-			for (cb5__CBAmount__c a : blw.amounts) {
-				Decimal fraction = a.cb5__Value__c / yearlyTotal;
-				a.cb5__Value__c = (yearlyTax * fraction).setScale(2);
+			for (cb5__CBNonFinancialItem__c item : items) {
+				Decimal fraction = item.cb5__Value__c / yearlyTotal;
+				item.cb5__Value__c = (yearlyTax * fraction).setScale(2);
 			}
 		} catch (Exception e) {
 			System.debug('applyTaxThresholds EXCEPTION: ' + e);

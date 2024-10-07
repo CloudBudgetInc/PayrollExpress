@@ -48,11 +48,13 @@ export default class CBPayrollDialog extends LightningElement {
 	@track employee;
 	@track categories;
 	@track functionSO = [];
+	@track renderVariable;
 
 	async connectedCallback() {
 		try {
 			this.readyToRender = false;
 			this.showSpinner = true;
+			this.checkVariableRendering();
 			await this.getEmployee();
 			await this.getCategories();
 			this.colorAllocatedGroup();
@@ -84,6 +86,8 @@ export default class CBPayrollDialog extends LightningElement {
 		}
 	};
 
+	checkVariableRendering = () => this.renderVariable = JSON.parse(localStorage.getItem('renderVariable'));
+
 	closeDialog = () => {
 		this.closeDialogFunction();
 	};
@@ -103,9 +107,11 @@ export default class CBPayrollDialog extends LightningElement {
 		await saveEmployeeServer({employee: this.employee, byId: this.budgetYearId})
 			.then(employee => {
 				this.recordId = employee.Id;
-				this.connectedCallback();
 			})
-			.catch(e => _parseServerError('Employee Saving Error: ', e));
+			.catch(e => _parseServerError('Employee Saving Error: ', e))
+			.finally(() => {
+				this.connectedCallback();
+			});
 	};
 
 	refreshDialog = () => {
@@ -121,6 +127,9 @@ export default class CBPayrollDialog extends LightningElement {
 				cb5p__CBEmployee__c: this.employee.Id,
 				cb5p__CBDivision__c: this.employee.cb5p__CBDivision__c,
 				cb5p__CBBudgetYear__c: this.budgetYearId,
+				cb5p__CBVariable1__c: this.employee.cb5p__CBVariable1__c,
+				cb5p__CBVariable2__c: this.employee.cb5p__CBVariable2__c,
+				cb5p__CBVariable3__c: this.employee.cb5p__CBVariable3__c,
 				cb5p__Formula__c: '#1',
 				cb5p__Index__c,
 				cb5p__Type__c: 'Salary'

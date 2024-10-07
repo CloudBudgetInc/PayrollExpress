@@ -32,6 +32,54 @@
 								></lightning-input-field>
 							</lightning-record-edit-form>
 						</lightning-layout-item>
+						<template lwc:if={renderVariable.cb5__CBVariable1__c}>
+							<lightning-layout-item>
+								<lightning-record-edit-form object-api-name="cb5__CBVariable5__c">
+									<lightning-input-field
+											field-name="cb5p__CBVariable1__c"
+											value={employee.cb5p__CBVariable1__c}
+											name="cb5p__CBVariable1__c"
+											onchange={handleChange}
+									></lightning-input-field>
+								</lightning-record-edit-form>
+							</lightning-layout-item>
+						</template>
+						<template lwc:if={renderVariable.cb5__CBVariable2__c}>
+							<lightning-layout-item>
+								<lightning-record-edit-form object-api-name="cb5__CBVariable5__c">
+									<lightning-input-field
+											field-name="cb5p__CBVariable2__c"
+											value={employee.cb5p__CBVariable2__c}
+											name="cb5p__CBVariable2__c"
+											onchange={handleChange}
+									></lightning-input-field>
+								</lightning-record-edit-form>
+							</lightning-layout-item>
+						</template>
+						<template lwc:if={renderVariable.cb5__CBVariable3__c}>
+							<lightning-layout-item>
+								<lightning-record-edit-form object-api-name="cb5__CBVariable5__c">
+									<lightning-input-field
+											field-name="cb5p__CBVariable3__c"
+											value={employee.cb5p__CBVariable3__c}
+											name="cb5p__CBVariable3__c"
+											onchange={handleChange}
+									></lightning-input-field>
+								</lightning-record-edit-form>
+							</lightning-layout-item>
+						</template>
+						<template lwc:if={renderVariable.cb5__CBVariable4__c}>
+							<lightning-layout-item>
+								<lightning-record-edit-form object-api-name="cb5__CBVariable5__c">
+									<lightning-input-field
+											field-name="cb5p__CBVariable4__c"
+											value={employee.cb5p__CBVariable4__c}
+											name="cb5p__CBVariable4__c"
+											onchange={handleChange}
+									></lightning-input-field>
+								</lightning-record-edit-form>
+							</lightning-layout-item>
+						</template>
 						<lightning-layout-item>
 							<lightning-record-edit-form object-api-name="cb5__CBVariable5__c">
 								<lightning-input-field
